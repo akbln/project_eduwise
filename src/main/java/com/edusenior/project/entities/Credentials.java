@@ -25,8 +25,12 @@ public class Credentials {
     @Column(name = "failed_login_attempts")
     private int failed;
 
+
     @Column (name = "locked_out_till")
     private Timestamp lockout;
+
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId // This tells Hibernate to use the Student ID as both the PK and FK
@@ -38,6 +42,11 @@ public class Credentials {
         this.failed = failed;
         this.email = email;
         this.hash = hash;
+    }
+
+    public Credentials() {
+        this.lockout = new Timestamp(System.currentTimeMillis());
+        this.failed = 0;
     }
 
     public String getId() {
@@ -86,5 +95,9 @@ public class Credentials {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

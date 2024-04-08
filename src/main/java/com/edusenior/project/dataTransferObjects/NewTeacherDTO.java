@@ -1,9 +1,8 @@
 package com.edusenior.project.dataTransferObjects;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
-public class NewStudentDTO {
+public class NewTeacherDTO {
     //Create input validation for all fields in the dto
 
     @NotNull
@@ -34,7 +33,7 @@ public class NewStudentDTO {
     private String level;
 
 
-    public NewStudentDTO() {}
+    public NewTeacherDTO() {}
 
     public String getEmail() {
         return email;
@@ -84,3 +83,4 @@ public class NewStudentDTO {
         this.level = level;
     }
 }
+

@@ -3,6 +3,6 @@ package com.edusenior.project.dataAccessObjects.credentials;
 import com.edusenior.project.entities.Credentials;
 
 public interface CredentialsDAO {
-    public String fetchPasswordHash(String id);
+    public Credentials fetchCredential(String email);
     public void createCredential(Credentials credentials);
 }

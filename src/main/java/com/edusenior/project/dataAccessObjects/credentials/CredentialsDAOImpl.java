@@ -11,8 +11,10 @@ public class CredentialsDAOImpl implements CredentialsDAO{
     private EntityManager em;
 
     @Override
-    public String fetchPasswordHash(String id) {
-        return em.find(Credentials.class,id).getHash();
+    public Credentials fetchCredential(String email) {
+        return (Credentials) em.createQuery("SELECT c FROM Credentials c WHERE c.email = :email")
+                .setParameter("email", email)
+                .getSingleResult();
     }
 
     @Override

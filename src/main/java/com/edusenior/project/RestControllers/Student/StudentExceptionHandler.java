@@ -2,8 +2,14 @@ package com.edusenior.project.RestControllers.Student;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.validation.FieldError;
+
 
 @ControllerAdvice
 public class StudentExceptionHandler {
@@ -15,5 +21,7 @@ public class StudentExceptionHandler {
         return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 
     }
+
+
 
 }

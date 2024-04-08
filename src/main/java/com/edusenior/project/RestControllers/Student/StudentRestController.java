@@ -4,6 +4,7 @@ import com.edusenior.project.dataAccessObjects.student.StudentDAO;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Student;
 import com.edusenior.project.services.student.StudentServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class StudentRestController {
 
 
     @PostMapping("/register")
-    public void createStudent(@RequestBody NewStudentDTO s){
+    public void createStudent(@Valid @RequestBody NewStudentDTO s){
         studentService.registerStudent(s);
     }
     @GetMapping("/id={studentUUID}")

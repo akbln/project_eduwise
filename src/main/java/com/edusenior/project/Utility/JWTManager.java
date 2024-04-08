@@ -14,6 +14,8 @@ import java.util.function.Function;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+
+
 @Component
 public class JWTManager {
     @Value("${jwt.secret}")
@@ -26,19 +28,23 @@ public class JWTManager {
         this.secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
     }
 
-    public String generateToken(String email) {
-        Instant now = Instant.now();
-        Instant oneMonthLater = now.plus(1, ChronoUnit.MONTHS);
+    public String generateToken(String email, String role) {
+        long currentTime = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(email)
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(oneMonthLater))
-                .signWith(SignatureAlgorithm.HS256,secretKey)
+                .claim("role", role) // Adding a custom claim for the role
+                .setIssuedAt(new Date(currentTime))
+                .setExpiration(new Date(currentTime+604800))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     public String getEmailFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    public String getRoleFromToken(String token) {
+        return getClaimFromToken(token, claims -> claims.get("role", String.class));
     }
 
     public Boolean validateToken(String token, String email) {
