@@ -9,4 +9,6 @@ public interface StudentDAO {
     public Student fetchStudentByEmail(String email);
     public void createStudent(Student s);
     public CredentialsDTO fetchCredentials(String email);
+    public boolean checkExistingEmail(String email);
+
 }

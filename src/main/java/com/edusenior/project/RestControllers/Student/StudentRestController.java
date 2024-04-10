@@ -1,11 +1,14 @@
 package com.edusenior.project.RestControllers.Student;
 
+import com.edusenior.project.Utility.ServerResponse;
 import com.edusenior.project.dataAccessObjects.student.StudentDAO;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Student;
 import com.edusenior.project.services.student.StudentServiceImpl;
 import jakarta.validation.Valid;
+import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +21,9 @@ public class StudentRestController {
     }
 
 
-    @PostMapping("/register")
-    public void createStudent(@Valid @RequestBody NewStudentDTO s){
-        studentService.registerStudent(s);
+    @PutMapping("/register")
+    public ResponseEntity<ServerResponse> createStudent(@Valid @RequestBody NewStudentDTO s){
+        return studentService.registerStudent(s);
     }
     @GetMapping("/id={studentUUID}")
     public Student fetchStudentByUUID(@PathVariable String studentUUID){

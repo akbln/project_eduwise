@@ -8,4 +8,5 @@ public interface TeacherDAO {
     public Teacher fetchTeacherByEmail(String email);
     public void createTeacher(Teacher t);
     public CredentialsDTO fetchCredentials(String email);
+    public boolean checkExistingEmail(String email);
 }

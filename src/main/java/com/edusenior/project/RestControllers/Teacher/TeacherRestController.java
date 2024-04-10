@@ -1,13 +1,12 @@
 package com.edusenior.project.RestControllers.Teacher;
 
+import com.edusenior.project.Utility.ServerResponse;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
 import com.edusenior.project.services.teacher.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/teachers")
@@ -19,8 +18,9 @@ public class TeacherRestController {
         this.teacherService = teacherService;
     }
 
-    @PostMapping("/register")
-    public void registerTeacher(@Valid @RequestBody NewTeacherDTO tDTO) {
-        teacherService.registerTeacher(tDTO);
+    @PutMapping("/register")
+    public ResponseEntity<ServerResponse> registerTeacher(@Valid @RequestBody NewTeacherDTO tDTO) {
+        return teacherService.registerTeacher(tDTO);
     }
+
 }

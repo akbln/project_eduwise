@@ -3,6 +3,7 @@ package com.edusenior.project.dataAccessObjects.student;
 import com.edusenior.project.dataTransferObjects.CredentialsDTO;
 import com.edusenior.project.entities.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -40,4 +41,18 @@ public class StudentDAOImpl implements StudentDAO{
                 .getResultList();
         return results.isEmpty() ? null : results.getFirst();
     }
+
+    @Override
+    public boolean checkExistingEmail(String email) {
+        try {
+            final String queryStr = "SELECT s.email FROM Student s WHERE s.email = :email";
+            em.createQuery(queryStr)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
 }
