@@ -26,6 +26,9 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<JwtDTO> login(@Valid @RequestBody LoginDTO loginDTO) throws LoginException {
         JwtDTO token = loginService.login(loginDTO);
+        if (token == null) {
+            throw new LoginException("Invalid credentials");
+        }
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 

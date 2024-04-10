@@ -1,12 +1,12 @@
 package com.edusenior.project.dataAccessObjects.student;
 
+import com.edusenior.project.dataTransferObjects.CredentialsDTO;
 import com.edusenior.project.entities.Student;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.List;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO{
@@ -18,11 +18,8 @@ public class StudentDAOImpl implements StudentDAO{
     }
 
     @Override
-    @Transactional
-    public String createStudent(Student s) {
-//        Student newStudent = new Student(name,age,gender,level);
+    public void createStudent(Student s) {
         em.persist(s);
-        return s.getId();
     }
     @Override
     public Student fetchStudent(String id){
@@ -34,5 +31,13 @@ public class StudentDAOImpl implements StudentDAO{
         return em.createQuery("SELECT s FROM Student s WHERE s.email = :email", Student.class)
                 .setParameter("email", email)
                 .getSingleResult();
+    }
+    @Override
+    public CredentialsDTO fetchCredentials(String email) {
+        List<CredentialsDTO> results = em.createQuery("SELECT new com.edusenior.project.dataTransferObjects.CredentialsDTO(s.email, s.hash, s.lockout, s.failed)" +
+                                "FROM Student s WHERE s.email = :email", CredentialsDTO.class)
+                .setParameter("email", email)
+                .getResultList();
+        return results.isEmpty() ? null : results.getFirst();
     }
 }

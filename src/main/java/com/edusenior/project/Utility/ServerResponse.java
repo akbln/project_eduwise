@@ -1,11 +1,14 @@
 package com.edusenior.project.Utility;
 
-public abstract class ServerResponse {
+import java.util.List;
+
+public class ServerResponse {
     private String operationStatus;
-    private String description;
-    public ServerResponse(String operationStatus, String description){
+    private List<String> errors;
+
+    public ServerResponse(String operationStatus, List<String> errors){
         this.operationStatus = operationStatus;
-        this.description = description;
+        this.errors = errors;
     }
     public String getOperationStatus() {
         return operationStatus;
@@ -13,10 +16,10 @@ public abstract class ServerResponse {
     public void setOperationStatus(String operationStatus) {
         this.operationStatus = operationStatus;
     }
-    public String getDescription() {
-        return description;
+    public List<String> getErrors() {
+        return errors;
     }
-    public void setDescription(String description) {
-        this.description = description;
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
     }
 }

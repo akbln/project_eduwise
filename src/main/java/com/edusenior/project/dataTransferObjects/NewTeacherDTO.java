@@ -21,17 +21,13 @@ public class NewTeacherDTO {
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Invalid name")
     private String name;
 
+    @Pattern(regexp = "^[MF]$", message = "Invalid Input")
+    private String gender;
+
     @NotNull
     @Min(value = 5, message = "Invalid age")
     @Max(value = 100, message = "Invalid age")
     private int age;
-
-    @Pattern(regexp = "^[MF]$", message = "Invalid Input")
-    private String gender;
-
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}$", message = "Invalid level")
-    private String level;
-
 
     public NewTeacherDTO() {}
 
@@ -73,14 +69,6 @@ public class NewTeacherDTO {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 }
 
