@@ -1,12 +1,13 @@
 package com.edusenior.project.dataAccessObjects.teacher;
 
+import com.edusenior.project.dataAccessObjects.UserDAO;
 import com.edusenior.project.dataTransferObjects.CredentialsDTO;
 import com.edusenior.project.entities.Teacher;
 
-public interface TeacherDAO {
+public interface TeacherDAO extends UserDAO{
     public Teacher fetchTeacherById(String id);
     public Teacher fetchTeacherByEmail(String email);
     public void createTeacher(Teacher t);
-    public CredentialsDTO fetchCredentials(String email);
-    public boolean checkExistingEmail(String email);
+//    public CredentialsDTO fetchCredentials(String email);
+//    public boolean checkExistingEmail(String email);
 }

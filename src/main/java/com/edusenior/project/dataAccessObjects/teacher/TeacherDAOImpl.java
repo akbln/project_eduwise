@@ -35,7 +35,7 @@ public class TeacherDAOImpl implements TeacherDAO {
     @Override
     public CredentialsDTO fetchCredentials(String email) {
         List<CredentialsDTO> results = em.createQuery("SELECT new com.edusenior.project.dataTransferObjects.CredentialsDTO(t.email, t.hash, t.lockout, t.failed)" +
-                        "FROM Teacher t WHERE s.email = :email", CredentialsDTO.class)
+                        "FROM Teacher t WHERE t.email = :email", CredentialsDTO.class)
                 .setParameter("email", email)
                 .getResultList();
         return results.isEmpty() ? null : results.getFirst();
