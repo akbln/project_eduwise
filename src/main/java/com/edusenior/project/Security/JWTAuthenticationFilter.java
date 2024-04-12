@@ -36,8 +36,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         this.pathMatcher= new AntPathMatcher();
         this.SKIP_URLS = new ArrayList<>(Arrays.asList(new String[]{
                 "/login",
-                "/students/register",
-                "/teachers/register"
+                "/**/register"
         }));
     }
 
