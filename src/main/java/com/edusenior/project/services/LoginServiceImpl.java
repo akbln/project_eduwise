@@ -1,8 +1,6 @@
 package com.edusenior.project.services;
 
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
-import com.edusenior.project.dataAccessObjects.student.StudentDAO;
-import com.edusenior.project.dataAccessObjects.teacher.TeacherDAO;
 import com.edusenior.project.dataTransferObjects.JwtDTO;
 import com.edusenior.project.dataTransferObjects.LoginDTO;
 import com.edusenior.project.entities.Credentials;
