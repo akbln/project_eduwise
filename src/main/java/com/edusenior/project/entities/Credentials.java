@@ -78,4 +78,12 @@ public class Credentials {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getId() {
+        return id;
+    }
+    public int addToFailed(){
+        failed++;
+        return failed;
+    }
 }

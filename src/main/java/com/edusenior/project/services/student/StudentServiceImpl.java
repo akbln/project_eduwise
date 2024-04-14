@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
         c.setHash(encoder.passwordEncoder().encode(sDTO.getPassword()));
         c.setUser(s);
 
-        credentialsDAO.createUser(c);
+        credentialsDAO.persistChange(c);
         ServerResponse response = new ServerResponse("success",new ArrayList<>());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

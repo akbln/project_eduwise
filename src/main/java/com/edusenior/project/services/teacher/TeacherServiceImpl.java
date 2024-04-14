@@ -1,7 +1,6 @@
 package com.edusenior.project.services.teacher;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
-import com.edusenior.project.Mappings.StudentMapper;
 import com.edusenior.project.Mappings.TeacherMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
 import com.edusenior.project.Utility.ServerResponse;
@@ -9,7 +8,6 @@ import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
 import com.edusenior.project.dataAccessObjects.teacher.TeacherDAO;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
 import com.edusenior.project.entities.Credentials;
-import com.edusenior.project.entities.Student;
 import com.edusenior.project.entities.Teacher;
 import jakarta.transaction.Transactional;
 import org.mapstruct.factory.Mappers;
@@ -47,7 +45,7 @@ public class TeacherServiceImpl implements TeacherService{
         c.setHash(encoder.passwordEncoder().encode(tDTO.getPassword()));
         c.setUser(t);
 
-        credentialsDAO.createUser(c);
+        credentialsDAO.persistChange(c);
         ServerResponse response = new ServerResponse("success",new ArrayList<>());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

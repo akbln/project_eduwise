@@ -50,7 +50,8 @@ public class CredentialsDAOImpl implements CredentialsDAO{
         }
     }
     @Override
-    public void createUser(Credentials credentials){
+    public void persistChange(Credentials credentials){
         em.persist(credentials);
     }
+
 }

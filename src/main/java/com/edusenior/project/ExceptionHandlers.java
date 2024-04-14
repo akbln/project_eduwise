@@ -33,7 +33,7 @@ public class ExceptionHandlers {
     @ExceptionHandler(LoginException.class)
     public ResponseEntity<ServerResponse> handleLoginException(LoginException ex) {
         ArrayList<String> errors = new ArrayList<>();
-        errors.add("Invalid credentials");
+        errors.add(ex.getMessage());
         ServerResponse error = new ServerResponse("failed",errors);
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }

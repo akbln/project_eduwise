@@ -6,5 +6,5 @@ public interface CredentialsDAO {
     public String getUserIdByEmail(String email);
     public boolean checkIfEmailExists(String email);
     public Credentials getByEmail(String email);
-    public void createUser(Credentials credential);
+    public void persistChange(Credentials credential);
 }
