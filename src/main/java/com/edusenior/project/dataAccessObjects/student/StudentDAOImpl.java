@@ -33,26 +33,15 @@ public class StudentDAOImpl implements StudentDAO{
                 .setParameter("email", email)
                 .getSingleResult();
     }
-    @Override
-    public CredentialsDTO fetchCredentials(String email) {
-        List<CredentialsDTO> results = em.createQuery("SELECT new com.edusenior.project.dataTransferObjects.CredentialsDTO(s.email, s.hash, s.lockout, s.failed)" +
-                                "FROM Student s WHERE s.email = :email", CredentialsDTO.class)
-                .setParameter("email", email)
-                .getResultList();
-        return results.isEmpty() ? null : results.getFirst();
-    }
+//    @Override
+//    public CredentialsDTO fetchCredentials(String email) {
+//        List<CredentialsDTO> results = em.createQuery("SELECT new com.edusenior.project.dataTransferObjects.CredentialsDTO(s.email, s.hash, s.lockout, s.failed)" +
+//                                "FROM Student s WHERE s.email = :email", CredentialsDTO.class)
+//                .setParameter("email", email)
+//                .getResultList();
+//        return results.isEmpty() ? null : results.getFirst();
+//    }
 
-    @Override
-    public boolean checkExistingEmail(String email) {
-        try {
-            final String queryStr = "SELECT s.email FROM Student s WHERE s.email = :email";
-            em.createQuery(queryStr)
-                    .setParameter("email", email)
-                    .getSingleResult();
-            return true;
-        } catch (NoResultException e) {
-            return false;
-        }
-    }
+
 
 }

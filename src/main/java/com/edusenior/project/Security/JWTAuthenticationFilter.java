@@ -20,7 +20,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -35,8 +34,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         this.jwtManager = jwtManager;
         this.pathMatcher= new AntPathMatcher();
         this.SKIP_URLS = new ArrayList<>(Arrays.asList(new String[]{
+                "/**/register",
                 "/login",
-                "/**/register"
         }));
     }
 
@@ -60,7 +59,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     email, null, List.of(new SimpleGrantedAuthority("ROLE_"+role)));
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request, response);
-        } catch (BadAuthorizationException ex) {
+        }
+        catch (BadAuthorizationException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Invalid JWT\"]}");
             response.setContentType("application/json");
@@ -69,6 +69,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         catch (JwtException ex){
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Bad JWT\"]}");
+            response.setContentType("application/json");
+            response.getWriter().flush();
+        }
+        catch (Exception ex){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Bad Request\"]}");
             response.setContentType("application/json");
             response.getWriter().flush();
         }

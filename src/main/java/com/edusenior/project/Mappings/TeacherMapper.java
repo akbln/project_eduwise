@@ -17,6 +17,5 @@ public interface TeacherMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "age", target = "age")
     @Mapping(source = "gender", target = "gender")
-    @Mapping(source = "email", target = "email")
     Teacher newTeacherDtoToTeacher(NewTeacherDTO tDTO);
 }

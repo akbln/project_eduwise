@@ -6,8 +6,16 @@ import org.hibernate.annotations.GenericGenerator;
 import java.sql.Blob;
 import java.sql.Timestamp;
 
-@MappedSuperclass
+@Table(name = "users")
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "user_id", nullable = false,updatable = false)
+    private String id;
 
     @Column(length = 100,nullable = false,updatable = false)
     private String name;
@@ -22,28 +30,8 @@ public class User {
     @Column(name = "profile_picture")
     private Blob profilePicture;
 
-    @Column(name = "email", unique = true, nullable = false)
-    private String email;
-
-    @Column(name = "password_hash", nullable = false)
-    private String hash;
-
-    @Column(name = "failed_login_attempts")
-    private int failed;
-
-    @Column (name = "locked_out_till")
-    private Timestamp lockout;
 
     public User() {
-        lockout = new Timestamp(System.currentTimeMillis()-1);
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {
@@ -78,27 +66,4 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public int getFailed() {
-        return failed;
-    }
-
-    public void setFailed(int failed) {
-        this.failed = failed;
-    }
-
-    public Timestamp getLockout() {
-        return lockout;
-    }
-
-    public void setLockout(Timestamp lockout) {
-        this.lockout = lockout;
-    }
 }

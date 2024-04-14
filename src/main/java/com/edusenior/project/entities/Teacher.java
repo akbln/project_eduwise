@@ -4,14 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "teacher_table", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})},schema = "edusenior")
+@Table(name = "teachers",schema = "edusenior")
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Teacher extends User{
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "teacher_id", nullable = false,updatable = false)
-    private String id;
-
 
     public Teacher(){
         super();
@@ -21,9 +16,6 @@ public class Teacher extends User{
     @Column(name = "role",length = 50,nullable = false,updatable = true)
     private String role;
 
-    public String getId() {
-        return id;
-    }
 
     public String getRole() {
         return role;
@@ -32,4 +24,5 @@ public class Teacher extends User{
     public void setRole(String role) {
         this.role = role;
     }
+
 }

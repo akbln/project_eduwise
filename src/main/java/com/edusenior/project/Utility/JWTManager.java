@@ -25,10 +25,10 @@ public class JWTManager {
         this.secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
     }
 
-    public String generateToken(String email, String role) {
+    public String generateToken(String userId, String role) {
         long currentTime = System.currentTimeMillis();
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userId)
                 .claim("role", role) // Adding a custom claim for the role
                 .setIssuedAt(new Date(currentTime))
                 .setExpiration(new Date(currentTime+604800))

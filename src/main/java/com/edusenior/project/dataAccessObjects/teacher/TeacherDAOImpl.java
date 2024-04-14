@@ -32,24 +32,13 @@ public class TeacherDAOImpl implements TeacherDAO {
     public void createTeacher(Teacher t) {
         em.persist(t);
     }
-    @Override
-    public CredentialsDTO fetchCredentials(String email) {
-        List<CredentialsDTO> results = em.createQuery("SELECT new com.edusenior.project.dataTransferObjects.CredentialsDTO(t.email, t.hash, t.lockout, t.failed)" +
-                        "FROM Teacher t WHERE t.email = :email", CredentialsDTO.class)
-                .setParameter("email", email)
-                .getResultList();
-        return results.isEmpty() ? null : results.getFirst();
-    }
-    @Override
-    public boolean checkExistingEmail(String email) {
-        try {
-            final String queryStr = "SELECT t.email FROM Teacher t WHERE t.email = :email";
-            em.createQuery(queryStr)
-                    .setParameter("email", email)
-                    .getSingleResult();
-            return true;
-        } catch (NoResultException e) {
-            return false;
-        }
-    }
+//    @Override
+//    public CredentialsDTO fetchCredentials(String email) {
+//        List<CredentialsDTO> results = em.createQuery("SELECT new com.edusenior.project.dataTransferObjects.CredentialsDTO(t.email, t.hash, t.lockout, t.failed)" +
+//                        "FROM Teacher t WHERE t.email = :email", CredentialsDTO.class)
+//                .setParameter("email", email)
+//                .getResultList();
+//        return results.isEmpty() ? null : results.getFirst();
+//    }
+
 }

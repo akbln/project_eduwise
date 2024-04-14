@@ -4,9 +4,11 @@ import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Mappings.StudentMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
 import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
 import com.edusenior.project.dataAccessObjects.student.StudentDAO;
 import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
+import com.edusenior.project.entities.Credentials;
 import com.edusenior.project.entities.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,14 @@ import java.util.ArrayList;
 public class StudentServiceImpl implements StudentService {
     private StudentDAO studentDAO;
     private BcryptPasswordEncoder encoder;
+    private CredentialsDAO credentialsDAO;
 
 
     @Autowired
-    public StudentServiceImpl(StudentDAO studentDAO,BcryptPasswordEncoder encoder) {
+    public StudentServiceImpl(StudentDAO studentDAO,BcryptPasswordEncoder encoder,CredentialsDAO credentialsDAO) {
         this.studentDAO = studentDAO;
         this.encoder = encoder;
+        this.credentialsDAO = credentialsDAO;
     }
 
     @Override
@@ -42,14 +46,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public ResponseEntity<ServerResponse> registerStudent(NewStudentDTO sDTO) throws DuplicateEntryException {
-        if (studentDAO.checkExistingEmail(sDTO.getEmail())){
+        if (credentialsDAO.checkIfEmailExists(sDTO.getEmail())){
             throw new DuplicateEntryException("Email already in use");
         }
         Student s = new Student();
         s = Mappers.getMapper(StudentMapper.class).newStudentDtoToStudent(sDTO);
-        s.setHash(encoder.passwordEncoder().encode(sDTO.getPassword()));
 
-        studentDAO.createStudent(s);
+        Credentials c = new Credentials(true);
+        c.setEmail(sDTO.getEmail());
+        c.setHash(encoder.passwordEncoder().encode(sDTO.getPassword()));
+        c.setUser(s);
+
+        credentialsDAO.createUser(c);
         ServerResponse response = new ServerResponse("success",new ArrayList<>());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
