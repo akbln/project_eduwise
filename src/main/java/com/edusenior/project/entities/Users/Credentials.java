@@ -1,4 +1,4 @@
-package com.edusenior.project.entities;
+package com.edusenior.project.entities.Users;
 
 import jakarta.persistence.*;
 
@@ -24,6 +24,9 @@ public class Credentials {
 
     @Column (name = "locked_out_till")
     private Timestamp lockout;
+
+    @Column(name = "role")
+    private String role;
     
     public Credentials(boolean setDefaultLockout) {
         if(setDefaultLockout){
@@ -85,5 +88,13 @@ public class Credentials {
     public int addToFailed(){
         failed++;
         return failed;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

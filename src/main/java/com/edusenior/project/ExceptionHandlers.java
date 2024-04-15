@@ -1,6 +1,7 @@
 package com.edusenior.project;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
+import com.edusenior.project.Exceptions.EmailNotFoundException;
 import com.edusenior.project.RestControllers.LoginController;
 import com.edusenior.project.RestControllers.Student.StudentCustomErrorResponse;
 import com.edusenior.project.Utility.ServerResponse;
@@ -38,10 +39,31 @@ public class ExceptionHandlers {
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
     @ExceptionHandler(DuplicateEntryException.class)
-    public ResponseEntity<ServerResponse> handleDuplicateEntryException(){
+    public ResponseEntity<ServerResponse> handleDuplicateEntryException(DuplicateEntryException ex){
         ArrayList<String> errors = new ArrayList<>();
         errors.add("Email already in use");
         ServerResponse error = new ServerResponse("failed",errors);
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(EmailNotFoundException.class)
+    public ResponseEntity<ServerResponse> handleEmailNotFoundException(EmailNotFoundException ex){
+        ArrayList<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        ServerResponse error = new ServerResponse("failed",errors);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+//    @ExceptionHandler(DuplicateEntryException.class)
+//    public ResponseEntity<ServerResponse> handleDuplicateEntryException(){
+//        ArrayList<String> errors = new ArrayList<>();
+//        errors.add("Email already in use");
+//        ServerResponse error = new ServerResponse("failed",errors);
+//        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+//    }
+//    @ExceptionHandler(DuplicateEntryException.class)
+//    public ResponseEntity<ServerResponse> handleDuplicateEntryException(){
+//        ArrayList<String> errors = new ArrayList<>();
+//        errors.add("Email already in use");
+//        ServerResponse error = new ServerResponse("failed",errors);
+//        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+//    }
 }

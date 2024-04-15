@@ -72,11 +72,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             response.setContentType("application/json");
             response.getWriter().flush();
         }
-        catch (Exception ex){
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Bad Request\"]}");
-            response.setContentType("application/json");
-            response.getWriter().flush();
-        }
+//        catch (Exception ex){
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Bad Request\"]}");
+//            response.setContentType("application/json");
+//            response.getWriter().flush();
+//        }
     }
 }

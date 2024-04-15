@@ -1,6 +1,6 @@
 package com.edusenior.project.dataAccessObjects.credentials;
 
-import com.edusenior.project.entities.Credentials;
+import com.edusenior.project.entities.Users.Credentials;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +52,15 @@ public class CredentialsDAOImpl implements CredentialsDAO{
     @Override
     public void persistChange(Credentials credentials){
         em.persist(credentials);
+    }
+    public String getRoleByEmail(String email){
+        try{
+            return em.createQuery("SELECT c.role FROM Credentials c WHERE c.email = :email",String.class)
+                    .setParameter("email",email)
+                    .getSingleResult();
+        }catch (NoResultException ex){
+            return null;
+        }
     }
 
 }

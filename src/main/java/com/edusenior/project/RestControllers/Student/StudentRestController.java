@@ -1,12 +1,10 @@
 package com.edusenior.project.RestControllers.Student;
 
 import com.edusenior.project.Utility.ServerResponse;
-import com.edusenior.project.dataAccessObjects.student.StudentDAO;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
-import com.edusenior.project.entities.Student;
+import com.edusenior.project.entities.Users.Student;
 import com.edusenior.project.services.student.StudentServiceImpl;
 import jakarta.validation.Valid;
-import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

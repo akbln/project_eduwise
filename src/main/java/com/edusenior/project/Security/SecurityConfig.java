@@ -24,15 +24,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        //NOT NEEDED CUSTOM JWT FILTER BEING USED
-
-//        http.authorizeHttpRequests(auth -> auth.
-//                requestMatchers(HttpMethod.POST,"/login").permitAll().
-//                requestMatchers("/students/register").permitAll().
-//                requestMatchers("/teachers/register").permitAll());
-//
-//        http.httpBasic(Customizer.withDefaults());
+        http.authorizeHttpRequests(
+                auth -> auth.requestMatchers(HttpMethod.POST,"/login").permitAll()
+                        .requestMatchers("/students/register").permitAll()
+                        .requestMatchers("/teachers/register").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"/classes/updateTeacher").hasAuthority("ROLE_teacherAdmin")
+                        .anyRequest().authenticated());
         http.csrf(CsrfConfigurer::disable);
         return http.build();
     }

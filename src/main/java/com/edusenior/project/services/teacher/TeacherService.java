@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface TeacherService {
     public ResponseEntity<ServerResponse> registerTeacher(NewTeacherDTO tDTO);
+
 }

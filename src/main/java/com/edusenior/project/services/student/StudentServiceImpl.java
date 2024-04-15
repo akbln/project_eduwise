@@ -8,8 +8,8 @@ import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
 import com.edusenior.project.dataAccessObjects.student.StudentDAO;
 import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
-import com.edusenior.project.entities.Credentials;
-import com.edusenior.project.entities.Student;
+import com.edusenior.project.entities.Users.Credentials;
+import com.edusenior.project.entities.Users.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,6 +55,7 @@ public class StudentServiceImpl implements StudentService {
         Credentials c = new Credentials(true);
         c.setEmail(sDTO.getEmail());
         c.setHash(encoder.passwordEncoder().encode(sDTO.getPassword()));
+        c.setRole("teacher");
         c.setUser(s);
 
         credentialsDAO.persistChange(c);

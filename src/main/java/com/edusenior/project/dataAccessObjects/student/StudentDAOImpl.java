@@ -1,13 +1,9 @@
 package com.edusenior.project.dataAccessObjects.student;
 
-import com.edusenior.project.dataTransferObjects.CredentialsDTO;
-import com.edusenior.project.entities.Student;
+import com.edusenior.project.entities.Users.Student;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO{

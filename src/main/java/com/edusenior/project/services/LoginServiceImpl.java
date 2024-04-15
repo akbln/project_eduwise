@@ -3,7 +3,7 @@ package com.edusenior.project.services;
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
 import com.edusenior.project.dataTransferObjects.JwtDTO;
 import com.edusenior.project.dataTransferObjects.LoginDTO;
-import com.edusenior.project.entities.Credentials;
+import com.edusenior.project.entities.Users.Credentials;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +32,6 @@ public class LoginServiceImpl implements LoginService {
     @Transactional
     public JwtDTO login(LoginDTO loginDTO) throws LoginException {
         final String email = loginDTO.getEmail();
-        String role = loginDTO.getRole();
-
-        if (!role.equals("teacher") && !role.equals("student")) {
-            throw new LoginException("Invalid role");
-        }
 
         Credentials credentials = credentialsDAO.getByEmail(email);
         if (credentials == null){
@@ -53,9 +48,9 @@ public class LoginServiceImpl implements LoginService {
         }
 
         final String id = credentials.getId();
-        return new JwtDTO(jwtManager.generateToken(id, role));
+        final String userRole = credentials.getRole();
+        return new JwtDTO(jwtManager.generateToken(id, userRole));
     }
-
     private void resetFailedAttempts(Credentials credentials) {
         credentials.setFailed(0);
         credentialsDAO.persistChange(credentials);

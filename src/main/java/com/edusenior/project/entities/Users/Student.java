@@ -1,11 +1,6 @@
-package com.edusenior.project.entities;
+package com.edusenior.project.entities.Users;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.sql.Blob;
-import java.sql.Timestamp;
-import java.util.UUID;
 
 @Entity
 @Table(name = "students", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})

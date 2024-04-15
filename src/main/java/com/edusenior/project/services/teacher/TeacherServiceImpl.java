@@ -7,8 +7,8 @@ import com.edusenior.project.Utility.ServerResponse;
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
 import com.edusenior.project.dataAccessObjects.teacher.TeacherDAO;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
-import com.edusenior.project.entities.Credentials;
-import com.edusenior.project.entities.Teacher;
+import com.edusenior.project.entities.Users.Credentials;
+import com.edusenior.project.entities.Users.Teacher;
 import jakarta.transaction.Transactional;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +43,7 @@ public class TeacherServiceImpl implements TeacherService{
         Credentials c = new Credentials(true);
         c.setEmail(tDTO.getEmail());
         c.setHash(encoder.passwordEncoder().encode(tDTO.getPassword()));
+        c.setRole("teacher");
         c.setUser(t);
 
         credentialsDAO.persistChange(c);

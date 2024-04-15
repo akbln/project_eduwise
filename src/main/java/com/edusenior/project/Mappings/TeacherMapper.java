@@ -1,10 +1,8 @@
 package com.edusenior.project.Mappings;
 
-import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
-import com.edusenior.project.entities.Student;
 
-import com.edusenior.project.entities.Teacher;
+import com.edusenior.project.entities.Users.Teacher;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

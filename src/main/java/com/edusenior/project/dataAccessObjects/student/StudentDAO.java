@@ -2,8 +2,7 @@ package com.edusenior.project.dataAccessObjects.student;
 
 
 import com.edusenior.project.dataAccessObjects.UserDAO;
-import com.edusenior.project.dataTransferObjects.CredentialsDTO;
-import com.edusenior.project.entities.Student;
+import com.edusenior.project.entities.Users.Student;
 
 public interface StudentDAO extends UserDAO {
     public Student fetchStudent(String id);

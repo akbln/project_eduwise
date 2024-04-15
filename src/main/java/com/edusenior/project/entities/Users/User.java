@@ -1,10 +1,9 @@
-package com.edusenior.project.entities;
+package com.edusenior.project.entities.Users;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Blob;
-import java.sql.Timestamp;
 
 @Table(name = "users")
 @Entity
