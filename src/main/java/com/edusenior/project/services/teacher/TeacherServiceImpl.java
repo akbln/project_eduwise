@@ -38,7 +38,7 @@ public class TeacherServiceImpl implements TeacherService{
             throw new DuplicateEntryException("Email already in use");
         }
         Teacher t = new Teacher();
-        t = Mappers.getMapper(TeacherMapper.class).newTeacherDtoToTeacher(tDTO);
+        t = TeacherMapper.INSTANCE.newTeacherDtoToTeacher(tDTO);
 
         Credentials c = new Credentials(true);
         c.setEmail(tDTO.getEmail());

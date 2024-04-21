@@ -24,4 +24,5 @@ public class SchoolClassDAOImpl implements SchoolClassDAO {
     public void persistClass(SchoolClass c) {
         em.persist(c);
     }
+
 }

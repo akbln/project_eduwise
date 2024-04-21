@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface TeacherMapper {
 
-    StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
+    TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "age", target = "age")

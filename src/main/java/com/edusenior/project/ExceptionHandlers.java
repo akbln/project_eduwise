@@ -41,7 +41,7 @@ public class ExceptionHandlers {
     @ExceptionHandler(DuplicateEntryException.class)
     public ResponseEntity<ServerResponse> handleDuplicateEntryException(DuplicateEntryException ex){
         ArrayList<String> errors = new ArrayList<>();
-        errors.add("Email already in use");
+        errors.add(ex.getMessage());
         ServerResponse error = new ServerResponse("failed",errors);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
             throw new DuplicateEntryException("Email already in use");
         }
         Student s = new Student();
-        s = Mappers.getMapper(StudentMapper.class).newStudentDtoToStudent(sDTO);
+        s = StudentMapper.INSTANCE.newStudentDtoToStudent(sDTO);
 
         Credentials c = new Credentials(true);
         c.setEmail(sDTO.getEmail());

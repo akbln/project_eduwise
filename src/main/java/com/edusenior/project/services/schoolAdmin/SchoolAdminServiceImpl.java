@@ -1,7 +1,7 @@
 package com.edusenior.project.services.schoolAdmin;
 
 import com.edusenior.project.Exceptions.EmailNotFoundException;
-import com.edusenior.project.Exceptions.SchoolClassNotFoundException;
+import com.edusenior.project.Exceptions.NotFound.SchoolClassNotFoundException;
 import com.edusenior.project.Utility.ServerResponse;
 import com.edusenior.project.dataAccessObjects.classes.SchoolClassDAO;
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;

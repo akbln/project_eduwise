@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/students/register").permitAll()
                         .requestMatchers("/teachers/register").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/classes/updateTeacher").hasAuthority("ROLE_teacherAdmin")
+                        .requestMatchers(HttpMethod.PUT,"/courses/add").hasAuthority("ROLE_teacherAdmin")
                         .anyRequest().authenticated());
         http.csrf(CsrfConfigurer::disable);
         return http.build();
