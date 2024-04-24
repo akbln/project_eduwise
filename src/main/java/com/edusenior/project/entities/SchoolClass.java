@@ -1,9 +1,13 @@
 package com.edusenior.project.entities;
 
 import com.edusenior.project.Exceptions.InvalidOperationException;
+import com.edusenior.project.entities.Users.Student;
 import com.edusenior.project.entities.Users.Teacher;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "classes")
@@ -25,6 +29,14 @@ public class SchoolClass {
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "classes_students_junction",
+            joinColumns=@JoinColumn(name = "class_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> enrolledStudents;
 
     @Column(name = "number_of_students")
     private int numberOfStudents;
@@ -58,6 +70,9 @@ public class SchoolClass {
     public void setCourse(Course course) {
         this.course = course;
     }
+    public List<Student> getEnrolledStudents() {
+        return enrolledStudents;
+    }
 
     // Methods
     // Too slow
@@ -73,4 +88,10 @@ public class SchoolClass {
         }
         return --numberOfStudents;
     };
+    public void addMultipleStudents(List<Student> students){
+        if(enrolledStudents == null){
+            enrolledStudents = new ArrayList<>();
+        }
+        enrolledStudents.addAll(students);
+    }
 }

@@ -1,6 +1,6 @@
 package com.edusenior.project.services;
 
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
+import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
 import com.edusenior.project.dataTransferObjects.JwtDTO;
 import com.edusenior.project.dataTransferObjects.LoginDTO;
 import com.edusenior.project.entities.Users.Credentials;
@@ -21,19 +21,19 @@ public class LoginServiceImpl implements LoginService {
 
     private BcryptPasswordEncoder encoder;
     private JWTManager jwtManager;
-    private CredentialsDAO credentialsDAO;
+    private CredentialsJpaRepository credentialsJpaRepository;
 
     @Autowired
-    public LoginServiceImpl(JWTManager jwtManager, BcryptPasswordEncoder encoder,CredentialsDAO credentialsDAO) {
+    public LoginServiceImpl(JWTManager jwtManager, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
         this.jwtManager = jwtManager;
         this.encoder = encoder;
-        this.credentialsDAO = credentialsDAO;
+        this.credentialsJpaRepository = credentialsJpaRepository;
     }
     @Transactional
     public JwtDTO login(LoginDTO loginDTO) throws LoginException {
         final String email = loginDTO.getEmail();
 
-        Credentials credentials = credentialsDAO.getByEmail(email);
+        Credentials credentials = credentialsJpaRepository.findByEmail(email);
         if (credentials == null){
             throw new LoginException("Invalid credentials");
         }
@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService {
     }
     private void resetFailedAttempts(Credentials credentials) {
         credentials.setFailed(0);
-        credentialsDAO.persistChange(credentials);
+        credentialsJpaRepository.save(credentials);
     }
     private boolean validatePasswordAndUpdateFailures(Credentials credentials, LoginDTO loginDTO)  {
         if (!(encoder.passwordEncoder().matches(loginDTO.getPassword(), credentials.getHash()))) {
@@ -62,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
                 credentials.setFailed(0);
                 credentials.setLockout(new Timestamp(System.currentTimeMillis() + timeoutInterval));
             }
-            credentialsDAO.persistChange(credentials);
+            credentialsJpaRepository.save(credentials);
             return false;
         }
         return true;

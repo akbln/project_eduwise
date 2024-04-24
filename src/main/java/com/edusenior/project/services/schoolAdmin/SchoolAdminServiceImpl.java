@@ -1,14 +1,16 @@
 package com.edusenior.project.services.schoolAdmin;
 
+
 import com.edusenior.project.Exceptions.EmailNotFoundException;
-import com.edusenior.project.Exceptions.NotFound.SchoolClassNotFoundException;
 import com.edusenior.project.Utility.ServerResponse;
-import com.edusenior.project.dataAccessObjects.classes.SchoolClassDAO;
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
-import com.edusenior.project.dataAccessObjects.teacher.TeacherDAO;
+import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
+import com.edusenior.project.dataAccessObjects.teacher.TeacherJpaDAO;
+import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
+import com.edusenior.project.dataTransferObjects.CourseDTO;
 import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
-import com.edusenior.project.entities.SchoolClass;
 import com.edusenior.project.entities.Users.Teacher;
+import com.edusenior.project.services.SchoolClass.SchoolClassService;
+import com.edusenior.project.services.course.CourseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,53 +18,72 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class SchoolAdminServiceImpl implements SchoolAdminService{
 
-    private CredentialsDAO credentialsDAO;
-    private SchoolClassDAO schoolClassDAO;
-    private TeacherDAO teacherDAO;
-
+    private CredentialsJpaRepository credentialsJpaRepository;
+    private CourseService courseService;
+    private SchoolClassService schoolClassService;
+    private TeacherJpaDAO teacherJpaDAO;
 
     @Autowired
-    public SchoolAdminServiceImpl(CredentialsDAO credentialsDAO, SchoolClassDAO schoolClassDAO,TeacherDAO teacherDAO) {
-        this.credentialsDAO = credentialsDAO;
-        this.schoolClassDAO = schoolClassDAO;
-        this.teacherDAO = teacherDAO;
+    public SchoolAdminServiceImpl(CredentialsJpaRepository credentialsJpaRepository, CourseService courseService,
+                                  SchoolClassService schoolClassService, TeacherJpaDAO teacherJpaDAO) {
+        this.credentialsJpaRepository = credentialsJpaRepository;
+        this.courseService = courseService;
+        this.schoolClassService = schoolClassService;
+        this.teacherJpaDAO = teacherJpaDAO;
     }
-
-
-
 
     @Override
     @Transactional
-    public ResponseEntity<ServerResponse> setTeacherForClass(SetTeacherForClassDTO newInfo) {
-        final String email = newInfo.getEmail();
-        String teacherId = getTeacherId(email);
+    public ResponseEntity<ServerResponse> addClassToCourse(AddClassToCourseDTO cDTO){
+        return courseService.addClassToCourse(cDTO);
+    }
 
-        if(teacherId == null){
-            throw new EmailNotFoundException("Could not find teacher with the email specified");
-        }
+    @Override
+    @Transactional
+    public ResponseEntity<ServerResponse> createCourse(CourseDTO cDTO){
+        return courseService.createCourse(cDTO);
+    }
+
+
+    @Override
+    public ResponseEntity<ServerResponse> setTeacherForClass(SetTeacherForClassDTO newTeacherInfo) {
+        final String email = newTeacherInfo.getEmail();
+        final String teacherId = getTeacherId(email);
         final String role = getRoleByEmail(email);
-        if(!"teacher".equals(role)){
+
+        Optional<Teacher> teacherOptional = teacherJpaDAO.findById(teacherId);
+        if(teacherOptional.isEmpty()){
             throw new EmailNotFoundException("Could not find teacher with the email specified");
         }
-        SchoolClass sc = schoolClassDAO.getClassById(newInfo.getClassId());
-        if (sc == null){
-            throw new SchoolClassNotFoundException("Could not find requested class");
+        Teacher t = teacherOptional.get();
+
+
+        try{
+            return schoolClassService.setTeacherForClass(newTeacherInfo,t);
+        }catch (Exception ex){
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add(ex.getMessage());
+            return new ResponseEntity<ServerResponse>(new ServerResponse("failed",errors),HttpStatus.BAD_REQUEST);
         }
-        Teacher t = teacherDAO.fetchTeacherById(teacherId);
-        sc.setTeacher(t);
-        t.addClass(sc);
-        schoolClassDAO.persistClass(sc);
-        return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
     }
 
     private String getTeacherId(String email){
-        return credentialsDAO.getUserIdByEmail(email);
+        String teacherId = credentialsJpaRepository.findUserIdByEmail(email);
+        if(teacherId == null){
+            throw new EmailNotFoundException("Could not find teacher with the email specified");
+        }
+        return teacherId;
     }
     private String getRoleByEmail(String email){
-        return credentialsDAO.getRoleByEmail(email);
+        final String role = credentialsJpaRepository.getRoleByEmail(email);
+        if(!"teacher".equals(role)){
+            throw new EmailNotFoundException("Could not find teacher with the email specified");
+        }
+        return role;
     }
 }

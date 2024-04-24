@@ -3,12 +3,12 @@ package com.edusenior.project.dataAccessObjects.student;
 
 import com.edusenior.project.dataAccessObjects.UserDAO;
 import com.edusenior.project.entities.Users.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StudentDAO extends UserDAO {
-    public Student fetchStudent(String id);
-    public Student fetchStudentByEmail(String email);
-    public void createStudent(Student s);
-//    public CredentialsDTO fetchCredentials(String email);
-//    public boolean checkExistingEmail(String email);
+import java.util.ArrayList;
+import java.util.List;
 
+public interface StudentDAO extends JpaRepository<Student,String> {
+    public Student findByEmail(String email);
+    List<Student> findAllById(List<String> studentIds);
 }

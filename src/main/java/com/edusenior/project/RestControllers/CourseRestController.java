@@ -16,16 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/courses")
 public class CourseRestController {
 
-    private CourseService courseService;
 
-    @Autowired
-    public CourseRestController(CourseService courseService) {
-        this.courseService = courseService;
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity<ServerResponse> addCourse(@Valid @RequestBody CourseDTO cDTO){
-        return courseService.addCourse(cDTO);
-    }
 
 }

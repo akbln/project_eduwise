@@ -12,6 +12,7 @@ import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
 import com.edusenior.project.dataTransferObjects.CourseDTO;
 import com.edusenior.project.entities.Course;
 import com.edusenior.project.entities.SchoolClass;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -34,8 +35,9 @@ public class CourseServiceImpl implements CourseService{
         this.schoolClassJpaDAO = schoolClassJpaDAO;
     }
 
+    @Transactional
     @Override
-    public ResponseEntity<ServerResponse> addCourse(CourseDTO cDTO) throws DuplicateEntryException{
+    public ResponseEntity<ServerResponse> createCourse(CourseDTO cDTO) throws DuplicateEntryException{
         Course c = CourseMapping.INSTANCE.courseDTOToCourse(cDTO);
         try{
             courseJpaDAO.save(c);
@@ -46,6 +48,9 @@ public class CourseServiceImpl implements CourseService{
         }
 
     }
+
+    @Override
+    @Transactional
     public ResponseEntity<ServerResponse> addClassToCourse(AddClassToCourseDTO cDTO) throws SchoolClassNotFoundException,CourseNotFoundException,AdditionOfClassToCourseException{
         Course course = courseExistsById(cDTO.getCourseId());
         SchoolClass schoolClass = schoolClassExistsById(cDTO.getClassId());

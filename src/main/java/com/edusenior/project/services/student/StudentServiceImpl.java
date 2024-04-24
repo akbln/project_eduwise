@@ -4,7 +4,7 @@ import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Mappings.StudentMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
 import com.edusenior.project.Utility.ServerResponse;
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
+import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
 import com.edusenior.project.dataAccessObjects.student.StudentDAO;
 import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 
@@ -24,19 +23,19 @@ import java.util.ArrayList;
 public class StudentServiceImpl implements StudentService {
     private StudentDAO studentDAO;
     private BcryptPasswordEncoder encoder;
-    private CredentialsDAO credentialsDAO;
+    private CredentialsJpaRepository credentialsJpaRepository;
 
 
     @Autowired
-    public StudentServiceImpl(StudentDAO studentDAO,BcryptPasswordEncoder encoder,CredentialsDAO credentialsDAO) {
+    public StudentServiceImpl(StudentDAO studentDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
         this.studentDAO = studentDAO;
         this.encoder = encoder;
-        this.credentialsDAO = credentialsDAO;
+        this.credentialsJpaRepository = credentialsJpaRepository;
     }
 
     @Override
     public Student fetchStudent(String id){
-        Student s = studentDAO.fetchStudent(id);
+        Student s = studentDAO.findById(id);
         if(s == null){
             throw new StudentNotFoundException("Student Not Found");
         }
@@ -46,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public ResponseEntity<ServerResponse> registerStudent(NewStudentDTO sDTO) throws DuplicateEntryException {
-        if (credentialsDAO.checkIfEmailExists(sDTO.getEmail())){
+        if (credentialsJpaRepository.existsByEmail(sDTO.getEmail())){
             throw new DuplicateEntryException("Email already in use");
         }
         Student s = new Student();
@@ -58,13 +57,13 @@ public class StudentServiceImpl implements StudentService {
         c.setRole("teacher");
         c.setUser(s);
 
-        credentialsDAO.persistChange(c);
+        credentialsJpaRepository.save(c);
         ServerResponse response = new ServerResponse("success",new ArrayList<>());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public Student fetchStudentByEmail(String email){
-        Student s = studentDAO.fetchStudentByEmail(email);
+        Student s = studentDAO.findByEmail(email);
         if(s == null){
             throw new StudentNotFoundException("Student Not Found");
         }

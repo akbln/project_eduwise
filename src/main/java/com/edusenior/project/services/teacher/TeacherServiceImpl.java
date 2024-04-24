@@ -4,13 +4,12 @@ import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Mappings.TeacherMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
 import com.edusenior.project.Utility.ServerResponse;
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsDAO;
+import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
 import com.edusenior.project.dataAccessObjects.teacher.TeacherDAO;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
 import com.edusenior.project.entities.Users.Credentials;
 import com.edusenior.project.entities.Users.Teacher;
 import jakarta.transaction.Transactional;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +22,18 @@ public class TeacherServiceImpl implements TeacherService{
 
     private TeacherDAO teacherDAO;
     private BcryptPasswordEncoder encoder;
-    private CredentialsDAO credentialsDAO;
+    private CredentialsJpaRepository credentialsJpaRepository;
 
     @Autowired
-    public TeacherServiceImpl(TeacherDAO teacherDAO, BcryptPasswordEncoder encoder, CredentialsDAO credentialsDAO) {
+    public TeacherServiceImpl(TeacherDAO teacherDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
         this.teacherDAO = teacherDAO;
         this.encoder = encoder;
-        this.credentialsDAO = credentialsDAO;
+        this.credentialsJpaRepository = credentialsJpaRepository;
     }
 
     @Transactional
     public ResponseEntity<ServerResponse> registerTeacher(NewTeacherDTO tDTO) {
-        if (credentialsDAO.checkIfEmailExists(tDTO.getEmail())){
+        if (credentialsJpaRepository.existsByEmail(tDTO.getEmail())){
             throw new DuplicateEntryException("Email already in use");
         }
         Teacher t = new Teacher();
@@ -46,7 +45,7 @@ public class TeacherServiceImpl implements TeacherService{
         c.setRole("teacher");
         c.setUser(t);
 
-        credentialsDAO.persistChange(c);
+        credentialsJpaRepository.save(c);
         ServerResponse response = new ServerResponse("success",new ArrayList<>());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
