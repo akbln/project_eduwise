@@ -31,7 +31,7 @@ public class JWTManager {
                 .setSubject(userId)
                 .claim("role", role) // Adding a custom claim for the role
                 .setIssuedAt(new Date(currentTime))
-                .setExpiration(new Date(currentTime+604800))
+                .setExpiration(new Date(currentTime+60480000))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }

@@ -5,8 +5,8 @@ import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Exceptions.NotFound.CourseNotFoundException;
 import com.edusenior.project.Exceptions.NotFound.SchoolClassNotFoundException;
 import com.edusenior.project.Mappings.CourseMapping;
-import com.edusenior.project.Utility.ServerResponse;
-import com.edusenior.project.dataAccessObjects.classes.SchoolClassJpaDAO;
+import com.edusenior.project.ServerResponses.ServerResponse;
+import com.edusenior.project.dataAccessObjects.classes.SchoolClassJpaRepository;
 import com.edusenior.project.dataAccessObjects.courses.CourseJpaDAO;
 import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
 import com.edusenior.project.dataTransferObjects.CourseDTO;
@@ -27,12 +27,12 @@ import java.util.Optional;
 public class CourseServiceImpl implements CourseService{
 
     private CourseJpaDAO courseJpaDAO;
-    private SchoolClassJpaDAO schoolClassJpaDAO;
+    private SchoolClassJpaRepository schoolClassJpaRepository;
 
     @Autowired
-    public CourseServiceImpl(CourseJpaDAO c,SchoolClassJpaDAO schoolClassJpaDAO){
+    public CourseServiceImpl(CourseJpaDAO c,SchoolClassJpaRepository schoolClassJpaRepository){
         this.courseJpaDAO = c;
-        this.schoolClassJpaDAO = schoolClassJpaDAO;
+        this.schoolClassJpaRepository = schoolClassJpaRepository;
     }
 
     @Transactional
@@ -73,7 +73,7 @@ public class CourseServiceImpl implements CourseService{
         return courseOptional.get();
     }
     private SchoolClass schoolClassExistsById(String id) throws SchoolClassNotFoundException{
-        Optional<SchoolClass> schoolClassOptional = schoolClassJpaDAO.findById(id);
+        Optional<SchoolClass> schoolClassOptional = schoolClassJpaRepository.findById(id);
         if(schoolClassOptional.isEmpty()){
             throw new CourseNotFoundException("Invalid Course ID");
         }

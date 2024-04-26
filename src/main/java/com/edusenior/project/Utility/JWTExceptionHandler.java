@@ -1,7 +1,7 @@
 package com.edusenior.project.Utility;
 
 import com.edusenior.project.Exceptions.BadAuthorizationException;
-import com.edusenior.project.RestControllers.Student.StudentCustomErrorResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

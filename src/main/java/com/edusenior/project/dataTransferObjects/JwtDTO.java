@@ -1,6 +1,6 @@
 package com.edusenior.project.dataTransferObjects;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 
 import java.util.ArrayList;
 

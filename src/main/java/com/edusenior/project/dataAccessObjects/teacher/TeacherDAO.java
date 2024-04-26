@@ -1,9 +1,8 @@
 package com.edusenior.project.dataAccessObjects.teacher;
 
-import com.edusenior.project.dataAccessObjects.UserDAO;
 import com.edusenior.project.entities.Users.Teacher;
 
-public interface TeacherDAO extends UserDAO{
+public interface TeacherDAO {
     public Teacher fetchTeacherById(String id);
     public Teacher fetchTeacherByEmail(String email);
     public void createTeacher(Teacher t);

@@ -1,6 +1,6 @@
 package com.edusenior.project.services.student;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Users.Student;
 import org.springframework.http.ResponseEntity;

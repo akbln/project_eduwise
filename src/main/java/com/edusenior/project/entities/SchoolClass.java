@@ -92,6 +92,6 @@ public class SchoolClass {
         if(enrolledStudents == null){
             enrolledStudents = new ArrayList<>();
         }
-        enrolledStudents.addAll(students);
+        this.enrolledStudents.addAll(students);
     }
 }

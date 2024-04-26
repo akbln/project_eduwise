@@ -1,6 +1,7 @@
 package com.edusenior.project.services.SchoolClass;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.EmailsNotFoundResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToCourseDTO;
 import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
 import com.edusenior.project.entities.Users.Teacher;

@@ -1,4 +1,4 @@
-package com.edusenior.project.Utility;
+package com.edusenior.project.ServerResponses;
 
 import java.util.List;
 

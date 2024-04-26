@@ -3,9 +3,9 @@ package com.edusenior.project.services.student;
 import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Mappings.StudentMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
-import com.edusenior.project.dataAccessObjects.student.StudentDAO;
+import com.edusenior.project.dataAccessObjects.student.StudentJpaDAO;
 import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Users.Credentials;
@@ -17,29 +17,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class StudentServiceImpl implements StudentService {
-    private StudentDAO studentDAO;
+    private StudentJpaDAO studentJpaDAO;
     private BcryptPasswordEncoder encoder;
     private CredentialsJpaRepository credentialsJpaRepository;
 
 
     @Autowired
-    public StudentServiceImpl(StudentDAO studentDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
-        this.studentDAO = studentDAO;
+    public StudentServiceImpl(StudentJpaDAO studentJpaDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
+        this.studentJpaDAO = studentJpaDAO;
         this.encoder = encoder;
         this.credentialsJpaRepository = credentialsJpaRepository;
     }
 
     @Override
     public Student fetchStudent(String id){
-        Student s = studentDAO.findById(id);
-        if(s == null){
+        Optional<Student> s = studentJpaDAO.findById(id);
+        if(s.isEmpty()){
             throw new StudentNotFoundException("Student Not Found");
         }
-        return s;
+        return s.get();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
         Credentials c = new Credentials(true);
         c.setEmail(sDTO.getEmail());
         c.setHash(encoder.passwordEncoder().encode(sDTO.getPassword()));
-        c.setRole("teacher");
+        c.setRole("student");
         c.setUser(s);
 
         credentialsJpaRepository.save(c);
@@ -62,11 +63,11 @@ public class StudentServiceImpl implements StudentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public Student fetchStudentByEmail(String email){
-        Student s = studentDAO.findByEmail(email);
-        if(s == null){
-            throw new StudentNotFoundException("Student Not Found");
-        }
-        return s;
-    }
+//    public Student fetchStudentByEmail(String email){
+//        Student s = studentDAO.findByEmail(email);
+//        if(s == null){
+//            throw new StudentNotFoundException("Student Not Found");
+//        }
+//        return s;
+//    }
 }

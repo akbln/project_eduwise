@@ -2,9 +2,9 @@ package com.edusenior.project;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Exceptions.EmailNotFoundException;
-import com.edusenior.project.RestControllers.LoginController;
-import com.edusenior.project.RestControllers.Student.StudentCustomErrorResponse;
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.Exceptions.StudentEmailsNotFoundException;
+import com.edusenior.project.ServerResponses.EmailsNotFoundResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionHandlers {
@@ -52,18 +50,11 @@ public class ExceptionHandlers {
         ServerResponse error = new ServerResponse("failed",errors);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-//    @ExceptionHandler(DuplicateEntryException.class)
-//    public ResponseEntity<ServerResponse> handleDuplicateEntryException(){
-//        ArrayList<String> errors = new ArrayList<>();
-//        errors.add("Email already in use");
-//        ServerResponse error = new ServerResponse("failed",errors);
-//        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
-//    }
-//    @ExceptionHandler(DuplicateEntryException.class)
-//    public ResponseEntity<ServerResponse> handleDuplicateEntryException(){
-//        ArrayList<String> errors = new ArrayList<>();
-//        errors.add("Email already in use");
-//        ServerResponse error = new ServerResponse("failed",errors);
-//        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
-//    }
+    @ExceptionHandler(StudentEmailsNotFoundException.class)
+    public ResponseEntity<ServerResponse> handleStudentEmailsNotFoundException(StudentEmailsNotFoundException ex){
+        ArrayList<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        EmailsNotFoundResponse errorResponse = new EmailsNotFoundResponse("failed",errors,ex.getNotFoundEmails());
+        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
 }

@@ -3,7 +3,7 @@ package com.edusenior.project.services.teacher;
 import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Mappings.TeacherMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
 import com.edusenior.project.dataAccessObjects.teacher.TeacherDAO;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;

@@ -2,10 +2,11 @@ package com.edusenior.project.services.schoolAdmin;
 
 
 import com.edusenior.project.Exceptions.EmailNotFoundException;
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
 import com.edusenior.project.dataAccessObjects.teacher.TeacherJpaDAO;
 import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
+import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToCourseDTO;
 import com.edusenior.project.dataTransferObjects.CourseDTO;
 import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
 import com.edusenior.project.entities.Users.Teacher;
@@ -70,6 +71,12 @@ public class SchoolAdminServiceImpl implements SchoolAdminService{
             errors.add(ex.getMessage());
             return new ResponseEntity<ServerResponse>(new ServerResponse("failed",errors),HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<ServerResponse> addMultipleStudentsToClass(AddMultipleStudentsToCourseDTO sDTO){
+        return schoolClassService.addMultipleStudentsToClass(sDTO);
     }
 
     private String getTeacherId(String email){

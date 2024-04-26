@@ -46,5 +46,11 @@ public class Student extends User {
         }
         enrolledClasses.addAll(SchoolClasses);
     }
+    public void addSingleClass(SchoolClass c){
+        if(enrolledClasses == null){
+            enrolledClasses = new ArrayList<>();
+        }
+        enrolledClasses.add(c);
+    }
 
 }

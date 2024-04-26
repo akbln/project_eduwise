@@ -1,10 +1,13 @@
 package com.edusenior.project.dataAccessObjects.credentials;
 
+import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.UserEmailsAndRolesDTO;
 import com.edusenior.project.entities.Users.Credentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -22,6 +25,9 @@ public interface CredentialsJpaRepository extends JpaRepository<Credentials, Str
 
     @Query("SELECT c.id FROM Credentials c WHERE c.email IN :emails AND c.role = :role")
     List<String> findUserIdsByEmailsAndRole(@Param("emails") List<String> emails, @Param("role") String role);
+
+    @Query("Select c.email FROM Credentials c WHERE c.email IN :emails AND c.role = 'student'")
+    HashSet<String> findExistingStudentEmailsByEmails(List<String> emails);
 }
 
 

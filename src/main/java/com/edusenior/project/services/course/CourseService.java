@@ -1,6 +1,6 @@
 package com.edusenior.project.services.course;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
 import com.edusenior.project.dataTransferObjects.CourseDTO;
 import org.springframework.http.ResponseEntity;

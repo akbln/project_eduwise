@@ -1,6 +1,6 @@
 package com.edusenior.project.RestControllers.Student;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Users.Student;
 import com.edusenior.project.services.student.StudentServiceImpl;
@@ -27,9 +27,9 @@ public class StudentRestController {
     public Student fetchStudentByUUID(@PathVariable String studentUUID){
         return studentService.fetchStudent(studentUUID);
     }
-    @GetMapping("/email={studentEmail}")
-    public Student fetchStudentByEmail(@PathVariable String studentEmail){
-        return studentService.fetchStudentByEmail(studentEmail);
-    }
+//    @GetMapping("/email={studentEmail}")
+//    public Student fetchStudentByEmail(@PathVariable String studentEmail){
+//        return studentService.fetchStudentByEmail(studentEmail);
+//    }
 
 }

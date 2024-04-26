@@ -1,6 +1,6 @@
 package com.edusenior.project.RestControllers.Teacher;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
 import com.edusenior.project.services.teacher.TeacherService;
 import jakarta.validation.Valid;

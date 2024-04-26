@@ -1,9 +1,8 @@
 package com.edusenior.project.RestControllers.SchoolClasses;
 
-import com.edusenior.project.Utility.ServerResponse;
+import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
 import com.edusenior.project.services.schoolAdmin.SchoolAdminService;
-import com.edusenior.project.services.teacher.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
