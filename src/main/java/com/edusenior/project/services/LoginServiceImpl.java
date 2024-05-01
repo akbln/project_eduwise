@@ -1,6 +1,6 @@
 package com.edusenior.project.services;
 
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
+import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepository;
 import com.edusenior.project.dataTransferObjects.JwtDTO;
 import com.edusenior.project.dataTransferObjects.LoginDTO;
 import com.edusenior.project.entities.Users.Credentials;

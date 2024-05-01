@@ -3,8 +3,8 @@ package com.edusenior.project.services.schoolAdmin;
 
 import com.edusenior.project.Exceptions.EmailNotFoundException;
 import com.edusenior.project.ServerResponses.ServerResponse;
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
-import com.edusenior.project.dataAccessObjects.teacher.TeacherJpaDAO;
+import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepository;
+import com.edusenior.project.JpaRepositories.teacher.TeacherJpaDAO;
 import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
 import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToCourseDTO;
 import com.edusenior.project.dataTransferObjects.CourseDTO;

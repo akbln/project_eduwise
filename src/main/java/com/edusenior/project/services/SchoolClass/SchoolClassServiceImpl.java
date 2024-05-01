@@ -1,13 +1,12 @@
 package com.edusenior.project.services.SchoolClass;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
-import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.Exceptions.NotFound.SchoolClassNotFoundException;
 import com.edusenior.project.Exceptions.StudentEmailsNotFoundException;
 import com.edusenior.project.ServerResponses.ServerResponse;
-import com.edusenior.project.dataAccessObjects.classes.SchoolClassJpaRepository;
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
-import com.edusenior.project.dataAccessObjects.student.StudentJpaDAO;
+import com.edusenior.project.JpaRepositories.classes.SchoolClassJpaRepository;
+import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepository;
+import com.edusenior.project.JpaRepositories.student.StudentJpaRepository;
 import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToCourseDTO;
 import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
 import com.edusenior.project.entities.SchoolClass;
@@ -29,14 +28,14 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 
     private SchoolClassJpaRepository schoolClassJpaRepository;
     private CredentialsJpaRepository credentialsJpaRepository;
-    private StudentJpaDAO studentJpaDAO;
+    private StudentJpaRepository studentJpaRepository;
 
 
     @Autowired
-    public SchoolClassServiceImpl(SchoolClassJpaRepository schoolClassJpaRepository, StudentJpaDAO studentJpaDAO,
+    public SchoolClassServiceImpl(SchoolClassJpaRepository schoolClassJpaRepository, StudentJpaRepository studentJpaRepository,
                                   CredentialsJpaRepository credentialsJpaRepository) {
         this.schoolClassJpaRepository = schoolClassJpaRepository;
-        this.studentJpaDAO = studentJpaDAO;
+        this.studentJpaRepository = studentJpaRepository;
         this.credentialsJpaRepository = credentialsJpaRepository;
     }
 
@@ -67,13 +66,24 @@ public class SchoolClassServiceImpl implements SchoolClassService {
         if(!notFoundEmails.isEmpty()){
             throw new StudentEmailsNotFoundException("Could not find registered students with the following emails: ",(ArrayList<String>) notFoundEmails);
         }
+        List<Student> students = getStudentsByEmails(foundEmails);
 
+
+        //Needs performance optimization
+        List<Student> studentsNotAlreadyInClass = new ArrayList<>();
+//        studentsNotAlreadyInClass.addAll(studentJpaDAO.findAllStudentsNotInClassByEmails(foundEmails.stream().toList(),
+//                sDTO.getClassId()));
+
+        for(Student s : students){
+            if (!s.getEnrolledClasses().contains(sc)){
+                studentsNotAlreadyInClass.add(s);
+            }
+        }
         try {
-            List<Student> students = getStudentsByEmails(foundEmails);
-            sc.addMultipleStudents(students);
-            schoolClassJpaRepository.save(sc);
+            sc.addMultipleStudents(studentsNotAlreadyInClass);
+            schoolClassJpaRepository.saveAndFlush(sc);
         } catch (RuntimeException ex){
-            throw new DuplicateEntryException(ex.getMessage());
+            throw new DuplicateEntryException("Invalid Request");
         }
 
         return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
@@ -91,7 +101,7 @@ public class SchoolClassServiceImpl implements SchoolClassService {
     }
     private List<Student> getStudentsByEmails(HashSet<String> emails){
         List<String> studentIds = credentialsJpaRepository.findUserIdsByEmailsAndRole(emails.stream().toList(),"student");
-        return studentJpaDAO.findAllById(studentIds);
+        return studentJpaRepository.findAllById(studentIds);
     }
     private SchoolClass findClassById(String id){
         Optional<SchoolClass> classOptional = schoolClassJpaRepository.findById(id);

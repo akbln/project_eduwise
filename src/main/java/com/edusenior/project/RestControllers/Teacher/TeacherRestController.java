@@ -18,7 +18,7 @@ public class TeacherRestController {
         this.teacherService = teacherService;
     }
 
-    @PutMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<ServerResponse> registerTeacher(@Valid @RequestBody NewTeacherDTO tDTO) {
         return teacherService.registerTeacher(tDTO);
     }

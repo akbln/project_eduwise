@@ -1,4 +1,4 @@
-package com.edusenior.project.dataAccessObjects.teacher;
+package com.edusenior.project.JpaRepositories.teacher;
 
 import com.edusenior.project.entities.Users.Teacher;
 

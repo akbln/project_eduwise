@@ -1,19 +1,10 @@
 // import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
-// eslint-disable-next-line react/no-deprecated
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
 );
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//     <BrowserRouter>
-//         <App />
-//     </BrowserRouter>
-// );

@@ -3,8 +3,9 @@ package com.edusenior.project.entities.Users;
 import com.edusenior.project.entities.SchoolClass;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "students", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
@@ -22,8 +23,7 @@ public class Student extends User {
             joinColumns=@JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "class_id")
     )
-
-    private List<SchoolClass> enrolledClasses;
+    private Set<SchoolClass> enrolledClasses;
 
     public Student() {
         super();
@@ -37,20 +37,24 @@ public class Student extends User {
         this.level = level;
     }
 
-    public List<SchoolClass> getEnrolledClasses() {
+    public Set<SchoolClass> getEnrolledClasses() {
         return enrolledClasses;
     }
-    public void addMultipleClasses(List<SchoolClass> SchoolClasses){
-        if(enrolledClasses == null){
-            enrolledClasses = new ArrayList<>();
-        }
-        enrolledClasses.addAll(SchoolClasses);
+
+    public void setEnrolledClasses(Set<SchoolClass> enrolledClasses) {
+        this.enrolledClasses = enrolledClasses;
     }
-    public void addSingleClass(SchoolClass c){
-        if(enrolledClasses == null){
-            enrolledClasses = new ArrayList<>();
-        }
-        enrolledClasses.add(c);
-    }
+    //    public void addMultipleClasses(List<SchoolClass> SchoolClasses){
+//        if(enrolledClasses == null){
+//            enrolledClasses = new ArrayList<>();
+//        }
+//        enrolledClasses.addAll(SchoolClasses);
+//    }
+//    public void addSingleClass(SchoolClass c){
+//        if(enrolledClasses == null){
+//            enrolledClasses = new ArrayList<>();
+//        }
+//        enrolledClasses.add(c);
+//    }
 
 }

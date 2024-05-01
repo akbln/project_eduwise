@@ -1,0 +1,24 @@
+.register-page{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.register-box{
+    height: 60vh;
+    background-color: aqua;
+
+}
+.register-form-wrapper{
+    height: 100%;
+}
+@media screen and (max-width: 450px) {
+    .register-box{
+        height: 85vh;
+    }
+    .register-form-wrapper{
+        height: 65%;
+    }
+
+}

@@ -1,12 +1,10 @@
-package com.edusenior.project.dataAccessObjects.credentials;
+package com.edusenior.project.JpaRepositories.credentials;
 
-import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.UserEmailsAndRolesDTO;
 import com.edusenior.project.entities.Users.Credentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 

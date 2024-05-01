@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "classes")
@@ -94,4 +95,14 @@ public class SchoolClass {
         }
         this.enrolledStudents.addAll(students);
     }
-}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        SchoolClass otherClass = (SchoolClass) o;
+        return id != null && id.equals(otherClass.getId());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }}

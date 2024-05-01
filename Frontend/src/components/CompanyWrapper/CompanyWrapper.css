@@ -1,0 +1,22 @@
+
+
+.company-wrapper {
+    background-color: hsl(0, 89%, 78%);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo{
+    height: 150px;
+    width: 150px;
+    background-image: url("../../assets/Logo.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+@media screen and (max-width: 450px){
+    .company-wrapper {
+        height: 35%;
+    }
+
+}

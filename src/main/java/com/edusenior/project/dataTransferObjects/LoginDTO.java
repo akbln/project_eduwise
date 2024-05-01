@@ -16,9 +16,9 @@ public class LoginDTO {
             message = "Invalid password")
     private String password;
 
-    @NotNull
-    @Pattern(regexp = "^(teacher|student)$", message = "Invalid role")
-    private String role;
+//    @NotNull
+//    @Pattern(regexp = "^(teacher|student)$", message = "Invalid role")
+//    private String role;
 
 
     public LoginDTO() {}
@@ -35,10 +35,10 @@ public class LoginDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public String getRole() {
+//        return role;
+//    }
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 }

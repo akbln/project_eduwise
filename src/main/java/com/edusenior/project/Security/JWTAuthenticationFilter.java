@@ -36,6 +36,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         this.SKIP_URLS = new ArrayList<>(Arrays.asList(new String[]{
                 "/**/register",
                 "/login",
+                "/videos/**"
         }));
     }
 

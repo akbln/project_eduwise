@@ -4,8 +4,8 @@ import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Mappings.StudentMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
 import com.edusenior.project.ServerResponses.ServerResponse;
-import com.edusenior.project.dataAccessObjects.credentials.CredentialsJpaRepository;
-import com.edusenior.project.dataAccessObjects.student.StudentJpaDAO;
+import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepository;
+import com.edusenior.project.JpaRepositories.student.StudentJpaRepository;
 import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Users.Credentials;
@@ -22,21 +22,21 @@ import java.util.Optional;
 @Service
 @Transactional
 public class StudentServiceImpl implements StudentService {
-    private StudentJpaDAO studentJpaDAO;
+    private StudentJpaRepository studentJpaRepository;
     private BcryptPasswordEncoder encoder;
     private CredentialsJpaRepository credentialsJpaRepository;
 
 
     @Autowired
-    public StudentServiceImpl(StudentJpaDAO studentJpaDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
-        this.studentJpaDAO = studentJpaDAO;
+    public StudentServiceImpl(StudentJpaRepository studentJpaRepository, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
+        this.studentJpaRepository = studentJpaRepository;
         this.encoder = encoder;
         this.credentialsJpaRepository = credentialsJpaRepository;
     }
 
     @Override
     public Student fetchStudent(String id){
-        Optional<Student> s = studentJpaDAO.findById(id);
+        Optional<Student> s = studentJpaRepository.findById(id);
         if(s.isEmpty()){
             throw new StudentNotFoundException("Student Not Found");
         }

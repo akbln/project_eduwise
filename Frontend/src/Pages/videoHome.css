@@ -1,0 +1,14 @@
+.home-body {
+  margin: 0;
+  padding: 0;
+  background-color: gold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.home-wrapper {
+  background-color: red;
+  width: 30%;
+  height: 30vh;
+}
