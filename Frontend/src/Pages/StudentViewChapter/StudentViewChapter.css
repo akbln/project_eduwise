@@ -1,0 +1,9 @@
+.svc-page{
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-template-rows:  minmax(75px,auto) repeat(9,minmax(100px, auto));
+    grid-gap: 20px;
+}
+.video-player-wrapper{
+    grid-column: 3 / 10;
+}

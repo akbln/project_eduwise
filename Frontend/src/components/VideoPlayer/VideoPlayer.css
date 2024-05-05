@@ -1,9 +1,7 @@
 .video-player video {
   width: 100%;
   height: auto;
-  display: block;
-  margin: 0 auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(204, 255, 0, 0.5);
+}
+.video-player {
+  width: 100%;
 }

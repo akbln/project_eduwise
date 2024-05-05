@@ -1,14 +1,17 @@
-import { useParams } from 'react-router-dom';
+
 import "./VideoPlayer.css";
 
-const VideoPlayer = () => {
-    const { id } = useParams();
-    const videoUrl = `http://localhost/videos/${id}`;
+const VideoPlayer = ({videoUrl}) => {
+
+    const handleError = (e)=>{
+        console.error("Error loading video:", e);
+        console.error("Error details:", e.target.error); // Get more detailed error
+    }
+
     return (
         <div className="video-player">
-            <h1>Video Stream Test</h1>
             <video controls>
-                <source src={videoUrl} type="video/mp4" />
+                <source src={videoUrl} onError={handleError} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
         </div>

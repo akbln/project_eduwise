@@ -23,9 +23,9 @@ public class VideoStreamingRestController {
     }
 
 
-    @GetMapping("/videos/{id}")
-    public ResponseEntity<ResourceRegion> getVideoChunk(@RequestHeader HttpHeaders headers,@PathVariable("id")  String id){
-        return videoStreamingService.getVideo(headers,id);
+    @GetMapping("/students/chapters/{ChapterId}/video")
+    public ResponseEntity<ResourceRegion> getVideoChunk(@RequestHeader HttpHeaders headers,@PathVariable("ChapterId")  String ChapterId){
+        return videoStreamingService.getVideo(headers,ChapterId);
     }
 
 }

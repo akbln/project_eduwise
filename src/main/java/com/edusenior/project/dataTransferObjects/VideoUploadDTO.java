@@ -15,20 +15,13 @@ public class VideoUploadDTO {
     @NotNull
     @Size(min = 1,max =1000,message = "Invalid title")
 //    @Pattern( regexp = "^(?! )[a-zA-Z0-9 ][a-zA-Z0-9](?<! )$",message = "Invalid title request")
-    private String title;
+    private String courseName;
 
-    @Size(min = 0,max =1000,message = "Invalid d request")
-//    @Pattern( regexp = "^(?! )[a-zA-Z0-9 ][a-zA-Z0-9](?<! )$",message = "Invalid d request")
-    private String description;
+    @NotNull
+    @Pattern(regexp = "^[1-9]+$")
+    private String chapterNumber;
 
     public VideoUploadDTO() {
-    }
-
-
-    public VideoUploadDTO(MultipartFile video, String title, String description) {
-        this.video = video;
-        this.title = title;
-        this.description = description;
     }
 
     public MultipartFile getVideo() {
@@ -39,19 +32,19 @@ public class VideoUploadDTO {
         this.video = video;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getChapterNumber() {
+        return chapterNumber;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setChapterNumber(String chapterNumber) {
+        this.chapterNumber = chapterNumber;
     }
 }

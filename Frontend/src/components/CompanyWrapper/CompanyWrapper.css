@@ -1,11 +1,9 @@
-
-
 .company-wrapper {
-    background-color: hsl(0, 89%, 78%);
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 1rem 0 0 1rem;
 }
 .logo{
     height: 150px;
@@ -13,6 +11,7 @@
     background-image: url("../../assets/Logo.webp");
     background-repeat: no-repeat;
     background-size: contain;
+    border-radius: 100%;
 }
 @media screen and (max-width: 450px){
     .company-wrapper {

@@ -16,14 +16,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private JWTAuthenticationFilter jwtAuthenticationFilter;
+    private VideoJWTFilter videoJWTFilter;
 
     @Autowired
-    public SecurityConfig(JWTAuthenticationFilter jwt){
+    public SecurityConfig(JWTAuthenticationFilter jwt,VideoJWTFilter videoJWTFilter){
         this.jwtAuthenticationFilter = jwt;
+        this.videoJWTFilter = videoJWTFilter;
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(videoJWTFilter, UsernamePasswordAuthenticationFilter.class);
         http.authorizeHttpRequests(
                 auth -> auth.requestMatchers(HttpMethod.POST,"/login").permitAll()
                         .requestMatchers("/students/register").permitAll()
@@ -31,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/students/**").hasAuthority("ROLE_student")
                         .requestMatchers("/teachers/**").hasAuthority("ROLE_teacher")
                         .requestMatchers("/schoolAdmins/**").hasAuthority("ROLE_teacherAdmin")
-                        .requestMatchers("/videos/**").permitAll()
+                        .requestMatchers("/videos/**").hasAuthority("ROLE_student")
                         .anyRequest().authenticated());
         http.csrf(CsrfConfigurer::disable);
         return http.build();

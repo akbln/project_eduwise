@@ -20,6 +20,9 @@ public class Chapter {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "chapter_number")
+    private int number;
+
     @Column(name = "description")
     private String description;
 
@@ -34,6 +37,18 @@ public class Chapter {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "video_id")
+    private Video video;
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
 
     public String getName() {
         return name;
@@ -78,6 +93,15 @@ public class Chapter {
     public void setMaterialAmount(int materialAmount) {
         this.materialAmount = materialAmount;
     }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public int addToMaterialAmount(int a) throws FullChapterException{
         if(this.materialAmount == Integer.MAX_VALUE){
             throw new FullChapterException("Chapter "+this.name+" reached the maximum amount of allowed material");

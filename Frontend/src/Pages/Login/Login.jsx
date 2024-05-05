@@ -3,10 +3,11 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CompanyWrapper from "../../components/CompanyWrapper/CompanyWrapper.jsx";
+import Header from "../../components/Header/Header.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
-  if (window.localStorage.getItem("token")) {
+  if (localStorage.getItem("token")) {
     navigate("/");
   }
   const [email, setEmail] = useState("");
@@ -36,30 +37,9 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page-wrapper">
-      <div className="login-area-wrapper">
+    <div className={"login-page"}>
+      <div className={"login-box"}>
         <CompanyWrapper/>
-        <div className="login-form-wrapper">
-          <div className="credential-wrapper">
-            <div className="input-wrapper email">
-              <input
-                type="text"
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-              />
-            </div>
-            <div className="input-wrapper password">
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-              />
-            </div>
-          </div>
-          <div className="button-wrapper">
-            <button onClick={() => handleLogin()}>Login</button>
-          </div>
-        </div>
       </div>
     </div>
   );

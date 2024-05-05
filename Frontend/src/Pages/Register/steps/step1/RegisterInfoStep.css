@@ -1,0 +1,68 @@
+
+.register-step-wrapper{
+    height: 100%;
+    width: 100%;
+}
+.email-input-wrapper{
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.email-input-wrapper h4{
+    width: 65%;
+    text-align: left;
+}
+.email-input-wrapper input{
+    border: none;
+    border-radius: 5px;
+    width: 65%;
+    height: 40px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.register-step-wrapper input{
+    border: 1px solid #deb887;
+    color: #3e2723;
+    background-color: #f0e6d6;
+    padding: 7px 7px 7px 15px;
+    border-radius: 10px;
+}
+.name-input-wrapper,.password-input-wrapper,.age-input-wrapper{
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    padding-top: 25px;
+}
+.name-input-wrapper input,.password-input-wrapper input,.age-input-wrapper input{
+    width: 45%;
+}
+.register-step-wrapper input:focus{
+    outline: brown solid;
+}
+.register-step-wrapper input:hover{
+    background-color: wheat;
+}
+.name-input-wrapper input,.age-input-wrapper input{
+    width: 90%;
+}
+
+@media screen and (max-width: 450px){
+    .inputs input{
+        width: 85%;
+    }
+    .inputs{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+.inputs input{
+    padding: 7px 7px 7px 15px;
+    font-size: 15px;
+}
+
+

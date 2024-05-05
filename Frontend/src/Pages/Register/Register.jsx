@@ -10,8 +10,9 @@ const Register = () => {
     const [gender, setGender] = useState("");
     return(
         <div className="register-page">
-            <div className="col-2 col-m-1 col-s-0"></div>
-            <div className="register-box col-8 col-m-10 col-s-12">
+            <div className="col-2 col-m-0 col-s-0"></div>
+            <div className="register-box col-8 col-m-12 col-s-12">
+                <div className={"register-text"}><h1>Registration</h1></div>
                 <CompanyWrapper />
                 <div className="register-form-wrapper col-8 col-s-12">
                     {step === 0 && <RoleStep setStep={setStep} setRole={setRole} />}
@@ -19,7 +20,7 @@ const Register = () => {
                     {/*{step === 2 && <RoleStep setRole={setRole} setStep={setStep} />}*/}
                 </div>
             </div>
-            <div className="col-2 col-m-1 col-s-0"></div>
+            <div className="col-2 col-m-0 col-s-0"></div>
         </div>
     )
 }

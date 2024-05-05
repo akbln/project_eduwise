@@ -1,74 +1,28 @@
-.login-page-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ff0101;
+.login-page{
   height: 100vh;
   width: 100%;
-}
-.login-area-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: gold;
-  height: 300px;
-  width: 65vw;
+  background-image: url("../../assets/Background.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
-
-.login-form-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 65%;
+.login-box{
+  height: 60vh;
+  align-self: center;
+  background-color: red;
+  width: 70%
 }
-.credential-wrapper {
-  background-color: hsl(129, 78%, 53%);
-  height: 80%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 100px;
-  margin-top: 30px;
+@media screen and (max-width: 900px){
+  .login-box{
+    width: 85%;
+  }
 }
-.input-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.input-wrapper input {
-  width: 70%;
-  height: 40px;
-  margin: 10px 0;
-  padding: 0 10px;
-  border: none;
-  border-radius: 5px;
-}
-.button-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.button-wrapper button {
-  background-color: #ff9a57be;
-  color: rgb(0, 0, 0);
-  font-size: 12px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 15px;
-  transition: background-color 0.3s, transform 0.3s;
-  font-family: "Roboto", sans-serif;
-}
-.button-wrapper button:hover {
-  background-color: #f7e1d3be;
-  cursor: pointer;
-  transform: scale(1.1);
-}
-.input-wrapper input:focus {
-  outline: none;
-  border: #ff6200be 2px solid;
+@media screen and (max-width: 450px){
+  .login-box{
+    width: 100%;
+  }
 }
