@@ -16,6 +16,14 @@
   background-color: red;
   width: 70%
 }
+.login-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100%;
+  width: 65%
+}
 @media screen and (max-width: 900px){
   .login-box{
     width: 85%;

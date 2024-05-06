@@ -1,15 +1,23 @@
 import axios from "axios";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import CompanyWrapper from "../../components/CompanyWrapper/CompanyWrapper.jsx";
-import Header from "../../components/Header/Header.jsx";
+import expiredJwt from "../../components/JWTParser.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
-  if (localStorage.getItem("token")) {
-    navigate("/");
-  }
+
+  useEffect(() => {
+    if(expiredJwt(localStorage.getItem("token"))) {
+      localStorage.removeItem("token");
+      return;
+    }
+    if(localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,7 +35,7 @@ const Login = () => {
         }
       );
       console.log(response.data.token);
-      window.localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.token);
       navigate("/");
     } catch (error) {
       console.log(error.response.status);
@@ -40,6 +48,11 @@ const Login = () => {
     <div className={"login-page"}>
       <div className={"login-box"}>
         <CompanyWrapper/>
+        <div className={"login-wrapper"}>
+          <input type="email" onChange={e => setEmail(e.target.value)}/>
+          <input type="password" onChange={e => setPassword(e.target.value)}/>
+          <button onClick={handleLogin}>Login</button>
+        </div>
       </div>
     </div>
   );
