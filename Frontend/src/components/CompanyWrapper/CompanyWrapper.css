@@ -1,5 +1,4 @@
 .company-wrapper {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,10 +11,4 @@
     background-repeat: no-repeat;
     background-size: contain;
     border-radius: 100%;
-}
-@media screen and (max-width: 450px){
-    .company-wrapper {
-        height: 35%;
-    }
-
 }

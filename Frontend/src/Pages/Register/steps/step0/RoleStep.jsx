@@ -10,26 +10,16 @@ const RoleStep = ({setStep,setRole}) => {
         setStep(1);
     }
     return (
-        <div className="role-step-wrapper">
-            <div className="role-selector-p row">
-                <p>What are you registering as?</p>
-            </div>
-            <div className={"role-selector-wrapper row"}>
-                <div onClick={changeRoleToStudent} className={"role-student col-6"}>
-                    <div className={"role-student-text row"}>
-                        <p>Student</p>
-                    </div>
-                    <div className={"role-student-image-wrapper row"}>
-                        <div className={"role-student-image"}></div>
-                    </div>
+        <div className={"role-step-wrapper"}>
+            <h1>Register as?</h1>
+            <div className={"role-wrapper"}>
+                <div className={"student-wrapper"} onClick={changeRoleToStudent}>
+                    <p>Student</p>
+                    <div className={"student-logo"} ></div>
                 </div>
-                <div onClick={changeRoleToTeacher} className={"role-teacher col-6"}>
-                    <div className={"role-teacher-text row col-12"}>
-                        <p>Teacher</p>
-                    </div>
-                    <div className={"role-teacher-image-wrapper row col-12"}>
-                        <div className={"role-teacher-image"}></div>
-                    </div>
+                <div className={"teacher-wrapper"} onClick={changeRoleToTeacher}>
+                    <p>Teacher</p>
+                    <div className={"teacher-logo"} ></div>
                 </div>
             </div>
         </div>

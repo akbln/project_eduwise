@@ -1,112 +1,55 @@
-.role-selector-p{
-    height: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 5%;
-}
-.role-selector-p p{
-    font-size: 2.4rem;
-    text-align: center;
-    padding-right: 2%;
-    padding-left: 2%;
-}
-.role-selector{
-    height: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .role-step-wrapper{
     height: 100%;
-}
-
-.role-selector-wrapper{
-    margin-top: 10%;
-}
-
-.role-teacher{
-    height: 140px;
-}
-
-.role-selector label {
-    font-size: 2.5rem;
-    text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.role-selector select {
-    padding: 8px 12px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.role-selector select:hover,
-.role-selector select:focus {
-    border-color: #007BFF; /* A nice blue shade when hovered or focused */
-}
-.dropdown{
-    width: 40%;
-    text-align: center;
-}
-.role-student-text{
-    text-align: center;
-}
-.role-student-image-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.role-teacher-text{
-    text-align: center;
-}
-.role-teacher-image-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.role-student-image{
-    background-image: url("../../../../assets/Logo.webp");
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 100px;
-    width: 100px;
-}
-.role-teacher-image{
-    background-image: url("../../../../assets/Logo.webp");
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 100px;
-    width: 100px;
-}
-.next-step-wrapper{
-
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
-.next-step{
-    margin-right: 10%;
-    margin-top: 10%;
-    width: 80px;
-    height: 30px;
-}
-.next-step button{
-    font-size: 15px;
-    font-weight: bold;
     width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    border: none;
+    display: grid;
+    grid-template-columns:repeat(12,1fr);
+    grid-template-rows:repeat(12,1fr);
 }
-.selected {
-    background-color: #4CAF50;
-    color: white;
+.role-step-wrapper h1{
+    grid-column: 1/13;
+    grid-row: 2;
+    text-align: center;
+}
+.role-wrapper{
+    grid-column: 1/13;
+    grid-row: 3/13;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.role-step-wrapper p{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 23px;
 }
 
 
+
+
+.student-logo{
+    background-image: url("../../../../assets/Student.webp");
+    height: 200px;
+    width: 200px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 2rem;
+}
+.teacher-logo{
+    background-image: url("../../../../assets/Teacher.webp");
+    height: 200px;
+    width: 200px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 2rem;
+}
+.student-wrapper:hover,.teacher-wrapper:hover{
+    transform: scale(1.10);
+    cursor: pointer;
+}
+.student-wrapper,.teacher-wrapper{
+    transition: transform 0.5s ease;
+}

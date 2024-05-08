@@ -12,8 +12,8 @@ import Logout from "./Pages/Login/Logout.jsx";
 function App() {
   return (
     <Routes>
-        <Route path="/" component={<Home />} />
-        <Route path="/logout" component={<Logout />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/upload" element={<UploadPage />} />

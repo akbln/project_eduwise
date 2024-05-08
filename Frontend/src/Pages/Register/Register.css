@@ -9,39 +9,22 @@
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
 }
 .register-box{
-    position: relative;
-    height: 60vh;
-    background-color: rgba(245, 222, 179,0.85);
-    border-radius: 1rem;
-    color: #3e2723;
-    border: 1px solid #ffa600;
+    width: 80%;
+    height: 55%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    background-color: rgba(255, 249, 249, 0.83);
     backdrop-filter: blur(5px);
+    border-radius: 2rem;
 }
-.register-text{
-    position: absolute;
-    width: 100%;
-    padding-top: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.company-wrapper{
+    grid-column: 1/5;
+    grid-row: 1/13;
 }
-.register-form-wrapper{
-    height: 100%;
-}
-@media screen and (max-width: 450px) {
-    .register-box{
-        height: 90vh;
-    }
-    .register-text{
-        position: relative;
-    }
-    .register-form-wrapper{
-        height: 65%;
-    }
-
+.steps-wrapper{
+    grid-column: 5/13;
+    grid-row: 1/13;
 }

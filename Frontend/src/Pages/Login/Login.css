@@ -11,26 +11,91 @@
   background-attachment: fixed;
 }
 .login-box{
+  border-radius: 12px 12px 12px 12px;
   height: 60vh;
-  align-self: center;
-  background-color: red;
-  width: 70%
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  background-color: rgba(251, 194, 131, 0.7);
+  backdrop-filter: blur(10px);
+  width: 70%;
+}
+.company-wrapper{
+  grid-column: 1/5;
+  grid-row: 4/10;
 }
 .login-wrapper{
+  border-radius: 0 12px 12px 0;
+  grid-column: 5/13;
+  grid-row: 1/13;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+}
+.login-wrapper h1{
+  grid-column: 1 / 13;
+  grid-row: 2/3;
+  justify-self: center;
+}
+.login-input{
+  grid-column: 1 / 13;
+  grid-row: 3/10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.email-input,.password-input{
+  width: 50%;
+}
+.email-input input,.password-input input{
+  padding: 7px;
+  width: 100%;
+  font-size: 15px;
+}
+.login-footer{
   display: flex;
   align-items: center;
+  flex-direction: row;
   justify-content: space-evenly;
-  flex-direction: column;
-  height: 100%;
-  width: 65%
+  grid-column: 1 / 13;
+  grid-row: 10/13;
+}
+.login-footer button{
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fff8dc;
 }
 @media screen and (max-width: 900px){
   .login-box{
-    width: 85%;
+    width: 100%;
+  }
+  .email-input,.password-input{
+    width: 75%;
+  }
+  .company-wrapper{
+    grid-column: 1/5;
+    grid-row: 4/10;
+  }
+  .login-wrapper{
+    grid-column: 5/13;
+    grid-row: 1/13;
   }
 }
 @media screen and (max-width: 450px){
   .login-box{
     width: 100%;
+  }
+  .email-input,.password-input{
+    width: 90%;
+  }
+  .company-wrapper{
+    grid-column: 1/13;
+    grid-row: 1/5;
+  }
+  .login-wrapper{
+    grid-column: 1/13;
+    grid-row: 5/13;
   }
 }

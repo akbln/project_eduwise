@@ -49,9 +49,21 @@ const Login = () => {
       <div className={"login-box"}>
         <CompanyWrapper/>
         <div className={"login-wrapper"}>
-          <input type="email" onChange={e => setEmail(e.target.value)}/>
-          <input type="password" onChange={e => setPassword(e.target.value)}/>
-          <button onClick={handleLogin}>Login</button>
+          <h1>Welcome Back!</h1>
+          <div className={"login-input"}>
+            <div className={"email-input"}>
+              <h3>Email:</h3>
+              <input type="email" onChange={e => setEmail(e.target.value)}/>
+            </div>
+            <div className={"password-input"}>
+              <h3>Password:</h3>
+              <input type="password" onChange={e => setPassword(e.target.value)}/>
+            </div>
+          </div>
+          <div className={"login-footer"}>
+            <button onClick={handleLogin}>Continue</button>
+            <button onClick={e => navigate("/register")}>Create Account</button>
+          </div>
         </div>
       </div>
     </div>

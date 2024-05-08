@@ -2,25 +2,26 @@ import {useState} from "react";
 import RoleStep from "./steps/step0/RoleStep.jsx";
 import "./Register.css";
 import CompanyWrapper from "../../components/CompanyWrapper/CompanyWrapper.jsx";
-import NameStep from "./steps/step1/NameStep.jsx";
+import InfoStep from "./steps/step1/InfoStep.jsx";
 
 const Register = () => {
     const [step, setStep] = useState(0);
-    const [role, setRole] = useState("");
-    const [gender, setGender] = useState("");
+    const [role, setRole] = useState(null);
+    const [email,setEmail] = useState(null);
+    const [password,setPassword] = useState(null);
+    const [age,setAge] = useState(null);
+    const [gender, setGender] = useState(null);
     return(
-        <div className="register-page">
-            <div className="col-2 col-m-0 col-s-0"></div>
-            <div className="register-box col-8 col-m-12 col-s-12">
-                <div className={"register-text"}><h1>Registration</h1></div>
-                <CompanyWrapper />
-                <div className="register-form-wrapper col-8 col-s-12">
-                    {step === 0 && <RoleStep setStep={setStep} setRole={setRole} />}
-                    {step === 1 && <NameStep setGender={setGender} setStep={setStep} />}
-                    {/*{step === 2 && <RoleStep setRole={setRole} setStep={setStep} />}*/}
+        <div className={"register-page"}>
+            <div className={"register-box"}>
+                <CompanyWrapper/>
+                <div className={"steps-wrapper"}>
+                    {step === 0 && <RoleStep setRole={setRole} setStep={setStep} />}
+                    {step === 1 &&
+                        <InfoStep setEmail={setEmail} setPassword={setPassword} setAge={setAge} setGender={setGender}/>
+                    }
                 </div>
             </div>
-            <div className="col-2 col-m-0 col-s-0"></div>
         </div>
     )
 }
