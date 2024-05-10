@@ -30,8 +30,8 @@ public class NewStudentDTO {
     @Pattern(regexp = "^[MF]$", message = "Invalid Input")
     private String gender;
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}$", message = "Invalid level")
-    private String level;
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}$", message = "Invalid level")
+//    private String level;
 
 
     public NewStudentDTO() {}
@@ -76,11 +76,11 @@ public class NewStudentDTO {
         this.gender = gender;
     }
 
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
+//    public String getLevel() {
+//        return level;
+//    }
+//
+//    public void setLevel(String level) {
+//        this.level = level;
+//    }
 }

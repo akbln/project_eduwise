@@ -1,15 +1,26 @@
-import VideoPlayer from "../../components/VideoPlayer/VideoPlayer.jsx";
+import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.jsx";
 import {useState} from "react";
-import SelectFile from "../../components/SelectFile/SelectFile.jsx";
+import SelectFile from "../../../components/SelectFile/SelectFile.jsx";
 import "./Upload.css";
 import axios from "axios";
-import Header from "../../components/Header/Header.jsx";
-import Sidebar from "../../components/Sidebar/Sidebar.jsx";
+import Header from "../../../components/Header/Header.jsx";
+import Sidebar from "../../../components/Sidebar/Sidebar.jsx";
+import FillQuestion from "../../../components/FillQuestion/FillQuestion.jsx";
 const UploadPage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [videoUrl, setVideoUrl] = useState("");
     const [course, setCourse] = useState("");
     const [chapter, setChapter] = useState("");
+    const [uploadType , setUploadType] = useState("Video")
+
+
+    const changeUploadType = () => {
+        if(uploadType === "Video"){
+            setUploadType("Question");
+        }else{
+            setUploadType("Video");
+        }
+    }
 
     const finalizeUpload = async () => {
 
@@ -64,12 +75,13 @@ const UploadPage = () => {
             <Header/>
             <Sidebar/>
             <div className="upload-area">
-                {selectedFile === null && <SelectFile onFileSelect={handleFileSelect}/>}
-                {selectedFile !== null && <VideoPlayer videoUrl={videoUrl}/>}
+                {uploadType === "Video" && selectedFile === null && <SelectFile onFileSelect={handleFileSelect}/>}
+                {uploadType === "Video" && selectedFile !== null && <VideoPlayer videoUrl={videoUrl}/>}
+                {uploadType === "Question" && <FillQuestion/>}
             </div>
             <div className="upload-options">
-                <div className="upload-type">
-
+                <div onClick={changeUploadType} className="upload-type">
+                    <h2>{uploadType}</h2>
                 </div>
                 <div className="course-name">
                     <h4>Course Name: </h4>

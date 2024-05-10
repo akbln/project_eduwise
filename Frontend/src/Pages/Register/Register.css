@@ -11,13 +11,13 @@
     background-attachment: fixed;
 }
 .register-box{
-    width: 80%;
+    width: 60%;
     height: 55%;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(12, 1fr);
-    background-color: rgba(255, 249, 249, 0.83);
-    backdrop-filter: blur(5px);
+    background-color: rgba(255, 249, 249, 1);
+    /*backdrop-filter: blur(5px);*/
     border-radius: 2rem;
 }
 .company-wrapper{

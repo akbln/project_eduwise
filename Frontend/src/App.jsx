@@ -5,7 +5,7 @@ import Home from "./Pages/Home/Home.jsx";
 import "./App.css";
 import Login from "./Pages/Login/Login.jsx";
 import Register from "./Pages/Register/Register.jsx";
-import UploadPage from "./Pages/Upload/Upload.jsx";
+import UploadPage from "./Pages/Teacher/Upload/Upload.jsx";
 import StudentViewChapter from "./Pages/StudentViewChapter/StudentViewChapter.jsx";
 import Logout from "./Pages/Login/Logout.jsx";
 

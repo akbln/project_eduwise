@@ -18,7 +18,7 @@ public class NewTeacherDTO {
     @NotNull
     @Size(min = 2, message = "Invalid name")
     @Size(max = 50, message = "Invalid name")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Invalid name")
+    @Pattern(regexp = "^[a-zA-Z]+( [a-zA-Z]+)+$", message = "Invalid name")
     private String name;
 
     @Pattern(regexp = "^[MF]$", message = "Invalid Input")

@@ -13,6 +13,7 @@ public class Chapter {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "chapter_id", nullable = false,updatable = false)
+
     private String id;
 
 

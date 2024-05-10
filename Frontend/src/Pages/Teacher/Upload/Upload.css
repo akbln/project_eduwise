@@ -7,9 +7,9 @@
 
 
 .upload-area{
-    background-color: red;
+    background-color: #ece8e8;
     grid-column: 3 / 10;
-    grid-row: 2 / 6;
+    grid-row: 2 / 7;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,9 +17,8 @@
 .upload-options{
     background-color: blue;
     grid-column: 10 / 13;
-    grid-row: 2 / 6;
+    grid-row: 2 / 7;
 }
-
 
 .upload-options{
     display: flex;
@@ -38,41 +37,38 @@
 }
 .upload-type{
     background-color: yellow;
-    width: 60%;
+    width: 40%;
     height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media screen and (max-width: 900px){
     .upload-area{
-        background-color: red;
         grid-column: 3 / 13;
         grid-row: 2 / 6;
     }
     .upload-options{
-        background-color: blue;
         grid-column: 3 / 13;
         grid-row: 6 / 8;
     }
     .sidebar{
-        background-color: yellow;
         grid-column: 1 / 3;
         grid-row: 1 / 11;
     }
 }
 @media screen and (max-width: 450px){
     .upload-area{
-        background-color: red;
         grid-column: 1 / 13;
         grid-row: 4 / 7;
     }
     .upload-options{
-        background-color: blue;
         grid-column: 1 / 13;
         grid-row: 7 / 10;
 
     }
     .sidebar{
-        background-color: yellow;
         grid-column: 1 / 13;
         grid-row: 2 / 4;
     }
