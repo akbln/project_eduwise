@@ -17,10 +17,16 @@
     align-items: center;
     flex-direction: column;
     font-size: xx-large;
+    font-family: lato ,sans-serif;
+    font-weight: bolder;
 }
 .question input{
-    width: 80%;
-    padding: 10px;
+    width: 65%;
+    padding: 13px 10px 13px 10px;
+    background-color: #e9eef6;
+    font-size: 20px;
+    font-family: lato ,sans-serif;
+    font-weight: bold;
 }
 .answer-a{
     grid-column: 1/7;
@@ -43,10 +49,21 @@
     justify-content: center;
     align-items: center;
     font-size: x-large;
+
+
 }
 .answer input {
     padding: 10px;
-    width:80%
+    width:80%;
+    background-color: #e9eef6;
+    margin-left: 5px;
+    font-family: lato, sans-serif;
+    font-size: 20px;
+
+
+}
+.answer input:focus {
+    background-color: #ffffff;
 }
 .answer-key{
     grid-column: 1/13;

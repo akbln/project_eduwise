@@ -12,6 +12,7 @@ import com.edusenior.project.Utility.BcryptPasswordEncoder;
 
 import javax.security.auth.login.LoginException;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 
 @Service
@@ -33,10 +34,11 @@ public class LoginServiceImpl implements LoginService {
     public JwtDTO login(LoginDTO loginDTO) throws LoginException {
         final String email = loginDTO.getEmail();
 
-        Credentials credentials = credentialsJpaRepository.findByEmail(email);
-        if (credentials == null){
+        Optional<Credentials> credentialsOptional = credentialsJpaRepository.findByEmail(email);
+        if (credentialsOptional.isEmpty()){
             throw new LoginException("Invalid credentials");
         }
+        Credentials credentials = credentialsOptional.get();
         if(isLockedOut(credentials)){
             throw new LoginException("You are not allowed to login at this time");
         }
@@ -49,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 
         final String id = credentials.getId();
         final String userRole = credentials.getRole();
-        return new JwtDTO(jwtManager.generateToken(id, userRole));
+        return new JwtDTO(jwtManager.generateToken(id, userRole,email));
     }
     private void resetFailedAttempts(Credentials credentials) {
         credentials.setFailed(0);

@@ -39,6 +39,4 @@ public class SecurityConfig {
         http.csrf(CsrfConfigurer::disable);
         return http.build();
     }
-
-
 }

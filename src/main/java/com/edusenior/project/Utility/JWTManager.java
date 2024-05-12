@@ -25,11 +25,11 @@ public class JWTManager {
         this.secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
     }
 
-    public String generateToken(String userId, String role) {
+    public String generateToken(String userId, String role ,String email) {
         long currentTime = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(userId)
-                .claim("role", role) // Adding a custom claim for the role
+                .claim("role", role).claim("email",email) // Adding a custom claim for the role
                 .setIssuedAt(new Date(currentTime))
                 .setExpiration(new Date(currentTime+60480000))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
@@ -37,7 +37,7 @@ public class JWTManager {
     }
 
     public String getEmailFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+        return getClaimFromToken(token, claims -> claims.get("email", String.class));
     }
 
     public String getRoleFromToken(String token) {

@@ -7,8 +7,11 @@ import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepository;
 import com.edusenior.project.JpaRepositories.teacher.TeacherDAO;
 import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
+import com.edusenior.project.dataTransferObjects.QuestionDTO;
+import com.edusenior.project.entities.Question;
 import com.edusenior.project.entities.Users.Credentials;
 import com.edusenior.project.entities.Users.Teacher;
+import com.edusenior.project.services.QuestionService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +26,14 @@ public class TeacherServiceImpl implements TeacherService{
     private TeacherDAO teacherDAO;
     private BcryptPasswordEncoder encoder;
     private CredentialsJpaRepository credentialsJpaRepository;
+    private QuestionService qService;
 
     @Autowired
-    public TeacherServiceImpl(TeacherDAO teacherDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository) {
+    public TeacherServiceImpl(TeacherDAO teacherDAO, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository, QuestionService qService) {
         this.teacherDAO = teacherDAO;
         this.encoder = encoder;
         this.credentialsJpaRepository = credentialsJpaRepository;
+        this.qService = qService;
     }
 
     @Transactional
@@ -48,5 +53,8 @@ public class TeacherServiceImpl implements TeacherService{
         credentialsJpaRepository.save(c);
         ServerResponse response = new ServerResponse("success",new ArrayList<>());
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    public ResponseEntity<ServerResponse> uploadQuestion (QuestionDTO questionDTO){
+        return qService.uploadQuestion(questionDTO);
     }
 }

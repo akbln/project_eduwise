@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CredentialsJpaRepository extends JpaRepository<Credentials, String> {
@@ -16,7 +17,7 @@ public interface CredentialsJpaRepository extends JpaRepository<Credentials, Str
 
     boolean existsByEmail(String email);
 
-    Credentials findByEmail(String email);
+    Optional<Credentials> findByEmail(String email);
 
     @Query("SELECT u.role FROM Credentials u WHERE u.email = ?1")
     String getRoleByEmail(String email);

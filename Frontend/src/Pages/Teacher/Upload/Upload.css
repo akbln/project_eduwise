@@ -3,21 +3,29 @@
     grid-template-columns: repeat(12,1fr);
     grid-template-rows:  minmax(75px,auto) repeat(9,minmax(100px, auto));
     grid-gap: 20px;
+    background: #f8fafd
+
+
 }
 
 
 .upload-area{
-    background-color: #ece8e8;
+    background-color: #d6d2d2;
     grid-column: 3 / 10;
     grid-row: 2 / 7;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #00231b;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
+
 .upload-options{
-    background-color: blue;
+    background-color: #d6d2d2;
+    border: 1px solid #d3d3d3;
     grid-column: 10 / 13;
     grid-row: 2 / 7;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .upload-options{
@@ -36,12 +44,15 @@
     outline: 1px solid #49a4fb;
 }
 .upload-type{
-    background-color: yellow;
-    width: 40%;
-    height: 50px;
+    background-image: linear-gradient(to bottom, #232526 0%, #414345  51%, #232526  100%);
+    color: white;
+    width: 150px;
+    height: 75px;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 900px){
