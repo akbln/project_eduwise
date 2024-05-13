@@ -15,7 +15,7 @@ public interface StudentMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "age", target = "age")
     @Mapping(source = "gender", target = "gender")
-    @Mapping(source = "level", target = "level")
+//    @Mapping(source = "level", target = "level")
 
 
     Student newStudentDtoToStudent(NewStudentDTO newStudentDTO);
