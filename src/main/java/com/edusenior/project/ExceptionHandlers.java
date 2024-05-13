@@ -2,6 +2,7 @@ package com.edusenior.project;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Exceptions.EmailNotFoundException;
+import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.Exceptions.StudentEmailsNotFoundException;
 import com.edusenior.project.ServerResponses.EmailsNotFoundResponse;
 import com.edusenior.project.ServerResponses.ServerResponse;
@@ -56,5 +57,19 @@ public class ExceptionHandlers {
         errors.add(ex.getMessage());
         EmailsNotFoundResponse errorResponse = new EmailsNotFoundResponse("failed",errors,ex.getNotFoundEmails());
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(InvalidOperationException.class)
+    public ResponseEntity<ServerResponse> handleInvalidOperationException(InvalidOperationException ex){
+        ArrayList<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        ServerResponse error = new ServerResponse("failed",errors);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ServerResponse> handleInvalidOperationException(IllegalArgumentException ex){
+        ArrayList<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        ServerResponse error = new ServerResponse("failed",errors);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

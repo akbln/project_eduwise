@@ -37,11 +37,11 @@ public class Question {
     private String description;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uploader_id")
     private Teacher teacher;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 

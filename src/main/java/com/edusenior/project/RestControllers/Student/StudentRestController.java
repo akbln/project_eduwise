@@ -1,7 +1,9 @@
 package com.edusenior.project.RestControllers.Student;
 
 import com.edusenior.project.ServerResponses.ServerResponse;
+import com.edusenior.project.dataTransferObjects.GetQuestionDTO;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
+import com.edusenior.project.entities.Question;
 import com.edusenior.project.entities.Users.Student;
 import com.edusenior.project.services.student.StudentServiceImpl;
 import jakarta.validation.Valid;
@@ -27,9 +29,9 @@ public class StudentRestController {
     public Student fetchStudentByUUID(@PathVariable String studentUUID){
         return studentService.fetchStudent(studentUUID);
     }
-//    @GetMapping("/email={studentEmail}")
-//    public Student fetchStudentByEmail(@PathVariable String studentEmail){
-//        return studentService.fetchStudentByEmail(studentEmail);
-//    }
+    @GetMapping("/chapters/{chapterId}/questions/{offSet}")
+    public GetQuestionDTO fetchQuestionByChapterIdAndIndex(@PathVariable String chapterId, @PathVariable int offSet){
+        return studentService.fetchQuestionByChapterIdAndIndex(chapterId,offSet);
+    }
 
 }

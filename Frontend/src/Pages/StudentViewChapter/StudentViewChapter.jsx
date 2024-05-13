@@ -4,6 +4,8 @@ import Header from "../../components/Header/Header.jsx";
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer.jsx";
 import QuestionLoader from "../../components/QuestionLoader/QuestionLoader.jsx";
+import {ToastContainer,toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StudentViewChapter = () => {
     const {id} = useParams();
@@ -11,6 +13,7 @@ const StudentViewChapter = () => {
     console.log(videoUrl)
     return(
         <div className="svc-page">
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
             <div className={"header-wrapper-svc"}>
                 <Header/>
             </div>
@@ -22,7 +25,7 @@ const StudentViewChapter = () => {
                 <VideoPlayer videoUrl={videoUrl}/>
             </div>
             <div className={"question-loader-wrapper"}>
-                <QuestionLoader/>
+                <QuestionLoader chapterId={id} />
             </div>
         </div>
     )

@@ -6,11 +6,15 @@ import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepositor
 import com.edusenior.project.JpaRepositories.teacher.TeacherJpaDAO;
 import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.Utility.JWTManager;
+import com.edusenior.project.dataTransferObjects.GetQuestionDTO;
 import com.edusenior.project.dataTransferObjects.QuestionDTO;
+import com.edusenior.project.entities.Chapter;
 import com.edusenior.project.entities.Question;
 import com.edusenior.project.entities.Users.Credentials;
 import com.edusenior.project.entities.Users.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -76,4 +80,25 @@ public class QuestionService {
         return  new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()), HttpStatus.OK);
 
     }
+
+    public GetQuestionDTO getQuestionByChapterIdAndIndex(String chapterId, int index){
+        Page<Question> page = qJpa.findByChapterIdAndIndex(chapterId, PageRequest.of(index,1));
+        if(!page.hasContent()){
+            throw new InvalidOperationException("Empty Question Set For Chapter");
+        }
+        Question q = page.getContent().getFirst();
+
+        GetQuestionDTO questionJson = new GetQuestionDTO();
+
+        questionJson.setId(q.getId());
+        questionJson.setQuestion(q.getQuestion());
+        questionJson.setAnswer1(q.getAnswer1());
+        questionJson.setAnswer2(q.getAnswer2());
+        questionJson.setAnswer3(q.getAnswer3());
+        questionJson.setAnswer4(q.getAnswer4());
+
+        return questionJson;
+
+    }
+
 }
