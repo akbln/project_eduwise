@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class VideoUploadDTO {
     @NotNull
-    @ValidVideo
+//    @ValidVideo
     private MultipartFile video;
 
     @NotNull

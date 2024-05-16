@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Validated
+//@Validated
 @RestController
 @RequestMapping("/videos")
 public class VideoUploadRestController {
@@ -22,7 +22,7 @@ public class VideoUploadRestController {
     }
 
     @PutMapping("/upload")
-    public ResponseEntity<ServerResponse> uploadVideo (@Valid @ModelAttribute VideoUploadDTO vDTO){
+    public ResponseEntity<ServerResponse> uploadVideo (@ModelAttribute VideoUploadDTO vDTO){
         return videoUploadService.storeVideo(vDTO);
     }
 }
