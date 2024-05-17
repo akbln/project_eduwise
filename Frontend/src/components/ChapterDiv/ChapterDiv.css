@@ -1,0 +1,15 @@
+.chapter {
+    display: flex;
+    align-items: center;           /* Centers text vertically */
+    justify-content: center;       /* Centers text horizontally (optional) */
+    height: 80px;
+    width: 100%;
+    background-image: url("../../assets/b2.png");
+    /*background-repeat: repeat-x;   !* Repeats the background image horizontally *!*/
+    /*background-position: center;   !* Centers the background image vertically *!*/
+    background-size: cover;
+    border-radius: 5px;
+    border: black 3px solid ;
+    font-size: 50px;
+    color: white;
+}

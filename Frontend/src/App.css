@@ -20,6 +20,13 @@ body {
   transform: scale(1.2);
   cursor: pointer;
 }
+.transform-ease-m{
+  transition: transform 0.3s ease;
+}
+.transform-ease-m:hover{
+  transform: scale(1.05);
+  cursor: pointer;
+}
 .no-select {
   -webkit-user-select: none;
   -ms-user-select: none;

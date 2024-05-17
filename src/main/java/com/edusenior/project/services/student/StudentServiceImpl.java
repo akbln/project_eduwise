@@ -107,6 +107,11 @@ public class StudentServiceImpl implements StudentService {
         if(!sc.getEnrolledStudents().contains(student)){
             throw new InvalidOperationException("Unauthorized request");
         }
+
+        return getAllStudentChaptersDTO(sc);
+    }
+
+    private FetchAllStudentChaptersDTO getAllStudentChaptersDTO(SchoolClass sc) {
         ArrayList<Chapter> chapters = new ArrayList<>(sc.getCourse().getAllChapters());
 
         ArrayList<ChapterDTO> scChaptersDTO = new ArrayList<>();
@@ -121,7 +126,6 @@ public class StudentServiceImpl implements StudentService {
 
         FetchAllStudentChaptersDTO classJson = new FetchAllStudentChaptersDTO();
         classJson.setAllChapters(scChaptersDTO);
-
         return classJson;
     }
 
