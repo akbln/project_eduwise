@@ -3,6 +3,7 @@ package com.edusenior.project.RestControllers.Student;
 import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.Exceptions.RouteAuthenticationException;
 import com.edusenior.project.ServerResponses.ServerResponse;
+import com.edusenior.project.dataTransferObjects.FetchAllStudentChaptersDTO;
 import com.edusenior.project.dataTransferObjects.FetchAllStudentClassesDTO;
 import com.edusenior.project.dataTransferObjects.GetQuestionDTO;
 import com.edusenior.project.dataTransferObjects.NewStudentDTO;
@@ -41,18 +42,25 @@ public class StudentRestController {
     public GetQuestionDTO fetchQuestionByChapterIdAndIndex(@PathVariable String chapterId, @PathVariable int offSet){
         return studentService.fetchQuestionByChapterIdAndIndex(chapterId,offSet);
     }
-    @GetMapping("/{id}/classes")
-    public FetchAllStudentClassesDTO fetchAllClasses(@PathVariable @NotNull String  id, UsernamePasswordAuthenticationToken auth){
+    @GetMapping("/classes")
+    public FetchAllStudentClassesDTO fetchAllClasses(UsernamePasswordAuthenticationToken auth){
         Map<String, String> details;
         try{
             details = (Map<String, String>) auth.getDetails();
         }catch (ClassCastException ex){
             throw new InvalidOperationException(ex.getMessage());
         }
-        if(!id.equals(details.get("id"))){
-            throw new RouteAuthenticationException("Unauthorized access to route");
+        return studentService.fetchAllClasses(details.get("id"));
+    }
+    @GetMapping("/classes/{id}/chapters")
+    public FetchAllStudentChaptersDTO fetchAllChapters(@PathVariable String id, UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
         }
-        return studentService.fetchAllClasses(id);
+        return studentService.fetchAllChapters(id,details.get("id"));
     }
 
 }
