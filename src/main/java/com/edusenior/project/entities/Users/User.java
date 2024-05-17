@@ -65,4 +65,7 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
+    public String getId() {
+        return id;
+    }
 }

@@ -40,6 +40,10 @@ public class JWTManager {
         return getClaimFromToken(token, claims -> claims.get("email", String.class));
     }
 
+    public String getIdFromToken(String token) {
+        return getClaimFromToken(token, claims -> claims.getSubject());
+    }
+
     public String getRoleFromToken(String token) {
         return getClaimFromToken(token, claims -> claims.get("role", String.class));
     }

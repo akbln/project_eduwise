@@ -3,6 +3,7 @@ package com.edusenior.project.entities;
 import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.entities.Users.Student;
 import com.edusenior.project.entities.Users.Teacher;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 

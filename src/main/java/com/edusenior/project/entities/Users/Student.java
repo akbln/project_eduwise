@@ -1,6 +1,7 @@
 package com.edusenior.project.entities.Users;
 
 import com.edusenior.project.entities.SchoolClass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -17,7 +18,7 @@ public class Student extends User {
 
 
 
-    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch = FetchType.EAGER)
     @JoinTable(
             name = "classes_students_junction",
             joinColumns=@JoinColumn(name = "student_id"),

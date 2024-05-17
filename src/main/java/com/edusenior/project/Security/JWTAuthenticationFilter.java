@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
@@ -55,9 +56,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             }
             token = token.substring(7);
             String role = jwtManager.getRoleFromToken(token);
+            String id =   jwtManager.getIdFromToken(token);
             String email = jwtManager.getEmailFromToken(token);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     email, null, List.of(new SimpleGrantedAuthority("ROLE_"+role)));
+            auth.setDetails(Map.of("id",id));
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request, response);
         }

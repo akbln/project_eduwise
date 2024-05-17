@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 
         final String id = credentials.getId();
         final String userRole = credentials.getRole();
-        return new JwtDTO(jwtManager.generateToken(id, userRole,email));
+        return new JwtDTO(jwtManager.generateToken(id, userRole ,email));
     }
     private void resetFailedAttempts(Credentials credentials) {
         credentials.setFailed(0);
