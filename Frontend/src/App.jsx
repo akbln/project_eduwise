@@ -10,6 +10,7 @@ import StudentViewChapter from "./Pages/StudentViewChapter/StudentViewChapter.js
 import Logout from "./Pages/Login/Logout.jsx";
 import SHome from "./Pages/Home/Student/sHome.jsx";
 import StudentViewClass from "./Pages/StudentViewClass/StudentViewClass.jsx";
+import StartCompetition from "./Pages/StartCompetition/StartCompetition.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/students/chapters/:id" element={<StudentViewChapter/>} />
         <Route path="/students/classes/:id" element={<StudentViewClass/>} />
         <Route path="/students/home" element={<SHome/>} />
+        <Route path="/teachers/competitions/create" element={<StartCompetition/>} />
     </Routes>
   );
 }

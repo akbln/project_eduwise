@@ -12,12 +12,20 @@ const StudentViewClass = () => {
     const [chapters,setChapters] = useState([]);
     const [loaded,setLoaded] = useState(false);
     const navigate = useNavigate();
-    useEffect(()=>{
-        if(!localStorage.getItem("token")){
+    const deAuth = (err,navigate) => {
+        if(err.response.data.errors.includes("Bad JWT")){
+            localStorage.removeItem("token");
             navigate("/login");
         }
+    }
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login");
+            return;
+        }
         fetchChapters();
-    },[])
+    },[navigate])
 
 
 
@@ -32,6 +40,7 @@ const StudentViewClass = () => {
                 setChapters(res.data.allChapters)
             }
         }catch (err){
+            deAuth(err,navigate)
             console.log(err);
         }
     }
