@@ -5,6 +5,9 @@ import com.edusenior.project.entities.Users.Teacher;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
+import java.util.List;
+
 @Entity
 @Table(name = "questions")
 public class Question {
@@ -44,6 +47,19 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
+
+    @ManyToMany
+    @JoinTable(
+            name = "comp_questions_junction",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn (name = "comp_id")
+    )
+    private List<Comp> comps;
+
+    @OneToMany(mappedBy = "question")
+    private List<CompSubmissions> compSubmissions;
+
+
 
     public String getId() {
         return id;
@@ -119,5 +135,21 @@ public class Question {
 
     public void setAnswer2(String answer2) {
         this.answer2 = answer2;
+    }
+
+    public List<Comp> getComps() {
+        return comps;
+    }
+
+    public void setComps(List<Comp> comps) {
+        this.comps = comps;
+    }
+
+    public List<CompSubmissions> getCompSubmissions() {
+        return compSubmissions;
+    }
+
+    public void setCompSubmissions(List<CompSubmissions> compSubmissions) {
+        this.compSubmissions = compSubmissions;
     }
 }

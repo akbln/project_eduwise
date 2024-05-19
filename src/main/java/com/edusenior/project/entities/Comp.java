@@ -1,11 +1,14 @@
 package com.edusenior.project.entities;
 
 
+import com.edusenior.project.entities.Users.Student;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Entity
 @Table(name = "comp")
@@ -14,7 +17,7 @@ public class Comp {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "comp_id", nullable = false,updatable = false)
+    @Column(name = "comp_id", nullable = false, updatable = false)
     private String compId;
 
     @Column(name = "start_date")
@@ -40,13 +43,15 @@ public class Comp {
     @JoinTable(
             name = "comp_questions_junction",
             joinColumns = @JoinColumn(name = "comp_id"),
-            inverseJoinColumns = @JoinColumn (name = "question_id")
+            inverseJoinColumns = @JoinColumn(name = "question_id")
     )
-    private HashSet<Question> questions;
+    private List<Question> questions;
 
     @OneToMany(mappedBy = "comp")
-    private HashSet<CompSubmissions> compSubmissions;
+    private List<CompSubmissions> compSubmissions;
 
+    @OneToMany(mappedBy = "comp")
+    private List<Student> students;
 
 
     public String getCompId() {
@@ -101,19 +106,33 @@ public class Comp {
         this.schoolClass = schoolClass;
     }
 
-    public HashSet<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(HashSet<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
-    public HashSet<CompSubmissions> getCompSubmissions() {
+    public List<CompSubmissions> getCompSubmissions() {
         return compSubmissions;
     }
 
-    public void setCompSubmissions(HashSet<CompSubmissions> compSubmissions) {
+    public void setCompSubmissions(List<CompSubmissions> compSubmissions) {
         this.compSubmissions = compSubmissions;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+    public void addStudent(Student s){
+        if(students == null){
+            students = new ArrayList<>();
+        }
+        students.add(s);
     }
 }

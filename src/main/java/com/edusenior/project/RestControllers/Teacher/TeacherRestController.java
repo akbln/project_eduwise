@@ -1,14 +1,17 @@
 package com.edusenior.project.RestControllers.Teacher;
 
+import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.ServerResponses.ServerResponse;
-import com.edusenior.project.dataTransferObjects.NewTeacherDTO;
-import com.edusenior.project.dataTransferObjects.QuestionDTO;
+import com.edusenior.project.dataTransferObjects.*;
 import com.edusenior.project.services.QuestionService;
 import com.edusenior.project.services.teacher.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teachers")
@@ -29,6 +32,30 @@ public class TeacherRestController {
     @PostMapping("/questions/upload")
     public ResponseEntity<ServerResponse> uploadQuestion( @Valid @RequestBody QuestionDTO qDTO){
         return questionService.uploadQuestion(qDTO);
+    }
+    @GetMapping("/classes")
+    public FetchAllClassesDTO fetchAllClasses(UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return teacherService.fetchAllClasses(details.get("id"));
+    }
+    @GetMapping("/questions")
+    public FetchAllQuestionsOfTeacherDTO fetchAllQuestionsOfTeacher(UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return teacherService.fetchAllQuestionsOfTeacher(details.get("id"));
+    }
+    @PutMapping("/competitions")
+    public ResponseEntity<ServerResponse> createComp(@RequestBody CreateCompDTO compDTO){
+        return teacherService.createComp(compDTO);
     }
 
 }

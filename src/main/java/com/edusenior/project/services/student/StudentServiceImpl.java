@@ -12,7 +12,6 @@ import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.*;
 import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.ChapterDTO;
 import com.edusenior.project.entities.Chapter;
-import com.edusenior.project.entities.Question;
 import com.edusenior.project.entities.SchoolClass;
 import com.edusenior.project.entities.Users.Credentials;
 import com.edusenior.project.entities.Users.Student;
@@ -77,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
         return questionService.getQuestionByChapterIdAndIndex(chapterId,offset);
     }
 
-    public FetchAllStudentClassesDTO fetchAllClasses(String id){
+    public FetchAllClassesDTO fetchAllClasses(String id){
         Student s = studentJpaRepository.findById(id)
                 .orElseThrow(() -> new InvalidOperationException("A student with that ID doesn't exist"));
 
@@ -93,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
             schoolClassDTOs.add(cDTO);
         }
 
-        FetchAllStudentClassesDTO classJson = new FetchAllStudentClassesDTO();
+        FetchAllClassesDTO classJson = new FetchAllClassesDTO();
         classJson.setAllClasses(schoolClassDTOs);
 
         return classJson;

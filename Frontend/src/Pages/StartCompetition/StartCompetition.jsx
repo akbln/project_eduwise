@@ -12,6 +12,24 @@ const StartCompetition = () => {
     const [selectedClass,setSelectedClass] = useState("");
     const [selectedQuestions,setSelectedQuestions] = useState([]);
 
+    const createCompRequest = async () => {
+
+        const reqJson = {
+            "questions":selectedQuestions,
+            "classId":selectedClass
+        }
+
+        try {
+            const response1 = await axios.put('http://localhost/teachers/competitions',JSON.stringify(reqJson), {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type" : "application/json"
+                }
+            });
+        }catch (e){
+            console.log(e);
+        }
+    }
 
     const toggleSelectedQuestions = (q) => {
         if(!selectedQuestions.includes(q.id)){
@@ -67,15 +85,17 @@ const StartCompetition = () => {
             </div>
             <div className={styles.schoolClasses}>
                 {loaded && schoolClasses?.map((cls) => (
-                    <div className={`${styles.schoolClass} ${selectedClass === cls.classId ? styles.selectedClass : ''} transform-ease-m no-select`}
-                         onClick={() => setSelectedClass(cls.classId)}
-                         key={cls.classId}>
+                    <div
+                        className={`${styles.schoolClass} ${selectedClass === cls.classId ? styles.selectedClass : ''} transform-ease-m no-select`}
+                        onClick={() => setSelectedClass(cls.classId)}
+                        key={cls.classId}>
                         <p>{cls.name}</p>
                     </div>
 
                 ))}
-
+                <button onClick={createCompRequest}>Upload</button>
             </div>
+
         </div>
     )
 

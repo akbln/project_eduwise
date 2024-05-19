@@ -65,13 +65,13 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
         catch (BadAuthorizationException ex) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Invalid JWT\"]}");
             response.setContentType("application/json");
             response.getWriter().flush();
         }
         catch (JwtException ex){
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("{\"operationStatus\":\"failed\", \"errors\":[\"Bad JWT\"]}");
             response.setContentType("application/json");
             response.getWriter().flush();

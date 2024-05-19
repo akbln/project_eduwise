@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +44,8 @@ public class SchoolClass {
     @Column(name = "number_of_students")
     private int numberOfStudents;
 
+    @OneToMany(mappedBy = "schoolClass")
+    private List<Comp> comps;
 
     // Getters and Setters
 
@@ -76,6 +79,27 @@ public class SchoolClass {
         return enrolledStudents;
     }
 
+
+    public List<Comp> getComps() {
+        return comps;
+    }
+
+    public void setComps(List<Comp> comps) {
+        this.comps = comps;
+    }
+
+    public int getNumberOfStudents() {
+        return numberOfStudents;
+    }
+
+    public void setNumberOfStudents(int numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
+    }
+
+    public void setEnrolledStudents(List<Student> enrolledStudents) {
+        this.enrolledStudents = enrolledStudents;
+    }
+
     // Methods
     // Too slow
     public int incrementNumberOfStudents() {
@@ -107,3 +131,5 @@ public class SchoolClass {
     public int hashCode() {
         return Objects.hashCode(id);
     }}
+
+

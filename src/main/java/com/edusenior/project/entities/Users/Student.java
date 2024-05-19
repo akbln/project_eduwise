@@ -1,5 +1,7 @@
 package com.edusenior.project.entities.Users;
 
+import com.edusenior.project.entities.Comp;
+import com.edusenior.project.entities.CompSubmissions;
 import com.edusenior.project.entities.SchoolClass;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,14 +19,21 @@ public class Student extends User {
     private String level;
 
 
-
-    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "classes_students_junction",
-            joinColumns=@JoinColumn(name = "student_id"),
+            joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "class_id")
     )
     private Set<SchoolClass> enrolledClasses;
+
+    @ManyToOne
+    @JoinColumn(name = "comp_id")
+    private Comp comp;
+
+    @OneToMany(mappedBy = "student")
+    private List<CompSubmissions> compSubmissions;
+
 
     public Student() {
         super();
@@ -45,17 +54,20 @@ public class Student extends User {
     public void setEnrolledClasses(Set<SchoolClass> enrolledClasses) {
         this.enrolledClasses = enrolledClasses;
     }
-    //    public void addMultipleClasses(List<SchoolClass> SchoolClasses){
-//        if(enrolledClasses == null){
-//            enrolledClasses = new ArrayList<>();
-//        }
-//        enrolledClasses.addAll(SchoolClasses);
-//    }
-//    public void addSingleClass(SchoolClass c){
-//        if(enrolledClasses == null){
-//            enrolledClasses = new ArrayList<>();
-//        }
-//        enrolledClasses.add(c);
-//    }
 
+    public Comp getComp() {
+        return comp;
+    }
+
+    public void setComp(Comp comp) {
+        this.comp = comp;
+    }
+
+    public List<CompSubmissions> getCompSubmissions() {
+        return compSubmissions;
+    }
+
+    public void setCompSubmissions(List<CompSubmissions> compSubmissions) {
+        this.compSubmissions = compSubmissions;
+    }
 }
