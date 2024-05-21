@@ -16,7 +16,8 @@ const StartCompetition = () => {
 
         const reqJson = {
             "questions":selectedQuestions,
-            "classId":selectedClass
+            "classId":selectedClass,
+            "timePerQuestionSeconds":20
         }
 
         try {

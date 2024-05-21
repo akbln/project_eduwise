@@ -11,6 +11,7 @@ import Logout from "./Pages/Login/Logout.jsx";
 import SHome from "./Pages/Home/Student/sHome.jsx";
 import StudentViewClass from "./Pages/StudentViewClass/StudentViewClass.jsx";
 import StartCompetition from "./Pages/StartCompetition/StartCompetition.jsx";
+import StudentViewComp from "./Pages/ViewComp/StudentViewComp.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/students/classes/:id" element={<StudentViewClass/>} />
         <Route path="/students/home" element={<SHome/>} />
         <Route path="/teachers/competitions/create" element={<StartCompetition/>} />
+        <Route path="/students/competition" element={<StudentViewComp/>} />
     </Routes>
   );
 }

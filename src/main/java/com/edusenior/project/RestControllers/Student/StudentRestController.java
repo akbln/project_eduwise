@@ -2,6 +2,8 @@ package com.edusenior.project.RestControllers.Student;
 
 import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.ServerResponses.ServerResponse;
+import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.LoadCompDTO;
+import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.SubmitQuestionDTO;
 import com.edusenior.project.dataTransferObjects.FetchAllStudentChaptersDTO;
 import com.edusenior.project.dataTransferObjects.FetchAllClassesDTO;
 import com.edusenior.project.dataTransferObjects.GetQuestionDTO;
@@ -57,6 +59,27 @@ public class StudentRestController {
             throw new InvalidOperationException(ex.getMessage());
         }
         return studentService.fetchAllChapters(id,details.get("id"));
+    }
+    @GetMapping("/competition")
+    public LoadCompDTO fetchAllChapters(UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return studentService.fetchEntireCompQuestions(details.get("id"));
+    }
+    @PostMapping("/competition")
+    public ResponseEntity<ServerResponse> submitQuestionResponse(@RequestBody SubmitQuestionDTO sqDTO,UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return studentService.submitQuestionResponse(sqDTO,details.get("id"));
+
     }
 
 }

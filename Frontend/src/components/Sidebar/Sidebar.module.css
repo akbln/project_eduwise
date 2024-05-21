@@ -1,0 +1,20 @@
+.sidebar{
+    background-color: yellow;
+    width: 17%;
+    position: fixed;
+    height: 100vh;
+}
+@media screen and (max-width: 900px) {
+    .sidebar{
+        /*width: 1;*/
+    }
+}
+@media screen and (max-width: 450px) {
+    .sidebar{
+        position: relative;
+        height: auto;
+        width: auto;
+        grid-column: 1/13;
+        grid-row: 2/6;
+    }
+}

@@ -147,6 +147,7 @@ public class TeacherServiceImpl implements TeacherService{
         comp.setNumberOfQuestions(numberOfQuestions);
         comp.setNumberOfParticipants(classStudents.size());
         comp.setSchoolClass(sc);
+        comp.setTimePerQuestionSeconds(compDTO.getTimePerQuestionSeconds());
         sc.getComps().add(comp);
 
         for(Student s : classStudents){

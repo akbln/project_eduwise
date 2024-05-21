@@ -1,8 +1,8 @@
-import "./Sidebar.css";
+import styles from "./Sidebar.module.css";
 
 const Sidebar = () => {
     return (
-        <div className="sidebar"></div>
+        <div className={styles.sidebar}></div>
     )
 }
 export default Sidebar;

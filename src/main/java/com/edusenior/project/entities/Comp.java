@@ -39,7 +39,7 @@ public class Comp {
     @JoinColumn(name = "class_id")
     private SchoolClass schoolClass;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "comp_questions_junction",
             joinColumns = @JoinColumn(name = "comp_id"),
