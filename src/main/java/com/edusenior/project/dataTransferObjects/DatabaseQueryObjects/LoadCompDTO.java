@@ -8,7 +8,7 @@ public class LoadCompDTO {
 
     private ArrayList<GetQuestionDTO> questions;
     private int timePerQuestions;
-
+    private String compId;
 
     public ArrayList<GetQuestionDTO> getQuestions() {
         return questions;
@@ -21,5 +21,13 @@ public class LoadCompDTO {
     }
     public void setTimePerQuestions(int timePerQuestions) {
         this.timePerQuestions = timePerQuestions;
+    }
+
+    public String getCompId() {
+        return compId;
+    }
+
+    public void setCompId(String compId) {
+        this.compId = compId;
     }
 }

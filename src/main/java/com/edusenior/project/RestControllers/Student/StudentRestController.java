@@ -79,7 +79,6 @@ public class StudentRestController {
             throw new InvalidOperationException(ex.getMessage());
         }
         return studentService.submitQuestionResponse(sqDTO,details.get("id"));
-
     }
 
 }

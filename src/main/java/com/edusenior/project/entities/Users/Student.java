@@ -3,6 +3,7 @@ package com.edusenior.project.entities.Users;
 import com.edusenior.project.entities.Comp;
 import com.edusenior.project.entities.CompSubmissions;
 import com.edusenior.project.entities.SchoolClass;
+import com.edusenior.project.entities.SubmissionCounts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -35,6 +36,8 @@ public class Student extends User {
     @OneToMany(mappedBy = "student")
     private List<CompSubmissions> compSubmissions;
 
+    @OneToMany(mappedBy = "student")
+    private List<SubmissionCounts> submissionCounts;
 
     public Student() {
         super();

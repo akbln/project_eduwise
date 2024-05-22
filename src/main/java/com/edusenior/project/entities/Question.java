@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "questions")
@@ -151,5 +152,18 @@ public class Question {
 
     public void setCompSubmissions(List<CompSubmissions> compSubmissions) {
         this.compSubmissions = compSubmissions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return Objects.equals(getId(), question.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

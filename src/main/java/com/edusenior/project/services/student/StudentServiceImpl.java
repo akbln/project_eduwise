@@ -164,16 +164,24 @@ public class StudentServiceImpl implements StudentService {
             getQuestionDTOS.add(qDTO);
         }
         LoadCompDTO compDTO = new LoadCompDTO();
+        compDTO.setCompId(comp.getCompId());
         compDTO.setQuestions(getQuestionDTOS);
         compDTO.setTimePerQuestions(comp.getTimePerQuestionSeconds());
 
         return compDTO;
     }
-
+    @Transactional
     public ResponseEntity<ServerResponse> submitQuestionResponse(SubmitQuestionDTO sqDTO, String id){
         Student s = studentJpaRepository.findById(id).orElseThrow(() -> new InvalidOperationException("A Student with that ID could not be found"));
         final String compId = sqDTO.getCompId();
         Comp comp = compJpaRepo.findById(compId).orElseThrow(() -> new InvalidOperationException("A Competition with that ID could not be found"));
+        if(new Timestamp(System.currentTimeMillis()).after(comp.getEndDate())){
+            compJpaRepo.deleteById(comp.getCompId());
+            compJpaRepo.flush();
+            ArrayList<String> arr =  new ArrayList<>();
+            arr.add("Expired Competition");
+            return new ResponseEntity<>(new ServerResponse("failed",arr),HttpStatus.BAD_REQUEST);
+        }
         if(!comp.getStudents().contains(s)){
             throw new InvalidOperationException("A Competition with that ID could not be found");
         }
@@ -181,6 +189,10 @@ public class StudentServiceImpl implements StudentService {
                 new InvalidOperationException("A question with that ID could not be found"));
         if(!comp.getQuestions().contains(q)){
             throw new InvalidOperationException("A question with that ID could not be found");
+        }
+        int num = compSubmissionsJPA.getNumberOfSubmissionsOfStudentForQuestion(sqDTO.getQuestionId(),id,compId);
+        if(num > 0){
+            throw new InvalidOperationException("Already Submitted Question");
         }
         CompSubmissions submission = new CompSubmissions();
         submission.setAnswer(sqDTO.getSubmittedAnswer());
@@ -190,6 +202,5 @@ public class StudentServiceImpl implements StudentService {
         compSubmissionsJPA.saveAndFlush(submission);
         return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
     }
-
 
 }
