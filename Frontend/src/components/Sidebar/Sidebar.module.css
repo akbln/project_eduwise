@@ -1,12 +1,105 @@
+.miniSidebar{
+    z-index: 1;
+    height: 100%;
+    width: auto;
+    background-color: #cfcfcf;
+    display: flex;
+}
+.burger{
+    width: 100%;
+    margin-bottom: 50px;
+}
+.sidebarWrapper{
+    width: fit-content;
+}
+.sidebarUtility{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 .sidebar{
-    background-color: yellow;
-    width: 17%;
-    position: fixed;
+    z-index: 99;
+    background-color: #cfcfcf;
+    width: 20vw;
     height: 100vh;
+    top:0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: clamp(12px, 2vw, 24px);
+    transition: transform ease-in-out 0.4s,width ease-in-out 0.4s;
+
+}
+.sidebarClosed{
+    transform: translateX(-110%);
+    z-index: 0;
+}
+.sidebarOpen{
+    transform: translateX(0%);
+}
+.classesWrapper{
+    margin-top: 200px;
+    height: 70%;
+    justify-content: left;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+.sidebarClasses{
+    min-height: 70px;
+    width: 180px;
+    background-color: white;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.join{
+    min-height: 70px;
+    width: 180px;
+    background-color: white;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bolder;
 }
 @media screen and (max-width: 900px) {
     .sidebar{
-        /*width: 1;*/
+        width: 35vw;
+    }
+}
+@media screen and (max-width: 700px) {
+    .sidebar{
+        width: 100vw;
+        height: 30vh;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .burger{
+        margin-bottom: 0;
+    }
+    .sidebarWrapper{
+        width: 100%;
+    }
+    .sidebarUtility{
+        height: 100%;
+        width: 75%;
+    }
+    .classesWrapper{
+        display: none;
+
+    }
+    .miniSidebar{
+        width: 100%;
     }
 }
 @media screen and (max-width: 450px) {

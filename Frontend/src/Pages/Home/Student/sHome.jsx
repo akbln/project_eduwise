@@ -2,7 +2,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import ClassDiv from "../../../components/ClassDiv/ClassDiv.jsx";
-import "./sHome.css"
+import styles from "./sHome.module.css"
+import Header from "../../../components/Header/Header.jsx";
+import Sidebar from "../../../components/Sidebar/Sidebar.jsx";
 
 const SHome = () => {
     const [loaded,setLoaded] = useState(false);
@@ -39,14 +41,19 @@ const SHome = () => {
 
 
     return (
-        <div className={"student-home"}>
-            <div className={"sHome-header"}></div>
-            <div className={"sHome-classes"}>
-                {loaded && fetchedClasses.map((item) => (
-                    <div key={item.classId} className="sHome-classes" onClick={() => {navigate(`/students/classes/${item.classId}`)}}>
-                        {<ClassDiv schoolClassInfo={item} />}
-                    </div>
-                ))}
+        <div className={styles.page}>
+            <Sidebar role={"student"} />
+            <div className={styles.contentWrapper}>
+                <Header/>
+                <div className={styles.classes}>
+                    {loaded && fetchedClasses.map((item) => (
+                        <div key={item.classId} className={styles.class} onClick={() => {
+                            navigate(`/students/classes/${item.classId}`)
+                        }}>
+                            {<ClassDiv schoolClassInfo={item}/>}
+                        </div>
+                    ))}
+                </div>
             </div>
 
 

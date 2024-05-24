@@ -5,18 +5,19 @@ function expiredJwt(token) {
         const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
-        const expired = isTokenExpired(jsonPayload);
-        console.log(expired);
-        return expired;
 
+        const decodedToken = JSON.parse(jsonPayload);
+        const expired = isTokenExpired(decodedToken);
+        const role = decodedToken.role || null;
+
+        return [role, expired];
     } catch (error) {
-        return true;
+        return [null, true]; // If there's an error, return null for role and true for expired
     }
 }
-export default expiredJwt;
 
 function isTokenExpired(decodedToken) {
-    if (!decodedToken) {
+    if (!decodedToken || !decodedToken.exp) {
         console.log("Failed to decode token or token is empty.");
         return true; // Consider the token expired if it cannot be decoded
     }
@@ -24,3 +25,5 @@ function isTokenExpired(decodedToken) {
     const currentTime = Date.now() / 1000; // convert milliseconds to seconds
     return decodedToken.exp < currentTime;
 }
+
+export default expiredJwt;
