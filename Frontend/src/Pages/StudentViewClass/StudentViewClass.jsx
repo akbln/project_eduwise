@@ -1,9 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import ClassDiv from "../../components/ClassDiv/ClassDiv.jsx";
 import ChapterDiv from "../../components/ChapterDiv/ChapterDiv.jsx";
-import "./StudentViewClass.css";
+import styles from "./StudentViewClass.module.css";
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Header from "../../components/Header/Header.jsx";
 
@@ -47,22 +46,26 @@ const StudentViewClass = () => {
 
 
     return (
-        <div className={"student-view-class"}>
-            <div className={`header-wrapper`}>
+        <div className={styles.page}>
+
+            <Sidebar role={"student"}/>
+            <div className={styles.content}>
                 <Header/>
-            </div>
-            <div className={`menu-wrapper`}>
-                <Sidebar/>
-            </div>
-            <div className={"svc-objectives"}></div>
-            <div className={"chapters-wrapper"}>
-                {loaded && chapters.map((item) => (
-                    <div key={item.name} className="chapter-wrapper" onClick={() => {
-                        navigate(`/students/chapters/${item.id}`)
-                    }}>
-                        {<ChapterDiv chapter={item}/>}
+                <div className={styles.objectives}></div>
+                <div className={styles.chaptersWrapper}>
+                    <div>
+                        <p>Chapters</p>
                     </div>
-                ))}
+                    <div className={styles.chapters}>
+                        {loaded && chapters.map((item) => (
+                            <div key={item.name} className={styles.chapterWrapper} onClick={() => {
+                                navigate(`/students/chapters/${item.id}`)
+                            }}>
+                                {<ChapterDiv chapter={item}/>}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
 
