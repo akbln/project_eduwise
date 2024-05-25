@@ -1,9 +1,6 @@
 package com.edusenior.project.entities.Users;
 
-import com.edusenior.project.entities.Comp;
-import com.edusenior.project.entities.CompSubmissions;
-import com.edusenior.project.entities.SchoolClass;
-import com.edusenior.project.entities.SubmissionCounts;
+import com.edusenior.project.entities.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -32,6 +29,9 @@ public class Student extends User {
     @ManyToOne
     @JoinColumn(name = "comp_id")
     private Comp comp;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private Set<ChapterQuestionSubmissions> submissions;
 
     @OneToMany(mappedBy = "student")
     private List<CompSubmissions> compSubmissions;
@@ -73,6 +73,22 @@ public class Student extends User {
 
     public void setCompSubmissions(List<CompSubmissions> compSubmissions) {
         this.compSubmissions = compSubmissions;
+    }
+
+    public Set<ChapterQuestionSubmissions> getSubmissions() {
+        return submissions;
+    }
+
+    public void setSubmissions(Set<ChapterQuestionSubmissions> submissions) {
+        this.submissions = submissions;
+    }
+
+    public List<SubmissionCounts> getSubmissionCounts() {
+        return submissionCounts;
+    }
+
+    public void setSubmissionCounts(List<SubmissionCounts> submissionCounts) {
+        this.submissionCounts = submissionCounts;
     }
 
     @Override

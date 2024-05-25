@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Blob;
+import java.util.Set;
 
 @Entity
 @Table(name = "chapters")
@@ -42,6 +43,9 @@ public class Chapter {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "video_id")
     private Video video;
+
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    private Set<ChapterQuestionSubmissions> submissions;
 
     public Video getVideo() {
         return video;
@@ -101,6 +105,14 @@ public class Chapter {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public Set<ChapterQuestionSubmissions> getSubmissions() {
+        return submissions;
+    }
+
+    public void setSubmissions(Set<ChapterQuestionSubmissions> submissions) {
+        this.submissions = submissions;
     }
 
     public int addToMaterialAmount(int a) throws FullChapterException{

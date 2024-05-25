@@ -41,7 +41,7 @@
     transform: translateX(0%);
 }
 .classesWrapper{
-    margin-top: 200px;
+    margin-top: 10vh;
     height: 70%;
     justify-content: left;
     display: flex;

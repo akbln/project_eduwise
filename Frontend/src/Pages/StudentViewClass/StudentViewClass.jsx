@@ -53,7 +53,7 @@ const StudentViewClass = () => {
                 <Header/>
                 <div className={styles.objectives}></div>
                 <div className={styles.chaptersWrapper}>
-                    <div>
+                    <div className={styles.chapterWrapperText}>
                         <p>Chapters</p>
                     </div>
                     <div className={styles.chapters}>

@@ -5,12 +5,15 @@
     flex-direction: row;
     flex-wrap: nowrap;
 }
+/*.contentWrapper{*/
+/*    overflow: auto;*/
+/*    max-height: 100vh;*/
+/*}*/
 .content{
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-template-rows: repeat(12, 100px);
     flex-grow: 1;
-    max-height: 100vh;
     overflow: auto;
 }
 
@@ -20,12 +23,27 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(251, 194, 131, 0.7);
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #f0f0f0;
+}
+.chapterWrapper{
+    min-width: 100%;
+
+}
+.chapters{
+    width: 100%;
     overflow: auto;
+
 }
 .chaptersWrapper > div {
     margin-bottom: 25px;
-    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+.chapterWrapper{
+    margin-bottom: 10px;
+}
+.chapterWrapperText{
+    font-size: 70px;
 }
 .objectives{
     grid-column: 10/13;
@@ -39,6 +57,19 @@
     /*    grid-column: 1/13;*/
     /*    grid-row: 2/6;*/
     /*}*/
+}
+@media screen and (max-width: 700px){
+    .page{
+        flex-wrap: wrap;
+    }
+    .chaptersWrapper{
+        grid-column: 1/13;
+        grid-row: 4/13;
+    }
+    .objectives{
+        grid-column: 1/13;
+        grid-row: 2/4;
+    }
 }
 ::-webkit-scrollbar {
     width: 0;
