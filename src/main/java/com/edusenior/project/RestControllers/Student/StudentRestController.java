@@ -2,12 +2,10 @@ package com.edusenior.project.RestControllers.Student;
 
 import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.ServerResponses.ServerResponse;
+import com.edusenior.project.dataTransferObjects.*;
 import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.LoadCompDTO;
+import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.SubmitChapterQuestionAnswer;
 import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.SubmitQuestionDTO;
-import com.edusenior.project.dataTransferObjects.FetchAllStudentChaptersDTO;
-import com.edusenior.project.dataTransferObjects.FetchAllClassesDTO;
-import com.edusenior.project.dataTransferObjects.GetQuestionDTO;
-import com.edusenior.project.dataTransferObjects.NewStudentDTO;
 import com.edusenior.project.entities.Users.Student;
 import com.edusenior.project.services.student.StudentServiceImpl;
 import jakarta.validation.Valid;
@@ -28,7 +26,7 @@ public class StudentRestController {
     }
 
 
-    @PutMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<ServerResponse> createStudent(@Valid @RequestBody NewStudentDTO s){
         return studentService.registerStudent(s);
     }
@@ -36,9 +34,16 @@ public class StudentRestController {
     public Student fetchStudentByUUID(@PathVariable String studentUUID){
         return studentService.fetchStudent(studentUUID);
     }
-    @GetMapping("/chapters/{chapterId}/questions/{offSet}")
-    public GetQuestionDTO fetchQuestionByChapterIdAndIndex(@PathVariable String chapterId, @PathVariable int offSet){
-        return studentService.fetchQuestionByChapterIdAndIndex(chapterId,offSet);
+    @GetMapping("/classes/{classId}/chapters/{chapterId}/questions")
+    public LoadChapterQuestionsDTO fetchUnsolvedChapterQuestionsOfStudent(@PathVariable String chapterId, UsernamePasswordAuthenticationToken auth, @PathVariable String classId){
+        // TO-DO Rework to use classId
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return studentService.fetchUnsolvedChapterQuestionsOfStudent(chapterId,details.get("id"));
     }
     @GetMapping("/classes")
     public FetchAllClassesDTO fetchAllClasses(UsernamePasswordAuthenticationToken auth){
@@ -79,6 +84,18 @@ public class StudentRestController {
             throw new InvalidOperationException(ex.getMessage());
         }
         return studentService.submitQuestionResponse(sqDTO,details.get("id"));
+    }
+    @PostMapping("/classes/{classId}/chapters/{chapterId}/questions")
+    public ResponseEntity<ServerResponse> submitChapterQuestion(@PathVariable String chapterId, @PathVariable String classId,
+                                                     UsernamePasswordAuthenticationToken auth, @RequestBody SubmitChapterQuestionAnswer cqDTO){
+
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return studentService.submitChapterQuestionAnswer(details.get("id"),classId,chapterId,cqDTO);
     }
 
 }

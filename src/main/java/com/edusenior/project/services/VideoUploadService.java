@@ -58,7 +58,7 @@ public class VideoUploadService {
     }
 
     private Chapter validateAndGetChapter(VideoUploadDTO vDTO) {
-        Optional<Chapter> chapterOptional = chapterJpaRepository.findByCourseName(
+        Optional<Chapter> chapterOptional = chapterJpaRepository.findByCourseNameAndChapterNumber(
                 vDTO.getCourseName(), Integer.parseInt(vDTO.getChapterNumber()));
         if (chapterOptional.isEmpty()) {
             throw new InvalidOperationException("Could not find specified course");

@@ -34,7 +34,7 @@ public class VideoJWTFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return !pathMatcher.match("/students/chapters/*/video/**", path);
+        return !pathMatcher.match("/students/classes/*/chapters/*/video/**", path);
     }
 
     @Override

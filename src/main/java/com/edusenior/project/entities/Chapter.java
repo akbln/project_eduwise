@@ -44,8 +44,16 @@ public class Chapter {
     @JoinColumn(name = "video_id")
     private Video video;
 
-    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
-    private Set<ChapterQuestionSubmissions> submissions;
+    @OneToMany(mappedBy = "chapter")
+    private Set<Question> questions;
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
+    }
 
     public Video getVideo() {
         return video;
@@ -107,13 +115,6 @@ public class Chapter {
         this.number = number;
     }
 
-    public Set<ChapterQuestionSubmissions> getSubmissions() {
-        return submissions;
-    }
-
-    public void setSubmissions(Set<ChapterQuestionSubmissions> submissions) {
-        this.submissions = submissions;
-    }
 
     public int addToMaterialAmount(int a) throws FullChapterException{
         if(this.materialAmount == Integer.MAX_VALUE){

@@ -2,18 +2,20 @@ import styles from "./Home.module.css";
 import Timer from "../../components/Timer.jsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import expiredJwt from "../../components/JWTParser.jsx";
+import jwtParser from "../../components/JWTParser.jsx";
+import LoginValidator from "../../components/LoginValidator.jsx";
 
 const Home = () => {
+
     const [selectedAnswer,setSelectedAnswer] = useState("");
     const navigate = useNavigate();
     useEffect(()=>{
-        let details = expiredJwt(localStorage.getItem("token"));
+        let details = jwtParser(localStorage.getItem("token"));
         if(details[1]===true){
             localStorage.removeItem("token");
         }
         if(details[0]==="teacher"){
-            navigate("/home/teachers");
+            navigate("/teachers/home");
         }
         if(details[0]==="student"){
             navigate("/students/home");

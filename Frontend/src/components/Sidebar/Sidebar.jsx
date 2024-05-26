@@ -8,6 +8,21 @@ const Sidebar = ({role}) => {
     const [closed, setClosed] = useState(false);
     const [hidden, setHidden] = useState(false);
     const [classes, setClasses] = useState([]);
+    const navigate = useNavigate();
+
+    let compUrl = "";
+    let classUrl = "";
+    if(role === "teacher"){
+        classUrl="/students/classes/"
+        compUrl = "/teachers/competitions/create";
+    }
+    else if (role === "student"){
+        classUrl="/teachers/classes/"
+        compUrl = "/students/competitions";
+    }
+
+
+
     const transitionMenuIntoHeaven = () =>{
         if(closed){
             setClosed(false);
@@ -42,7 +57,7 @@ const Sidebar = ({role}) => {
         fetchClasses();
     },[])
 
-    const navigate = useNavigate();
+
     return (
         <div className={styles.sidebarWrapper}>
             <div className={`${styles.miniSidebar} ${hidden ? "" : "displayNone"}`}>
@@ -52,13 +67,13 @@ const Sidebar = ({role}) => {
                 className={`${styles.sidebar} ${closed ? `${styles.sidebarClosed}` : `${styles.sidebarOpen}`} ${hidden ? "displayNone" : ""}`}>
                 <div className={styles.burger} onClick={transitionMenuIntoHeaven}><Burger/></div>
                 <div className={styles.sidebarUtility}>
-                    <div className={styles.join}>{role === "student" && <p>Join Competition</p>}{role === "teacher" && <p>Create Competition</p>}</div>
+                    <div onClick={()=>navigate(compUrl)} className={`${styles.join} pointer`}>{role === "student" && <p>Join Competition</p>}{role === "teacher" && <p>Create Competition</p>}</div>
                 </div>
                 <div className={styles.classesWrapper}>
                     {
                         classes && classes.map((item) => (
-                            <div key={item.classId} className={styles.sidebarClasses} onClick={() => {
-                                navigate(`/students/classes/${item.classId}`)
+                            <div key={item.classId} className={`${styles.sidebarClasses} pointer`} onClick={() => {
+                                navigate(`${classUrl}${item.classId}`)
                             }}>
                                 {item.name}
                             </div>

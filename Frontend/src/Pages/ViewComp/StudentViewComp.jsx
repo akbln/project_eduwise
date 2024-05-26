@@ -5,10 +5,14 @@ import Header from "../../components/Header/Header.jsx";
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Timer from "../../components/Timer.jsx";
 import {useNavigate} from "react-router-dom";
+import LoginValidator from "../../components/LoginValidator.jsx";
 
 const StudentViewComp = () => {
+    LoginValidator("student");
+
+    const [loaded,setLoaded] = useState(false);
+
     const [compId,setCompId] = useState("");
-    const [num,setNum] = useState(0);
     const [questionSet,setQuestionSet] = useState([]);
     const [qId,setQId] = useState("");
     const [question,setQuestion] = useState("Loading...")
@@ -19,7 +23,6 @@ const StudentViewComp = () => {
     const [selectedAnswer,setSelectedAnswer] = useState("");
     const [timePerQuestion,setTimePerQuestion] = useState(30);
     const [index,setIndex] = useState(1);
-    const [loaded,setLoaded] = useState(false);
     const [size,setSize] = useState(0);
 
     const navigate = useNavigate();
@@ -89,7 +92,7 @@ const StudentViewComp = () => {
                         {question}
                     </div>
                     <div onClick={() => setSelectedAnswer("A")} className={`${styles.answer} ${selectedAnswer === "A" ? styles.selected : ""} transform-ease-s`}>{answer1}</div>
-                    <div onClick={() => setSelectedAnswer("B")} className={`${styles.answer} ${selectedAnswer === "B" ? styles.selected : ""} transform-ease-s`}>{answer1}</div>
+                    <div onClick={() => setSelectedAnswer("B")} className={`${styles.answer} ${selectedAnswer === "B" ? styles.selected : ""} transform-ease-s`}>{answer2}</div>
                     <div onClick={() => setSelectedAnswer("C")} className={`${styles.answer} ${selectedAnswer === "C" ? styles.selected : ""} transform-ease-s`}>{answer3}</div>
                     <div onClick={() => setSelectedAnswer("D")} className={`${styles.answer} ${selectedAnswer === "D" ? styles.selected : ""} transform-ease-s`}>{answer4}</div>
 

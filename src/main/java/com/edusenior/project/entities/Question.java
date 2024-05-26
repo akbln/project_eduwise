@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "questions")
@@ -46,7 +47,7 @@ public class Question {
     private Teacher teacher;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chapter_id")
+    @JoinColumn(name = "chapter_id",nullable = true)
     private Chapter chapter;
 
     @ManyToMany
@@ -60,6 +61,8 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<CompSubmissions> compSubmissions;
 
+    @OneToMany(mappedBy = "question")
+    private Set<ChapterQuestionSubmissions> chapterQuestionSubmissions;
 
 
     public String getId() {
@@ -152,6 +155,14 @@ public class Question {
 
     public void setCompSubmissions(List<CompSubmissions> compSubmissions) {
         this.compSubmissions = compSubmissions;
+    }
+
+    public Set<ChapterQuestionSubmissions> getChapterQuestionSubmissions() {
+        return chapterQuestionSubmissions;
+    }
+
+    public void setChapterQuestionSubmissions(Set<ChapterQuestionSubmissions> chapterQuestionSubmissions) {
+        this.chapterQuestionSubmissions = chapterQuestionSubmissions;
     }
 
     @Override

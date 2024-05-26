@@ -6,10 +6,13 @@ import VideoPlayer from "../../components/VideoPlayer/VideoPlayer.jsx";
 import QuestionLoader from "../../components/QuestionLoader/QuestionLoader.jsx";
 import {ToastContainer,toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoginValidator from "../../components/LoginValidator.jsx";
 
 const StudentViewChapter = () => {
-    const {id} = useParams();
-    const videoUrl = `http://localhost/students/chapters/${id}/video?token=${localStorage.getItem("token")}`;
+    LoginValidator("student");
+    const {classId} = useParams();
+    const {chapterId} = useParams();
+    const videoUrl = `http://localhost/students/classes/${classId}/chapters/${chapterId}/video?token=${localStorage.getItem("token")}`;
     console.log(videoUrl)
     return(
         <div className={styles.page}>
@@ -25,7 +28,7 @@ const StudentViewChapter = () => {
                         <VideoPlayer videoUrl={videoUrl}/>
                     </div>
                     <div className={styles.questionLoaderWrapper}>
-                        <QuestionLoader chapterId={id}/>
+                        <QuestionLoader loadType={"chapter"} chapterId={chapterId}/>
                     </div>
                 </div>
             </div>

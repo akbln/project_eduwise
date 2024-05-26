@@ -13,6 +13,8 @@ import StudentViewClass from "./Pages/StudentViewClass/StudentViewClass.jsx";
 import StartCompetition from "./Pages/StartCompetition/StartCompetition.jsx";
 import StudentViewComp from "./Pages/ViewComp/StudentViewComp.jsx";
 import Finished from "./components/Finished/Finished.jsx";
+import THome from "./Pages/Home/Teacher/tHome.jsx";
+import ProfilePage from "./Pages/ProfilePicture/ProfilePicture.jsx";
 
 function App() {
   return (
@@ -22,12 +24,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/upload" element={<UploadPage />} />
-        <Route path="/students/chapters/:id" element={<StudentViewChapter/>} />
-        <Route path="/students/classes/:id" element={<StudentViewClass/>} />
+        <Route path="/students/classes/:classId/chapters/:chapterId" element={<StudentViewChapter/>} />
+        <Route path="/students/classes/:classId" element={<StudentViewClass/>} />
         <Route path="/students/home" element={<SHome/>} />
+        <Route path="/teachers/home" element={<THome/>} />
         <Route path="/teachers/competitions/create" element={<StartCompetition/>} />
         <Route path="/students/competition" element={<StudentViewComp/>} />
         <Route path="/students/competition/finished" element={<Finished/>} />
+        <Route path="/profile" element={<ProfilePage/>} />
+
     </Routes>
   );
 }

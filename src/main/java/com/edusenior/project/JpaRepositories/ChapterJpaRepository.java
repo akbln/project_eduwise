@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ChapterJpaRepository extends JpaRepository<Chapter,String> {
     @Query("SELECT ch FROM Chapter ch WHERE ch.course.name = :name and ch.number = :number")
-    Optional<Chapter> findByCourseName(@Param("name") String name , @Param("number") int number);
+    Optional<Chapter> findByCourseNameAndChapterNumber(@Param("name") String name , @Param("number") int number);
 }

@@ -30,8 +30,14 @@ public class TeacherRestController {
         return teacherService.registerTeacher(tDTO);
     }
     @PostMapping("/questions/upload")
-    public ResponseEntity<ServerResponse> uploadQuestion( @Valid @RequestBody QuestionDTO qDTO){
-        return questionService.uploadQuestion(qDTO);
+    public ResponseEntity<ServerResponse> uploadQuestion( @Valid @RequestBody QuestionDTO qDTO,UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return questionService.uploadQuestion(details.get("id"),qDTO);
     }
     @GetMapping("/classes")
     public FetchAllClassesDTO fetchAllClasses(UsernamePasswordAuthenticationToken auth){

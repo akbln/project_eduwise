@@ -5,9 +5,12 @@ import ChapterDiv from "../../components/ChapterDiv/ChapterDiv.jsx";
 import styles from "./StudentViewClass.module.css";
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Header from "../../components/Header/Header.jsx";
+import LoginValidator from "../../components/LoginValidator.jsx";
 
 const StudentViewClass = () => {
-    const {id} = useParams();
+    LoginValidator("student");
+    const {chapterId} = useParams();
+    const {classId} = useParams();
     const [chapters,setChapters] = useState([]);
     const [loaded,setLoaded] = useState(false);
     const navigate = useNavigate();
@@ -30,7 +33,7 @@ const StudentViewClass = () => {
 
     const fetchChapters = async ()=> {
         try{
-            const res = await axios.get(`http://localhost/students/classes/${id}/chapters`,{headers:{
+            const res = await axios.get(`http://localhost/students/classes/${classId}/chapters`,{headers:{
                     Authorization:"Bearer "+localStorage.getItem("token"),
                 }})
             if(res.status === 200){
@@ -59,7 +62,7 @@ const StudentViewClass = () => {
                     <div className={styles.chapters}>
                         {loaded && chapters.map((item) => (
                             <div key={item.name} className={styles.chapterWrapper} onClick={() => {
-                                navigate(`/students/chapters/${item.id}`)
+                                navigate(`/students/classes/${classId}/chapters/${item.id}`)
                             }}>
                                 {<ChapterDiv chapter={item}/>}
                             </div>

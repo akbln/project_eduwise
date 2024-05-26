@@ -2,9 +2,7 @@ package com.edusenior.project.services.student;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
 import com.edusenior.project.Exceptions.InvalidOperationException;
-import com.edusenior.project.JpaRepositories.CompJpaRepo;
-import com.edusenior.project.JpaRepositories.CompSubmissionsJPA;
-import com.edusenior.project.JpaRepositories.QuestionJpaRepository;
+import com.edusenior.project.JpaRepositories.*;
 import com.edusenior.project.JpaRepositories.classes.SchoolClassJpaRepository;
 import com.edusenior.project.Mappings.StudentMapper;
 import com.edusenior.project.Utility.BcryptPasswordEncoder;
@@ -15,6 +13,7 @@ import com.edusenior.project.RestControllers.Student.StudentNotFoundException;
 import com.edusenior.project.dataTransferObjects.*;
 import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.ChapterDTO;
 import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.LoadCompDTO;
+import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.SubmitChapterQuestionAnswer;
 import com.edusenior.project.dataTransferObjects.DatabaseQueryObjects.SubmitQuestionDTO;
 import com.edusenior.project.entities.*;
 import com.edusenior.project.entities.Users.Credentials;
@@ -24,12 +23,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -39,6 +38,8 @@ public class StudentServiceImpl implements StudentService {
     private final CompJpaRepo compJpaRepo;
     private final CompSubmissionsJPA compSubmissionsJPA;
     private final QuestionJpaRepository questionJpaRepository;
+    private final ChapterJpaRepository chapterJpaRepository;
+    private final ChapterQuestionSubmissionsJpaRepo chapterQuestionSubmissionsJpaRepo;
     private StudentJpaRepository studentJpaRepository;
     private BcryptPasswordEncoder encoder;
     private CredentialsJpaRepository credentialsJpaRepository;
@@ -47,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
-    public StudentServiceImpl(StudentJpaRepository studentJpaRepository, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository, QuestionService questionService, SchoolClassJpaRepository schoolClassJpaRepository, CompJpaRepo compJpaRepo, CompSubmissionsJPA compSubmissionsJPA, QuestionJpaRepository questionJpaRepository) {
+    public StudentServiceImpl(StudentJpaRepository studentJpaRepository, BcryptPasswordEncoder encoder, CredentialsJpaRepository credentialsJpaRepository, QuestionService questionService, SchoolClassJpaRepository schoolClassJpaRepository, CompJpaRepo compJpaRepo, CompSubmissionsJPA compSubmissionsJPA, QuestionJpaRepository questionJpaRepository, ChapterJpaRepository chapterJpaRepository, ChapterQuestionSubmissionsJpaRepo chapterQuestionSubmissionsJpaRepo) {
         this.studentJpaRepository = studentJpaRepository;
         this.encoder = encoder;
         this.credentialsJpaRepository = credentialsJpaRepository;
@@ -56,6 +57,8 @@ public class StudentServiceImpl implements StudentService {
         this.compJpaRepo = compJpaRepo;
         this.compSubmissionsJPA = compSubmissionsJPA;
         this.questionJpaRepository = questionJpaRepository;
+        this.chapterJpaRepository = chapterJpaRepository;
+        this.chapterQuestionSubmissionsJpaRepo = chapterQuestionSubmissionsJpaRepo;
     }
 
     @Override
@@ -70,14 +73,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public ResponseEntity<ServerResponse> registerStudent(NewStudentDTO sDTO) throws DuplicateEntryException {
-        if (credentialsJpaRepository.existsByEmail(sDTO.getEmail())){
+        final String email = sDTO.getEmail().toLowerCase();
+        if (credentialsJpaRepository.existsByEmail(email)){
             throw new DuplicateEntryException("Email already in use");
         }
         Student s = new Student();
         s = StudentMapper.INSTANCE.newStudentDtoToStudent(sDTO);
 
         Credentials c = new Credentials(true);
-        c.setEmail(sDTO.getEmail());
+        c.setEmail(email);
         c.setHash(encoder.passwordEncoder().encode(sDTO.getPassword()));
         c.setRole("student");
         c.setUser(s);
@@ -87,8 +91,8 @@ public class StudentServiceImpl implements StudentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public GetQuestionDTO fetchQuestionByChapterIdAndIndex(String chapterId, int offset){
-        return questionService.getQuestionByChapterIdAndIndex(chapterId,offset);
+    public LoadChapterQuestionsDTO fetchUnsolvedChapterQuestionsOfStudent(String chapterId, String sId){
+        return questionService.fetchUnsolvedChapterQuestionsOfStudent(chapterId,sId);
     }
 
     public FetchAllClassesDTO fetchAllClasses(String id){
@@ -202,5 +206,26 @@ public class StudentServiceImpl implements StudentService {
         compSubmissionsJPA.saveAndFlush(submission);
         return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
     }
+    public ResponseEntity<ServerResponse> submitChapterQuestionAnswer(String sId,String classId,String chapterId, SubmitChapterQuestionAnswer cqDTO){
+        Student s = studentJpaRepository.findById(sId).orElseThrow(()-> new InvalidOperationException("Invalid Student ID"));
+        SchoolClass sc = schoolClassJpaRepository.findById(classId).orElseThrow(()-> new InvalidOperationException("Invalid Class ID"));
+        Chapter c = chapterJpaRepository.findById(chapterId).orElseThrow(()-> new InvalidOperationException("Invalid Chapter ID"));
+        Question q = questionJpaRepository.findById(cqDTO.getQuestionId()).orElseThrow(() -> new InvalidOperationException("Invalid Question ID"));
+        if(!sc.getEnrolledStudents().contains(s)){
+            throw new InvalidOperationException("Not Registered In Class");
+        }
+        if(!c.getQuestions().contains(q)) {
+            throw new InvalidOperationException("Not Valid Question");
+        }
+        ChapterQuestionSubmissions submission = new ChapterQuestionSubmissions();
+        submission.setQuestion(q);
+        submission.setStudent(s);
+        submission.setSubmission(cqDTO.getSubmission());
+
+        chapterQuestionSubmissionsJpaRepo.saveAndFlush(submission);
+
+        return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
+    }
 
 }
+

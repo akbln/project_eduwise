@@ -3,13 +3,13 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import {useEffect, useState} from "react";
 import CompanyWrapper from "../../components/CompanyWrapper/CompanyWrapper.jsx";
-import expiredJwt from "../../components/JWTParser.jsx";
+import jwtParser from "../../components/JWTParser.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(expiredJwt(localStorage.getItem("token"))) {
+    if(jwtParser(localStorage.getItem("token"))) {
       localStorage.removeItem("token");
       return;
     }

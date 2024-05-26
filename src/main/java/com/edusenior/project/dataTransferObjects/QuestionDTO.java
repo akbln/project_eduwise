@@ -6,17 +6,11 @@ import jakarta.validation.constraints.Size;
 
 public class QuestionDTO {
 
-//    @NotNull
-//    @Size(min = 1,max =1000,message = "Invalid title")
+
 //    @Pattern( regexp = "^(?! )[a-zA-Z0-9 ][a-zA-Z0-9](?<! )$",message = "Invalid title request")
     private String courseName;
 
-    @NotNull
-    private String jwt;
-
-//    @NotNull
-//    @Pattern(regexp = "^[1-9]+$")
-    private String chapterNumber;
+    private int chapterNumber;
 
     @NotNull
     @Size(min = 1,max = 100)
@@ -56,20 +50,11 @@ public class QuestionDTO {
         this.courseName = courseName;
     }
 
-    public String getJwt() {
-        return jwt;
-    }
-
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
-        System.out.println(jwt);
-    }
-
-    public @Pattern(regexp = "^[1-9]+$") String getChapterNumber() {
+    public int getChapterNumber() {
         return chapterNumber;
     }
 
-    public void setChapterNumber(@Pattern(regexp = "^[1-9]+$") String chapterNumber) {
+    public void setChapterNumber(int chapterNumber) {
         this.chapterNumber = chapterNumber;
     }
 

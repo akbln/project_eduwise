@@ -2,8 +2,10 @@ import {useState} from "react";
 import "./RegisterInfoStep.css"
 import register from "../../Register.jsx";
 import {ToastContainer,toast} from "react-toastify";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
-const RegisterInfoStep = ({setStep,setEmail,setPassword,setGender,setAge,makeRegisterRequest,setName}) => {
+const RegisterInfoStep = ({role}) => {
 
     const [nameLocal,setNameLocal] = useState("");
     const [emailLocal,setEmailLocal] = useState("");
@@ -11,9 +13,9 @@ const RegisterInfoStep = ({setStep,setEmail,setPassword,setGender,setAge,makeReg
     const [confirmPasswordLocal,setConfirmPasswordLocal] = useState("");
     const [ageLocal,setAgeLocal] = useState("");
     const [genderLocal, setGenderLocal] = useState("");
+    const navigate = useNavigate();
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!/^\S+@\S+\.\S+$/.test(emailLocal)) {
@@ -40,14 +42,39 @@ const RegisterInfoStep = ({setStep,setEmail,setPassword,setGender,setAge,makeReg
             toast.error("Invalid Gender");
             return;
         }
-        setEmail(emailLocal);
-        setPassword(passwordLocal);
-        setName(nameLocal)
-        setAge(ageLocal);
-        setGender(genderLocal);
-        makeRegisterRequest();
+        await makeRegisterRequest();
     }
-
+    const makeRegisterRequest = async () => {
+        const reqJson = {
+            "email":emailLocal,
+            "password":passwordLocal,
+            "age":ageLocal,
+            "gender":genderLocal,
+            "name":nameLocal
+        }
+        if(role === "teacher"){
+            try{
+                const response = await axios.post("http://localhost/teachers/register",JSON.stringify(reqJson),{headers:{"Content-Type":"application/json"}})
+                if(response.status === 200){
+                    toast.success("Successfully registered");
+                    setTimeout(()=>{navigate("/login")},2000);
+                }
+            }catch(e){
+                toast.error(e.response?.data?.errors[0] || e.message);
+            }
+        }
+        if(role === "student"){
+            try{
+                const response = await axios.post("http://localhost/students/register",JSON.stringify(reqJson),{headers:{"Content-Type":"application/json"}})
+                if(response.status === 200){
+                    toast.success("Successfully registered");
+                    setTimeout(()=>{navigate("/login")},2000);
+                }
+            }catch(err){
+                toast.error(err.response?.data?.errors[0] || err.message);
+            }
+        }
+    }
 
 
 
@@ -74,7 +101,7 @@ const RegisterInfoStep = ({setStep,setEmail,setPassword,setGender,setAge,makeReg
                     <option value="F">Male</option>
                 </select>
             </div>
-            <button type={"submit"}>Confirm</button>
+            <button onClick={handleSubmit}>Confirm</button>
         </form>
     )
 }

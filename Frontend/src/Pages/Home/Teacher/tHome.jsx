@@ -2,30 +2,25 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import ClassDiv from "../../../components/ClassDiv/ClassDiv.jsx";
-import styles from "./sHome.module.css"
+import styles from "./tHome.module.css"
 import Header from "../../../components/Header/Header.jsx";
 import Sidebar from "../../../components/Sidebar/Sidebar.jsx";
 import LoginValidator from "../../../components/LoginValidator.jsx";
 
 const SHome = () => {
-    LoginValidator("student");
+    LoginValidator("teacher");
 
     const [loaded,setLoaded] = useState(false);
     const [fetchedClasses, setFetchedClasses] = useState([]);
     const navigate = useNavigate();
 
     useEffect(()=>{
-        const fetchC = async() =>{
-            await fetchClasses();
-        }
-        fetchC();
+        fetchClasses();
     },[])
-
-
 
     const fetchClasses = async ()=> {
         try{
-            const res = await axios.get("http://localhost/students/classes",{headers:{
+            const res = await axios.get("http://localhost/teachers/classes",{headers:{
                     Authorization:"Bearer "+localStorage.getItem("token"),
                 }})
             if(res.status === 200){
@@ -41,13 +36,13 @@ const SHome = () => {
 
     return (
         <div className={styles.page}>
-            <Sidebar role={"student"} />
+            <Sidebar role={"teacher"} />
             <div className={styles.contentWrapper}>
                 <Header/>
                 <div className={styles.classes}>
                     {loaded && fetchedClasses.map((item) => (
                         <div key={item.classId} className={styles.class} onClick={() => {
-                            navigate(`/students/classes/${item.classId}`)
+                            navigate(`/teachers/classes/${item.classId}`)
                         }}>
                             {<ClassDiv schoolClassInfo={item}/>}
                         </div>

@@ -39,3 +39,6 @@ body {
   height: 0 !important;
   overflow: hidden;
 }
+.pointer:hover{
+  cursor: pointer;
+}

@@ -1,9 +1,10 @@
 .miniSidebar{
     z-index: 1;
-    height: 100%;
     width: auto;
     background-color: #cfcfcf;
     display: flex;
+    height: 100vh;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 }
 .burger{
     width: 100%;
@@ -20,6 +21,7 @@
     width: 100%;
 }
 .sidebar{
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
     z-index: 99;
     background-color: #cfcfcf;
     width: 20vw;
@@ -100,14 +102,6 @@
     }
     .miniSidebar{
         width: 100%;
-    }
-}
-@media screen and (max-width: 450px) {
-    .sidebar{
-        position: relative;
-        height: auto;
-        width: auto;
-        grid-column: 1/13;
-        grid-row: 2/6;
+        height: 10vh;
     }
 }

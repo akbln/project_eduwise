@@ -3,6 +3,8 @@ import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Header from "../../components/Header/Header.jsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {ToastContainer,toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const StartCompetition = () => {
@@ -13,7 +15,6 @@ const StartCompetition = () => {
     const [selectedQuestions,setSelectedQuestions] = useState([]);
 
     const createCompRequest = async () => {
-
         const reqJson = {
             "questions":selectedQuestions,
             "classId":selectedClass,
@@ -27,8 +28,12 @@ const StartCompetition = () => {
                     "Content-Type" : "application/json"
                 }
             });
+            if(response1.status === 200){
+                toast.success("Successfully Created Competition");
+            }
         }catch (e){
-            console.log(e);
+            toast.error(e.response?.data?.errors[0] || e.message);
+            console.log(e)
         }
     }
 
@@ -70,31 +75,34 @@ const StartCompetition = () => {
 
     return(
         <div className={styles.page}>
-            <div className={"header"}>
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+            <Sidebar role={"teacher"}/>
+            <div className={styles.content}>
                 <Header/>
-            </div>
-            <div className={"menu-wrapper"}>
-                <Sidebar/>
-            </div>
-            <div className={styles.questions}>
-                {loaded && questions?.map((q) => (
-                    <div className={`${styles.questions} ${selectedQuestions.includes(q.id) ? styles.selectedQuestion : ''} transform-ease-m no-select`} onClick={() => toggleSelectedQuestions(q)}
-                         key={q.id}>
-                        <p>{q.question}</p>
-                    </div>
-                ))}
-            </div>
-            <div className={styles.schoolClasses}>
-                {loaded && schoolClasses?.map((cls) => (
-                    <div
-                        className={`${styles.schoolClass} ${selectedClass === cls.classId ? styles.selectedClass : ''} transform-ease-m no-select`}
-                        onClick={() => setSelectedClass(cls.classId)}
-                        key={cls.classId}>
-                        <p>{cls.name}</p>
-                    </div>
+                <div className={styles.questions}>
+                    {loaded && questions?.map((q) => (
+                        <div
+                            className={`${styles.questions} ${selectedQuestions.includes(q.id) ? styles.selectedQuestion : ''}  no-select pointer`}
+                            onClick={() => toggleSelectedQuestions(q)}
+                            key={q.id}>
+                            <p>{q.question}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className={styles.schoolClassesW}>
+                    <div className={styles.schoolClasses}>
+                        {loaded && schoolClasses?.map((cls) => (
+                            <div
+                                className={`${styles.schoolClass} ${selectedClass === cls.classId ? styles.selectedClass : ''}  no-select pointer`}
+                                onClick={() => setSelectedClass(cls.classId)}
+                                key={cls.classId}>
+                                <p>{cls.name}</p>
+                            </div>
 
-                ))}
-                <button onClick={createCompRequest}>Upload</button>
+                        ))}
+                    </div>
+                    <button className={`${styles.button} pointer`} onClick={createCompRequest}>Upload</button>
+                </div>
             </div>
 
         </div>

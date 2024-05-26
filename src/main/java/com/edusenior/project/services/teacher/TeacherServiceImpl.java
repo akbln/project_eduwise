@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class TeacherServiceImpl implements TeacherService{
@@ -55,14 +56,15 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Transactional
     public ResponseEntity<ServerResponse> registerTeacher(NewTeacherDTO tDTO) {
-        if (credentialsJpaRepository.existsByEmail(tDTO.getEmail())){
+        final String email = tDTO.getEmail().toLowerCase();
+        if (credentialsJpaRepository.existsByEmail(email)){
             throw new DuplicateEntryException("Email already in use");
         }
         Teacher t = new Teacher();
         t = TeacherMapper.INSTANCE.newTeacherDtoToTeacher(tDTO);
 
         Credentials c = new Credentials(true);
-        c.setEmail(tDTO.getEmail());
+        c.setEmail(email);
         c.setHash(encoder.passwordEncoder().encode(tDTO.getPassword()));
         c.setRole("teacher");
         c.setUser(t);
@@ -72,8 +74,8 @@ public class TeacherServiceImpl implements TeacherService{
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @Transactional
-    public ResponseEntity<ServerResponse> uploadQuestion (QuestionDTO questionDTO){
-        return qService.uploadQuestion(questionDTO);
+    public ResponseEntity<ServerResponse> uploadQuestion (String tId,QuestionDTO questionDTO){
+        return qService.uploadQuestion(tId,questionDTO);
     }
     public FetchAllClassesDTO fetchAllClasses(String id){
         Teacher t = teacherJpaDAO.findById(id)
@@ -119,6 +121,9 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Transactional
     public ResponseEntity<ServerResponse> createComp(CreateCompDTO compDTO){
+        if(compDTO.getQuestions().isEmpty()){
+            throw new InvalidOperationException("Please Select Some Questions");
+        }
         SchoolClass sc = schoolClassJpaRepository.findById(compDTO.getClassId()).orElseThrow(
                 () -> new InvalidOperationException("A Class with that ID does not exist.")
         );
