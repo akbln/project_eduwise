@@ -7,9 +7,12 @@ import QuestionLoader from "../../components/QuestionLoader/QuestionLoader.jsx";
 import {ToastContainer,toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginValidator from "../../components/LoginValidator.jsx";
+import {useState} from "react";
+import Stat from "../../components/Stats/Stat.jsx";
 
 const StudentViewChapter = () => {
     LoginValidator("student");
+    const [finished,setFinished] = useState(false);
     const {classId} = useParams();
     const {chapterId} = useParams();
     const videoUrl = `http://localhost/students/classes/${classId}/chapters/${chapterId}/video?token=${localStorage.getItem("token")}`;
@@ -28,7 +31,8 @@ const StudentViewChapter = () => {
                         <VideoPlayer videoUrl={videoUrl}/>
                     </div>
                     <div className={styles.questionLoaderWrapper}>
-                        <QuestionLoader loadType={"chapter"} chapterId={chapterId}/>
+                        {!finished && <QuestionLoader setFinished={setFinished} loadType={"chapter"} chapterId={chapterId}/>}
+                        {finished && <Stat type={"chapter"}/>}
                     </div>
                 </div>
             </div>

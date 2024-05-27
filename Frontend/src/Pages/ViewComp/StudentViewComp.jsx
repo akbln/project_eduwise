@@ -1,11 +1,13 @@
 import styles from "./StudentViewComp.module.css"
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Header from "../../components/Header/Header.jsx";
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Timer from "../../components/Timer.jsx";
 import {useNavigate} from "react-router-dom";
 import LoginValidator from "../../components/LoginValidator.jsx";
+import {toast,ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StudentViewComp = () => {
     LoginValidator("student");
@@ -79,14 +81,25 @@ const StudentViewComp = () => {
                 setAnswer4(res.data.questions[0].answer4);
             }
         }catch (err){
-            console.log(err);
+            toast.error(err.response?.data?.errors[0] || err.message);
         }
     }
     return (
         <div className={styles.page}>
             <Header/>
-            <Sidebar/>
+            <Sidebar role={"student"}/>
             <div className={styles.questionsContainer}>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
                 <div className={styles.questionWrapper}>
                     <div className={styles.question}>
                         {question}
@@ -102,7 +115,7 @@ const StudentViewComp = () => {
                 </div>
             </div>
             <div className={styles.timer}>
-                {loaded && <Timer initialTime={timePerQuestion}/>}
+                {loaded && <Timer initialTime={size * 20}/>}
             </div>
         </div>
     )

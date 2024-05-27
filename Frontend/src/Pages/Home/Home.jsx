@@ -20,6 +20,9 @@ const Home = () => {
         if(details[0]==="student"){
             navigate("/students/home");
         }
+        if(details[0]==="teacherAdmin"){
+            navigate("/admins/home");
+        }
 
     },[])
     return(

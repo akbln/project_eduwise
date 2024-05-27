@@ -14,5 +14,5 @@ public interface TeacherService {
 
     FetchAllQuestionsOfTeacherDTO fetchAllQuestionsOfTeacher(String id);
 
-    ResponseEntity<ServerResponse> createComp(CreateCompDTO compDTO);
+    ResponseEntity<ServerResponse> createComp(String id,CreateCompDTO compDTO);
 }

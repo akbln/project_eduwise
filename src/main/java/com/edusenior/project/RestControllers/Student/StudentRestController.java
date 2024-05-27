@@ -97,5 +97,15 @@ public class StudentRestController {
         }
         return studentService.submitChapterQuestionAnswer(details.get("id"),classId,chapterId,cqDTO);
     }
+    @GetMapping("/chapter/{chapterId}/results")
+    public ResultsDTO getChapterResults(UsernamePasswordAuthenticationToken auth,@PathVariable String chapterId){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return studentService.fetchChapterAnswersForStudent(chapterId,details.get("id"));
+    }
 
 }

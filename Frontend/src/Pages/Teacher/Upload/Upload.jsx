@@ -8,13 +8,15 @@ import Sidebar from "../../../components/Sidebar/Sidebar.jsx";
 import FillQuestion from "../../../components/FillQuestion/FillQuestion.jsx";
 import {ToastContainer,toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import loginValidator from "../../../components/LoginValidator.jsx";
 
 
 const UploadPage = () => {
+    loginValidator("teacher");
     const [selectedFile, setSelectedFile] = useState(null);
     const [videoUrl, setVideoUrl] = useState("");
-    const [course, setCourse] = useState(0);
-    const [chapter, setChapter] = useState("");
+    const [course, setCourse] = useState("");
+    const [chapter, setChapter] = useState(0);
     const [uploadType , setUploadType] = useState("Type: Video")
 
     const [question,setQuestion] = useState("");
@@ -31,15 +33,16 @@ const UploadPage = () => {
         setAnswer2("");
         setAnswer3("");
         setAnswer4("");
-        setAnswerKey("");
-        setChapter("");
-        setCourse(0);
+        setAnswerKey("A");
+        setChapter(0);
+        setCourse("");
         for (let i = 0; i < inputs.length; i++) {
-            if (inputs[i].type === 'text') {
+            if (inputs[i].type === 'text' || inputs[i].type === 'number') {
                 inputs[i].value = '';
             }
         }
     }
+
 
     const makeQuestionRequest = async () => {
 
@@ -190,7 +193,7 @@ const UploadPage = () => {
 
     return(
         <div className={styles.page}>
-            <Sidebar/>
+            <Sidebar role={"teacher"}/>
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
             <div className={styles.content}>
                 <Header/>

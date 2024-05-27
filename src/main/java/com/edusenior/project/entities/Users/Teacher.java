@@ -1,5 +1,6 @@
 package com.edusenior.project.entities.Users;
 
+import com.edusenior.project.entities.Comp;
 import com.edusenior.project.entities.Question;
 import com.edusenior.project.entities.SchoolClass;
 import jakarta.persistence.*;
@@ -21,6 +22,18 @@ public class Teacher extends User {
 
     @OneToMany(mappedBy = "teacher" )
     private List<Question> allQuestions;
+
+    @ManyToOne
+    @JoinColumn(name = "comp_id")
+    private Comp comp;
+
+    public Comp getComp() {
+        return comp;
+    }
+
+    public void setComp(Comp comp) {
+        this.comp = comp;
+    }
 
     public void addClass(SchoolClass c){
         if (schoolClasses == null){

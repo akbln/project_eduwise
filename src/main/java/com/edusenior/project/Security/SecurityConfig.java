@@ -36,6 +36,8 @@ public class SecurityConfig {
                         .requestMatchers("/schoolAdmins/**").hasAuthority("ROLE_teacherAdmin")
 //                        .requestMatchers("/videos/upload").hasAuthority("role_teacher")
                         .requestMatchers("/videos/**").permitAll()
+                        .requestMatchers("/classes/**").hasAuthority("ROLE_teacherAdmin")
+                        .requestMatchers("/admins/**").hasAuthority("ROLE_teacherAdmin")
                         .anyRequest().authenticated());
         http.csrf(CsrfConfigurer::disable);
         return http.build();

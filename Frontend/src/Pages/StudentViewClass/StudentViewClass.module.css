@@ -5,14 +5,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
 }
-/*.contentWrapper{*/
-/*    overflow: auto;*/
-/*    max-height: 100vh;*/
-/*}*/
 .content{
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-template-rows: repeat(12, 100px);
+    max-height: 100vh;
+    overflow: auto;
     flex-grow: 1;
     overflow: auto;
 }

@@ -1,10 +1,7 @@
 package com.edusenior.project.RestControllers.Teacher;
 
 import com.edusenior.project.ServerResponses.ServerResponse;
-import com.edusenior.project.dataTransferObjects.AddClassToCourseDTO;
-import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToCourseDTO;
-import com.edusenior.project.dataTransferObjects.CourseDTO;
-import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
+import com.edusenior.project.dataTransferObjects.*;
 import com.edusenior.project.services.schoolAdmin.SchoolAdminService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/schoolAdmins")
+@RequestMapping("/admins")
 public class SchoolAdminRestController {
     private SchoolAdminService schoolAdminService;
 
@@ -36,9 +33,16 @@ public class SchoolAdminRestController {
     public ResponseEntity<ServerResponse> addClassToCourse(@Valid @RequestBody AddClassToCourseDTO cDTO){
         return schoolAdminService.addClassToCourse(cDTO);
     }
-    @PutMapping("/classes/students/add")
-    public ResponseEntity<ServerResponse> addMultipleStudentsToClass(@RequestBody AddMultipleStudentsToCourseDTO sDTO){
+    @PutMapping("/classes/students")
+    public ResponseEntity<ServerResponse> addMultipleStudentsToClass(@RequestBody AddMultipleStudentsToClassDTO sDTO){
         return schoolAdminService.addMultipleStudentsToClass(sDTO);
     }
+
+
+    @GetMapping("/classes")
+    public FetchAllClassesDTO fetchAllClasses(){
+        return schoolAdminService.fetchAllClasses();
+    }
+
 
 }

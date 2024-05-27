@@ -1,9 +1,11 @@
 import axios from "axios";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import CompanyWrapper from "../../components/CompanyWrapper/CompanyWrapper.jsx";
 import jwtParser from "../../components/JWTParser.jsx";
+import {ToastContainer,toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,12 +42,24 @@ const Login = () => {
     } catch (error) {
       console.log(error.response.status);
       console.log(error.response.data);
+      toast.error(error.response.data.errors[0] || error.message);
       navigate("/login");
     }
   };
 
   return (
     <div className={"login-page"}>
+      <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+      />
       <div className={"login-box"}>
         <CompanyWrapper/>
         <div className={"login-wrapper"}>

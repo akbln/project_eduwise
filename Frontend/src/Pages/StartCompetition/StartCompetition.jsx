@@ -5,9 +5,11 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {ToastContainer,toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import loginValidator from "../../components/LoginValidator.jsx";
 
 
 const StartCompetition = () => {
+    loginValidator("teacher");
     const [loaded, setLoaded] = useState(false);
     const [schoolClasses, setSchoolClasses] = useState([]);
     const [questions, setQuestions] = useState([]);

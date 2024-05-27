@@ -125,11 +125,11 @@ public class SchoolClass {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         SchoolClass otherClass = (SchoolClass) o;
-        return id != null && id.equals(otherClass.getId());
+        return getId() != null && getId().equals(otherClass.getId());
     }
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }}
 
 

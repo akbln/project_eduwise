@@ -2,13 +2,12 @@ package com.edusenior.project.entities;
 
 
 import com.edusenior.project.entities.Users.Student;
+import com.edusenior.project.entities.Users.Teacher;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "comp")
@@ -134,5 +133,18 @@ public class Comp {
             students = new ArrayList<>();
         }
         students.add(s);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comp comp = (Comp) o;
+        return Objects.equals(getCompId(), comp.getCompId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getCompId());
     }
 }

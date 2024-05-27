@@ -3,13 +3,27 @@ import axios from 'axios';
 import styles from './ProfilePage.module.css';
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import {useNavigate} from "react-router-dom";
+import LoginValidator from "../../components/LoginValidator.jsx";
+import jwtParser from "../../components/JWTParser.jsx";
+import Header from "../../components/Header/Header.jsx";
 
 function ProfilePage() {
+    const [role,setRole] = useState("");
     const [profilePicture, setProfilePicture] = useState(null);
     const [profileName, setProfileName] = useState("Your Full Name Here");
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
+        let details = jwtParser(localStorage.getItem("token"));
+        if(details[0]==="teacher"){
+            setRole("teacher");
+        }
+        if(details[0]==="student"){
+            setRole("student");
+        }
+        console.log(details[0]);
+
+
         const fetchProfile = async () => {
             try {
                 const response = await axios.get("http://localhost/profile", {
@@ -22,7 +36,6 @@ function ProfilePage() {
                 setProfileName(profileData.name);
 
                 if (profileData.profilePicture) {
-                    console.log('Profile picture received:', profileData.profilePicture); // Debug log
                     setProfilePicture(`data:image/jpeg;base64,${profileData.profilePicture}`);
                 }
             } catch (error) {
@@ -69,7 +82,7 @@ function ProfilePage() {
 
     return (
         <div className={styles.page}>
-            <Sidebar/>
+            <Sidebar role={role}/>
             <div className={styles.content}>
                 <div className={styles.profileArea}>
                     <div className={styles.profilePictureContainer}

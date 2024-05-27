@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import styles from "./QuestionLoader.module.css";
 import { useParams } from "react-router-dom";
 
-const QuestionLoader = ({ loadType }) => {
+const QuestionLoader = ({ loadType ,setFinished}) => {
     const { classId, chapterId } = useParams();
     const url = `http://localhost/students/classes/${classId}/chapters/${chapterId}/questions`;
 
@@ -57,7 +57,7 @@ const QuestionLoader = ({ loadType }) => {
             setAnswer3(nextQuestion.answer3);
             setAnswer4(nextQuestion.answer4);
         } else {
-            console.log("Finished");
+            setFinished(true);
         }
     };
 
@@ -81,6 +81,9 @@ const QuestionLoader = ({ loadType }) => {
                     setAnswer2(firstQuestion.answer2);
                     setAnswer3(firstQuestion.answer3);
                     setAnswer4(firstQuestion.answer4);
+                }
+                else{
+                    setFinished(true);
                 }
             }
         } catch (ex) {

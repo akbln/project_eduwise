@@ -60,8 +60,24 @@ public class TeacherRestController {
         return teacherService.fetchAllQuestionsOfTeacher(details.get("id"));
     }
     @PutMapping("/competitions")
-    public ResponseEntity<ServerResponse> createComp(@RequestBody CreateCompDTO compDTO){
-        return teacherService.createComp(compDTO);
+    public ResponseEntity<ServerResponse> createComp(@RequestBody CreateCompDTO compDTO,UsernamePasswordAuthenticationToken auth){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return teacherService.createComp(details.get("id"),compDTO);
+    }
+    @GetMapping("/classes/{classId}/competition")
+    public ResultsDTO createComp(UsernamePasswordAuthenticationToken auth, @PathVariable String classId){
+        Map<String, String> details;
+        try{
+            details = (Map<String, String>) auth.getDetails();
+        }catch (ClassCastException ex){
+            throw new InvalidOperationException(ex.getMessage());
+        }
+        return questionService.countResultsOfCompetition(classId,(details.get("id")));
     }
 
 }

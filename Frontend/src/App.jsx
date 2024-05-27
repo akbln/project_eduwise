@@ -15,6 +15,10 @@ import StudentViewComp from "./Pages/ViewComp/StudentViewComp.jsx";
 import Finished from "./components/Finished/Finished.jsx";
 import THome from "./Pages/Home/Teacher/tHome.jsx";
 import ProfilePage from "./Pages/ProfilePicture/ProfilePicture.jsx";
+import Stat from "./components/Stats/Stat.jsx";
+import ViewComp from "./Pages/ViewCompResults/ViewComp.jsx";
+import TeacherAdminAdd from "./Pages/Admin/TeacherAdminAdd.jsx";
+import AdminHome from "./Pages/Admin/AdminHome.jsx";
 
 function App() {
   return (
@@ -32,6 +36,10 @@ function App() {
         <Route path="/students/competition" element={<StudentViewComp/>} />
         <Route path="/students/competition/finished" element={<Finished/>} />
         <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/stats" element={<Stat/>}/>
+        <Route path="/teachers/classes/:classId" element={<ViewComp/>}/>
+        <Route path="/admins/classes/:classIdP/modify" element={<TeacherAdminAdd/>}/>
+        <Route path="/admins/home" element={<AdminHome/>}/>
 
     </Routes>
   );

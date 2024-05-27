@@ -1,13 +1,14 @@
 package com.edusenior.project.services.SchoolClass;
 
 import com.edusenior.project.Exceptions.DuplicateEntryException;
+import com.edusenior.project.Exceptions.InvalidOperationException;
 import com.edusenior.project.Exceptions.NotFound.SchoolClassNotFoundException;
 import com.edusenior.project.Exceptions.StudentEmailsNotFoundException;
 import com.edusenior.project.ServerResponses.ServerResponse;
 import com.edusenior.project.JpaRepositories.classes.SchoolClassJpaRepository;
 import com.edusenior.project.JpaRepositories.credentials.CredentialsJpaRepository;
 import com.edusenior.project.JpaRepositories.student.StudentJpaRepository;
-import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToCourseDTO;
+import com.edusenior.project.dataTransferObjects.AddMultipleStudentsToClassDTO;
 import com.edusenior.project.dataTransferObjects.SetTeacherForClassDTO;
 import com.edusenior.project.entities.SchoolClass;
 import com.edusenior.project.entities.Users.Student;
@@ -57,9 +58,9 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 
     @Override
     @Transactional
-    public ResponseEntity<ServerResponse> addMultipleStudentsToClass(AddMultipleStudentsToCourseDTO sDTO){
+    public ResponseEntity<ServerResponse> addMultipleStudentsToClass(AddMultipleStudentsToClassDTO sDTO){
 
-        SchoolClass sc = findClassById(sDTO.getClassId());
+        SchoolClass sc = schoolClassJpaRepository.findById(sDTO.getClassId()).orElseThrow(() -> new InvalidOperationException("Invalid Class ID"));
 
         HashSet<String> foundEmails = credentialsJpaRepository.findExistingStudentEmailsByEmails(sDTO.getEmails());
         List<String> notFoundEmails = getEmailsNotFoundInDatabase(sDTO.getEmails(),foundEmails);

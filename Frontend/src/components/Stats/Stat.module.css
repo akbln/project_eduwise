@@ -1,0 +1,70 @@
+.numbers{
+    overflow: auto;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: end;
+}
+.line{
+    border-top: 3px solid black;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.line p {
+    font-size: 20px;
+    width: 100px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    border: black 2px solid;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+
+}
+.dataWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+.correct{
+    width: 100px;
+    background-color: #39f639;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.incorrect{
+    width: 100px;
+    background-color: #ff1e00;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.noData{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+

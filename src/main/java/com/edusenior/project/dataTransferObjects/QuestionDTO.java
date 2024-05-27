@@ -42,11 +42,11 @@ public class QuestionDTO {
     @Pattern(regexp = "^[ABCD]$")
     private String answerKey;
 
-    public @Size(min = 1, max = 1000, message = "Invalid title") String getCourseName() {
+    public String getCourseName() {
         return courseName;
     }
 
-    public void setCourseName(@Size(min = 1, max = 1000, message = "Invalid title") String courseName) {
+    public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
 

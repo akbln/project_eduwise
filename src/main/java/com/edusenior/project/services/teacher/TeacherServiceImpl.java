@@ -120,7 +120,8 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Transactional
-    public ResponseEntity<ServerResponse> createComp(CreateCompDTO compDTO){
+    public ResponseEntity<ServerResponse> createComp(String tId,CreateCompDTO compDTO){
+        Teacher t = teacherJpaDAO.findById(tId).orElseThrow(()-> new InvalidOperationException("Invalid ID"));
         if(compDTO.getQuestions().isEmpty()){
             throw new InvalidOperationException("Please Select Some Questions");
         }
@@ -159,7 +160,9 @@ public class TeacherServiceImpl implements TeacherService{
             s.setComp(comp);
             comp.addStudent(s);
         }
+        t.setComp(comp);
         compJpaRepo.saveAndFlush(comp);
+        teacherJpaDAO.saveAndFlush(t);
         return new ResponseEntity<ServerResponse>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
     }
 }

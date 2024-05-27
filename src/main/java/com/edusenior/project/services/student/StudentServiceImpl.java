@@ -206,6 +206,7 @@ public class StudentServiceImpl implements StudentService {
         compSubmissionsJPA.saveAndFlush(submission);
         return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
     }
+    @Transactional
     public ResponseEntity<ServerResponse> submitChapterQuestionAnswer(String sId,String classId,String chapterId, SubmitChapterQuestionAnswer cqDTO){
         Student s = studentJpaRepository.findById(sId).orElseThrow(()-> new InvalidOperationException("Invalid Student ID"));
         SchoolClass sc = schoolClassJpaRepository.findById(classId).orElseThrow(()-> new InvalidOperationException("Invalid Class ID"));
@@ -225,6 +226,35 @@ public class StudentServiceImpl implements StudentService {
         chapterQuestionSubmissionsJpaRepo.saveAndFlush(submission);
 
         return new ResponseEntity<>(new ServerResponse("success",new ArrayList<>()),HttpStatus.OK);
+    }
+    public ResultsDTO fetchChapterAnswersForStudent(String chapterId,String sId){
+        Student s = studentJpaRepository.findById(sId).orElseThrow(()-> new InvalidOperationException("Invalid Student ID"));
+        Chapter c = chapterJpaRepository.findById(chapterId).orElseThrow(()-> new InvalidOperationException("Invalid Chapter ID"));
+        
+        List<ChapterQuestionSubmissions> questionSubmissions = new ArrayList<>(chapterQuestionSubmissionsJpaRepo.findByChapterIdAndStudentId(chapterId,sId));
+
+        return getResultsDTO(questionSubmissions);
+    }
+
+    private ResultsDTO getResultsDTO(List<ChapterQuestionSubmissions> questionSubmissions) {
+        int countCorrect = 0;
+        int countIncorrect = 0;
+
+        for (ChapterQuestionSubmissions sb : questionSubmissions){
+            String ans = sb.getSubmission();
+            Question q = sb.getQuestion();
+            if(q != null && ans != null){
+                if(ans.equals(q.getAnswerKey())){
+                    countCorrect++;
+                }else{
+                    countIncorrect++;
+                }
+            }
+        }
+        ResultsDTO resultsDTO = new ResultsDTO();
+        resultsDTO.setCorrect(countCorrect);
+        resultsDTO.setIncorrect(countIncorrect);
+        return resultsDTO;
     }
 
 }

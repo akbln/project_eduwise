@@ -19,7 +19,7 @@ public class SchoolClassController {
         this.schoolAdminService = schoolAdminService;
     }
 
-    @PutMapping("/updateTeacher")
+    @PutMapping("/teacher")
     public ResponseEntity<ServerResponse> updateClass(@Valid @RequestBody SetTeacherForClassDTO sDTO){
         return schoolAdminService.setTeacherForClass(sDTO);
     }

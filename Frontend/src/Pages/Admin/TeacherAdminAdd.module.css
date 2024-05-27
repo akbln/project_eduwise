@@ -1,0 +1,100 @@
+.page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f9f9f9;
+    flex-wrap: nowrap;
+}
+
+.content{
+    flex-grow: 1;
+    height: 100vh;
+    overflow: auto;
+}
+
+
+
+.formContainer {
+
+    height: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.sectionHeading {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: orange;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submitBtn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: orange;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+
+.submitBtn:hover {
+    background: white;
+    color: orange;
+}
+
+.message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+    background: #f1f1f1;
+    color: #333;
+    font-size: 1rem;
+}
+@media screen  and (max-width: 700px){
+    .page{
+        flex-wrap: wrap;
+    }
+
+}

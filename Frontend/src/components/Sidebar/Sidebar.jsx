@@ -9,16 +9,18 @@ const Sidebar = ({role}) => {
     const [hidden, setHidden] = useState(false);
     const [classes, setClasses] = useState([]);
     const navigate = useNavigate();
+    const [fetchUrl,setFetchUrl] = useState("/none");
+    const [loaded,setLoaded]=useState(false);
 
     let compUrl = "";
     let classUrl = "";
     if(role === "teacher"){
-        classUrl="/students/classes/"
         compUrl = "/teachers/competitions/create";
+        classUrl="/teachers/classes/"
     }
     else if (role === "student"){
-        classUrl="/teachers/classes/"
-        compUrl = "/students/competitions";
+        classUrl="/students/classes/"
+        compUrl = "/students/competition";
     }
 
 
@@ -35,19 +37,19 @@ const Sidebar = ({role}) => {
     }
     const fetchClasses = async ()=> {
         try{
-            let url = "";
             if(role === "student"){
-                url = "http://localhost/students/classes";
+                setFetchUrl("http://localhost/students/classes");
             }
             else{
-                url = "http://localhost/teachers/classes";
+                setFetchUrl("http://localhost/teachers/classes");
             }
-            const res = await axios.get(url,{headers:{
+            const res = await axios.get(fetchUrl,{headers:{
                     Authorization:"Bearer "+localStorage.getItem("token"),
                 }})
-            if(res.status === 200){
+            if(fetchUrl!=="" && res.status === 200){
                 console.log(res.data);
                 setClasses(res.data.allClasses)
+                setLoaded(true);
             }
         }catch (err){
             console.log(err);
@@ -55,7 +57,7 @@ const Sidebar = ({role}) => {
     }
     useEffect(()=>{
         fetchClasses();
-    },[])
+    },[fetchUrl])
 
 
     return (
@@ -67,12 +69,15 @@ const Sidebar = ({role}) => {
                 className={`${styles.sidebar} ${closed ? `${styles.sidebarClosed}` : `${styles.sidebarOpen}`} ${hidden ? "displayNone" : ""}`}>
                 <div className={styles.burger} onClick={transitionMenuIntoHeaven}><Burger/></div>
                 <div className={styles.sidebarUtility}>
-                    <div onClick={()=>navigate(compUrl)} className={`${styles.join} pointer`}>{role === "student" && <p>Join Competition</p>}{role === "teacher" && <p>Create Competition</p>}</div>
+                    <div onClick={() => navigate(compUrl)} className={`${styles.join} pointer transform-ease-m`}>{role === "student" &&
+                        <p>Join Competition</p>}{role === "teacher" && <p>Create Competition</p>}</div>
+
+                    {role === "teacher" && <div onClick={() => navigate("/upload")} className={`${styles.join} pointer transform-ease-m`}><p>Create</p></div>}
                 </div>
                 <div className={styles.classesWrapper}>
                     {
-                        classes && classes.map((item) => (
-                            <div key={item.classId} className={`${styles.sidebarClasses} pointer`} onClick={() => {
+                        loaded && classes && classes.map((item) => (
+                            <div key={item.classId} className={`${styles.sidebarClasses} pointer transform-ease-m`} onClick={() => {
                                 navigate(`${classUrl}${item.classId}`)
                             }}>
                                 {item.name}

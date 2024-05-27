@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 
-public class AddMultipleStudentsToCourseDTO {
+public class AddMultipleStudentsToClassDTO {
     @NotNull
     @NotEmpty
     private ArrayList<String> emails;
