@@ -40,6 +40,7 @@ This project was inspired by the lacking educational infstracture during the Cov
 - Jetbrains IDEs
 
 ## Hosting
+- Amazon EC2
 - Ubuntu
 - Nginix
 - Cloudflared Tunnel
