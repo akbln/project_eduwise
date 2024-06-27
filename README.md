@@ -44,10 +44,3 @@ This project was inspired by the lacking educational infstracture during the Cov
 - Nginix
 - Cloudflared Tunnel
 
-
-
-
-
-
-```bash
-Give examples
